@@ -12,24 +12,65 @@
 
   <style>
     :root {
+      /* Base palette (dark default) */
+      --bg-overlay: rgba(0,0,0,.55);
       --card-bg: rgba(0,0,0,.55);
-      --border: rgba(255,255,255,.15);
-      --accent: #e53935;
+      --card-blur: 12px;
+      --border: rgba(255,255,255,.16);
       --text: #ffffff;
-      --muted: #cccccc;
+      --muted: rgba(255,255,255,.78);
+      --muted2: rgba(255,255,255,.62);
+      --accent: #e53935;
+      --accent2: #ffb300;
+      --btn: rgba(0,0,0,.65);
+
+      /* Glow */
+      --glow: rgba(255, 255, 255, .18);
+      --glow-strong: rgba(255, 180, 0, .24);
+
+      /* Background image */
+      --bg-image: url("https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png");
+
+      /* Profile */
+      --avatar-border: rgba(255,255,255,.95);
+
+      /* Tabs */
+      --tab-bg: rgba(0,0,0,.30);
+      --tab-active: rgba(255,255,255,.10);
+
+      /* Mythic accents (enabled via .mythic) */
+      --mythic-accent: #d4af37; /* gold */
+      --mythic-accent2: #6dd6a5; /* underworld green */
+      --mythic-card: rgba(8, 6, 12, .62);
+      --mythic-btn: rgba(14, 10, 18, .72);
+
+      /* Light mode overrides via .light */
+      --light-bg-overlay: rgba(255,255,255,.55);
+      --light-card-bg: rgba(255,255,255,.70);
+      --light-border: rgba(0,0,0,.12);
+      --light-text: #101014;
+      --light-muted: rgba(0,0,0,.70);
+      --light-muted2: rgba(0,0,0,.55);
+      --light-btn: rgba(255,255,255,.75);
+      --light-tab-bg: rgba(255,255,255,.52);
+      --light-tab-active: rgba(0,0,0,.06);
+      --light-glow: rgba(0,0,0,.10);
+      --light-glow-strong: rgba(229,57,53,.18);
     }
 
     * { box-sizing: border-box; }
+    html, body { height: 100%; }
 
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       color: var(--text);
       background:
-        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)),
-        url("https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png");
+        linear-gradient(var(--bg-overlay), var(--bg-overlay)),
+        var(--bg-image);
       background-size: cover;
       background-position: center;
+      background-attachment: fixed;
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -37,58 +78,190 @@
       padding: 40px 15px;
     }
 
-    .card {
-      width: 100%;
-      max-width: 520px;
-      background: var(--card-bg);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 26px 22px 30px;
-      text-align: center;
+    /* Light mode */
+    body.light {
+      color: var(--light-text);
+      background:
+        linear-gradient(var(--light-bg-overlay), var(--light-bg-overlay)),
+        var(--bg-image);
     }
 
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid white;
-      object-fit: cover;
+    /* Mythic mode */
+    body.mythic {
+      --accent: var(--mythic-accent);
+      --accent2: var(--mythic-accent2);
+      --card-bg: var(--mythic-card);
+      --btn: var(--mythic-btn);
+      --glow-strong: rgba(212,175,55,.26);
+    }
+
+    /* Mythic + Light still looks clean */
+    body.light.mythic {
+      --card-bg: rgba(255,255,255,.76);
+      --btn: rgba(255,255,255,.85);
+      --glow-strong: rgba(212,175,55,.22);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 560px;
+      background: var(--card-bg);
+      backdrop-filter: blur(var(--card-blur));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 18px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body.light .card {
+      border-color: var(--light-border);
+      background: var(--light-card-bg);
+    }
+
+    /* Top controls */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
       margin-bottom: 14px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      user-select: none;
+      font-weight: 600;
+      font-size: .88rem;
+    }
+
+    body.light .pill {
+      border-color: var(--light-border);
+      background: rgba(255,255,255,.55);
+      color: var(--light-text);
+    }
+
+    .pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.18);
+    }
+
+    .pill i { font-size: 18px; }
+
+    .avatar {
+      width: 118px;
+      height: 118px;
+      border-radius: 50%;
+      border: 3px solid var(--avatar-border);
+      object-fit: cover;
+      margin: 8px auto 12px;
+      display: block;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
     }
 
     h1 {
       font-family: 'Satisfy', cursive;
-      font-size: 2.4rem;
-      margin: 6px 0 8px;
+      font-size: 2.35rem;
+      margin: 0 0 6px;
+      letter-spacing: .3px;
     }
+
+    .tagline {
+      font-size: .92rem;
+      color: var(--muted2);
+      margin: 0 0 14px;
+    }
+    body.light .tagline { color: var(--light-muted2); }
 
     .socials {
       display: flex;
       justify-content: center;
       gap: 18px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .socials a {
-      color: white;
+      color: inherit;
       font-size: 26px;
       transition: transform .2s ease, opacity .2s ease;
     }
+    .socials a:hover { transform: translateY(-3px); opacity: .86; }
 
-    .socials a:hover {
-      transform: translateY(-3px);
-      opacity: .85;
+    /* Tabs */
+    .tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0 16px;
     }
 
-    /* ABOUT SECTION */
-    details.about {
-      margin: 18px 0 22px;
-      text-align: left;
-      background: rgba(0,0,0,.35);
+    .tab {
+      padding: 10px 12px;
       border-radius: 14px;
-      padding: 14px 16px;
       border: 1px solid var(--border);
+      background: var(--tab-bg);
+      color: var(--text);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: .9rem;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+    body.light .tab {
+      border-color: var(--light-border);
+      background: var(--light-tab-bg);
+      color: var(--light-text);
+    }
+
+    .tab:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
+    .tab.active { background: var(--tab-active); }
+    body.light .tab.active { background: var(--light-tab-active); }
+
+    /* Panels */
+    .panel { display: none; text-align: left; }
+    .panel.active { display: block; }
+
+    .section-card {
+      background: rgba(0,0,0,.25);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 14px;
+      margin-bottom: 14px;
+    }
+    body.light .section-card {
+      background: rgba(255,255,255,.55);
+      border-color: var(--light-border);
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      font-weight: 800;
+      margin: 0 0 10px;
+      text-align: left;
+    }
+
+    /* About collapsible */
+    details.about {
+      border-radius: 14px;
+      padding: 12px 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.22);
+    }
+    body.light details.about {
+      border-color: var(--light-border);
+      background: rgba(255,255,255,.45);
     }
 
     details.about summary {
@@ -97,20 +270,34 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-weight: 600;
+      font-weight: 800;
+      user-select: none;
     }
-
     details.about summary::-webkit-details-marker { display: none; }
 
-    .chevron {
-      transition: transform .3s ease;
-      animation: bounce 1.6s infinite;
+    .summary-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    details[open] .chevron {
-      transform: rotate(180deg);
-      animation: none;
+    .chevron {
+      transition: transform .25s ease;
+      animation: bounce 1.6s infinite;
+      font-size: 22px;
     }
+    details[open] .chevron { transform: rotate(180deg); animation: none; }
+
+    .readmore {
+      font-size: .82rem;
+      color: var(--muted2);
+      font-weight: 700;
+      margin-left: 8px;
+    }
+    body.light .readmore { color: var(--light-muted2); }
+
+    details[open] .readmore::after { content: "Read less"; }
+    details:not([open]) .readmore::after { content: "Read more"; }
 
     @keyframes bounce {
       0%,100% { transform: translateY(0); }
@@ -118,13 +305,14 @@
     }
 
     .about p {
-      margin-top: 12px;
+      margin: 12px 0 0;
       font-size: .95rem;
-      line-height: 1.55;
+      line-height: 1.58;
       color: var(--muted);
     }
+    body.light .about p { color: var(--light-muted); }
 
-    /* LINKS */
+    /* Links */
     .links {
       display: flex;
       flex-direction: column;
@@ -132,44 +320,266 @@
     }
 
     .link-btn {
+      position: relative;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
       border-radius: 999px;
-      background: black;
-      color: white;
+      background: var(--btn);
+      color: inherit;
       text-decoration: none;
-      font-weight: 600;
-      transition: transform .2s ease, box-shadow .2s ease;
+      font-weight: 800;
+      border: 1px solid var(--border);
+      transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
+      overflow: hidden;
+    }
+    body.light .link-btn {
+      background: var(--light-btn);
+      border-color: var(--light-border);
+    }
+
+    /* Hover glow */
+    .link-btn::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: radial-gradient(circle at 30% 30%, var(--glow-strong), transparent 45%),
+                  radial-gradient(circle at 70% 70%, var(--glow), transparent 55%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events: none;
+    }
+
+    body.light .link-btn::before {
+      background: radial-gradient(circle at 30% 30%, var(--light-glow-strong), transparent 45%),
+                  radial-gradient(circle at 70% 70%, var(--light-glow), transparent 55%);
     }
 
     .link-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0,0,0,.4);
+      box-shadow: 0 14px 30px rgba(0,0,0,.25);
+      border-color: rgba(255,255,255,.25);
+    }
+    body.light .link-btn:hover { border-color: rgba(0,0,0,.16); }
+    .link-btn:hover::before { opacity: 1; }
+
+    .link-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 1;
     }
 
-    .link-btn.red {
-      background: var(--accent);
+    .badge {
+      font-size: .72rem;
+      font-weight: 900;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.18);
+      z-index: 1;
     }
+    body.light .badge {
+      background: rgba(0,0,0,.06);
+      border-color: rgba(0,0,0,.10);
+    }
+
+    .danger {
+      background: rgba(229,57,53,.16);
+      border-color: rgba(229,57,53,.35);
+    }
+
+    .support-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hint {
+      font-size: .85rem;
+      color: var(--muted2);
+      margin: 8px 0 0;
+    }
+    body.light .hint { color: var(--light-muted2); }
 
     footer {
-      margin-top: 18px;
+      margin-top: 10px;
+      text-align: center;
       font-size: .75rem;
-      color: #aaa;
+      color: rgba(255,255,255,.6);
+    }
+    body.light footer { color: rgba(0,0,0,.55); }
+
+    /* DOB Gate modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 9999;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 430px;
+      border-radius: 18px;
+      background: rgba(15, 12, 20, .85);
+      border: 1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(14px);
+      padding: 18px 16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      animation: popIn .22s ease-out;
+      color: #fff;
+    }
+
+    body.light .modal {
+      background: rgba(255,255,255,.88);
+      border-color: rgba(0,0,0,.12);
+      color: #101014;
+    }
+
+    @keyframes popIn {
+      from { transform: translateY(8px) scale(.98); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      font-weight: 900;
+      font-size: 1.05rem;
+    }
+
+    .close-x {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 22px;
+      color: inherit;
+      opacity: .8;
+      transition: transform .15s ease, opacity .15s ease;
+    }
+    .close-x:hover { transform: rotate(6deg); opacity: 1; }
+
+    .modal p {
+      margin: 8px 0 12px;
+      line-height: 1.45;
+      color: rgba(255,255,255,.82);
+    }
+    body.light .modal p { color: rgba(0,0,0,.70); }
+
+    .dob-row {
+      display: grid;
+      gap: 10px;
+      margin: 12px 0 10px;
+    }
+
+    .dob-row label {
+      font-size: .85rem;
+      font-weight: 800;
+      opacity: .9;
+    }
+
+    input[type="date"]{
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      color: inherit;
+      font-family: inherit;
+      font-weight: 600;
+    }
+    body.light input[type="date"]{
+      border-color: rgba(0,0,0,.16);
+      background: rgba(0,0,0,.04);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      flex: 1;
+      border: none;
+      cursor: pointer;
+      border-radius: 12px;
+      padding: 12px 12px;
+      font-weight: 900;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0b0b0f;
+    }
+
+    .btn.ghost {
+      background: rgba(255,255,255,.10);
+      color: inherit;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    body.light .btn.ghost {
+      background: rgba(0,0,0,.04);
+      border-color: rgba(0,0,0,.12);
+    }
+
+    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
+
+    .error {
+      display: none;
+      margin-top: 10px;
+      font-weight: 900;
+      font-size: .9rem;
+      color: #ff6b6b;
+      animation: shake .25s ease;
+    }
+    body.light .error { color: #d61f1f; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
     }
 
     @media (max-width: 480px) {
-      h1 { font-size: 2rem; }
-      .avatar { width: 105px; height: 105px; }
+      body { padding: 26px 12px; }
+      h1 { font-size: 2.05rem; }
+      .tabs { grid-template-columns: 1fr; }
+      .topbar { flex-wrap: wrap; justify-content: center; }
+      .pill { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 
 <body>
-
   <main class="card">
+
+    <!-- Controls -->
+    <div class="topbar">
+      <button class="pill" id="toggle-mode" type="button">
+        <i class="bx bx-moon"></i>
+        <span>Dark / Light</span>
+      </button>
+
+      <button class="pill" id="toggle-mythic" type="button">
+        <i class="bx bxs-crown"></i>
+        <span>Mythic Theme</span>
+      </button>
+    </div>
 
     <img
       class="avatar"
@@ -178,48 +588,373 @@
     />
 
     <h1>Hound Of Hades</h1>
+    <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
     <div class="socials">
-      <a href="https://www.instagram.com/hound.0f.hades" target="_blank"><i class="bx bxl-instagram"></i></a>
-      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank"><i class="bx bxl-tiktok"></i></a>
-      <a href="https://x.com/Hound_0f_Hades" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener"><i class="bx bxl-instagram"></i></a>
+      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener"><i class="bx bxl-tiktok"></i></a>
+      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
     </div>
 
-    <!-- ABOUT (COLLAPSED) -->
-    <details class="about">
-      <summary>
-        About Me
-        <i class="bx bx-chevron-down chevron"></i>
-      </summary>
-      <p>
-        As a true bibliophile, I find immense joy in fantasy worlds—whether through reading or audiobooks.
-        My passions extend far beyond the literary realm: I’m an avid crafter, curious explorer, and enthusiastic
-        seeker of new culinary experiences.
-        <br><br>
-        Travel fuels my spirit, both near and far, with Ireland, Scotland, and Greece at the top of my dream list—
-        inspired especially by a deep fascination with Greek mythology. Over the past year, I’ve also stepped into
-        the world of cosplay, creating outfits that have been an absolute delight.
-        <br><br>
-        Beyond all creative pursuits, spending meaningful time with my partner, loved ones, and friends brings
-        me the greatest joy and fulfillment.
-      </p>
-    </details>
+    <!-- Tabs -->
+    <div class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab active" data-tab="links" type="button">Links</button>
+      <button class="tab" data-tab="about" type="button">About</button>
+      <button class="tab" data-tab="support" type="button">Support</button>
+    </div>
 
-    <!-- LINKS -->
-    <section class="links">
-      <a class="link-btn red" href="https://fetlife.com/Hound0fHades" target="_blank">FetLife (18+)</a>
-      <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank">CashApp</a>
-      <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank">Venmo</a>
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank">Jewelry Wishlist</a>
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank">Desires Wishlist</a>
-      <a class="link-btn" href="https://www.snapchat.com/add/hound0fhades" target="_blank">Snapchat</a>
+    <!-- PANELS -->
+    <section class="panel active" id="panel-links" aria-labelledby="Links">
+      <div class="section-card">
+        <div class="section-title">
+          <span>Featured</span>
+          <span class="hint">Tap a link — glow is intentional ✨</span>
+        </div>
+
+        <div class="links">
+
+          <!-- FetLife (DOB gated) -->
+          <a class="link-btn" href="https://fetlife.com/Hound0fHades"
+             target="_blank" rel="noopener"
+             data-dob-gated="true">
+            <span class="link-left">
+              <i class="bx bx-lock-alt"></i>
+              <span>FetLife</span>
+            </span>
+            <span class="badge danger">18+</span>
+          </a>
+
+          <a class="link-btn" href="https://www.snapchat.com/add/hound0fhades" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bxl-snapchat"></i>
+              <span>Snapchat</span>
+            </span>
+            <span class="badge">Social</span>
+          </a>
+
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">
+          <span>Support</span>
+          <span class="hint">Thank you for the love 🖤</span>
+        </div>
+
+        <div class="links">
+          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bxs-wallet"></i>
+              <span>CashApp</span>
+            </span>
+            <span class="badge">Tip</span>
+          </a>
+
+          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-dollar-circle"></i>
+              <span>Venmo</span>
+            </span>
+            <span class="badge">Tip</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">
+          <span>Wishlists</span>
+          <span class="hint">Optional goodies ✨</span>
+        </div>
+
+        <div class="links">
+          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-gift"></i>
+              <span>Jewelry Wishlist</span>
+            </span>
+            <span class="badge">Amazon</span>
+          </a>
+
+          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-heart"></i>
+              <span>Desires Wishlist</span>
+            </span>
+            <span class="badge">Amazon</span>
+          </a>
+        </div>
+      </div>
     </section>
 
-    <footer>
-      © Hound Of Hades
-    </footer>
+    <section class="panel" id="panel-about" aria-labelledby="About">
+      <div class="section-card">
+        <div class="section-title">
+          <span>About</span>
+          <span class="hint">Short + sweet, expandable</span>
+        </div>
 
+        <!-- Collapsed by default -->
+        <details class="about">
+          <summary>
+            <span class="summary-left">
+              <i class="bx bx-book-heart"></i>
+              <span>About Me</span>
+              <span class="readmore"></span>
+            </span>
+            <i class="bx bx-chevron-down chevron"></i>
+          </summary>
+
+          <p>
+            As a true bibliophile, I find immense joy in fantasy worlds—whether through reading or audiobooks.
+            My passions extend far beyond the literary realm: I’m an avid crafter, curious explorer, and enthusiastic
+            seeker of new culinary experiences.
+            <br><br>
+            Travel fuels my spirit, both near and far, with Ireland, Scotland, and Greece at the top of my dream list—
+            inspired especially by a deep fascination with Greek mythology. Over the past year, I’ve also stepped into
+            the world of cosplay, creating outfits that have been an absolute delight.
+            <br><br>
+            Beyond all creative pursuits, spending meaningful time with my partner, loved ones, and friends brings
+            me the greatest joy and fulfillment.
+          </p>
+        </details>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">
+          <span>Vibe</span>
+          <span class="hint">Choose your mood up top</span>
+        </div>
+        <p class="hint" style="margin:0;">
+          Use <strong>Dark/Light</strong> for readability and <strong>Mythic Theme</strong> for that underworld-gold aesthetic.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-support" aria-labelledby="Support">
+      <div class="section-card">
+        <div class="section-title">
+          <span>Support & Extras</span>
+          <span class="hint">Everything in one place</span>
+        </div>
+
+        <div class="support-grid">
+          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
+            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
+            <span class="badge">Tip</span>
+          </a>
+
+          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
+            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
+            <span class="badge">Tip</span>
+          </a>
+
+          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
+            <span class="link-left"><i class="bx bx-gift"></i><span>Jewelry Wishlist</span></span>
+            <span class="badge">Amazon</span>
+          </a>
+
+          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
+            <span class="link-left"><i class="bx bx-heart"></i><span>Desires Wishlist</span></span>
+            <span class="badge">Amazon</span>
+          </a>
+        </div>
+
+        <p class="hint">
+          Tip: if you want, we can add a “Commission / Requests” button here later.
+        </p>
+      </div>
+    </section>
+
+    <footer>© Hound Of Hades</footer>
   </main>
 
+  <!-- DOB Gate Modal -->
+  <div class="modal-overlay" id="dobModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dobTitle">
+      <div class="modal-header">
+        <div class="modal-title" id="dobTitle">Age Check (18+)</div>
+        <button class="close-x" id="dobClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
+      </div>
+
+      <p>
+        This link is for adults only. Please confirm you are <strong>18+</strong> by entering your date of birth.
+      </p>
+
+      <div class="dob-row">
+        <label for="dobInput">Date of birth</label>
+        <input id="dobInput" type="date" />
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn ghost" id="dobCancel" type="button">Cancel</button>
+        <button class="btn primary" id="dobSubmit" type="button">Continue</button>
+      </div>
+
+      <div class="error" id="dobError">Sorry — you must be 18 or older.</div>
+    </div>
+  </div>
+
+  <script>
+    // -----------------------------
+    // Persistent toggles (Light/Dark + Mythic)
+    // -----------------------------
+    const body = document.body;
+    const toggleModeBtn = document.getElementById('toggle-mode');
+    const toggleMythicBtn = document.getElementById('toggle-mythic');
+
+    function applySavedPreferences() {
+      const savedMode = localStorage.getItem('hoh_mode');   // "light" or "dark"
+      const savedMythic = localStorage.getItem('hoh_mythic'); // "on" or "off"
+
+      if (savedMode === 'light') body.classList.add('light');
+      else body.classList.remove('light');
+
+      if (savedMythic === 'on') body.classList.add('mythic');
+      else body.classList.remove('mythic');
+
+      updateToggleIcons();
+    }
+
+    function updateToggleIcons() {
+      const modeIcon = toggleModeBtn.querySelector('i');
+      if (body.classList.contains('light')) {
+        modeIcon.className = 'bx bx-sun';
+      } else {
+        modeIcon.className = 'bx bx-moon';
+      }
+
+      const mythIcon = toggleMythicBtn.querySelector('i');
+      mythIcon.className = body.classList.contains('mythic') ? 'bx bxs-crown' : 'bx bx-crown';
+    }
+
+    toggleModeBtn.addEventListener('click', () => {
+      body.classList.toggle('light');
+      localStorage.setItem('hoh_mode', body.classList.contains('light') ? 'light' : 'dark');
+      updateToggleIcons();
+    });
+
+    toggleMythicBtn.addEventListener('click', () => {
+      body.classList.toggle('mythic');
+      localStorage.setItem('hoh_mythic', body.classList.contains('mythic') ? 'on' : 'off');
+      updateToggleIcons();
+    });
+
+    applySavedPreferences();
+
+    // -----------------------------
+    // Tabs
+    // -----------------------------
+    const tabs = document.querySelectorAll('.tab');
+    const panels = {
+      links: document.getElementById('panel-links'),
+      about: document.getElementById('panel-about'),
+      support: document.getElementById('panel-support'),
+    };
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        Object.values(panels).forEach(p => p.classList.remove('active'));
+        panels[target].classList.add('active');
+      });
+    });
+
+    // -----------------------------
+    // DOB Gate (animated modal) for 18+ links
+    // - Remembers success for 24 hours
+    // -----------------------------
+    const dobModal = document.getElementById('dobModal');
+    const dobInput = document.getElementById('dobInput');
+    const dobError = document.getElementById('dobError');
+    const dobClose = document.getElementById('dobClose');
+    const dobCancel = document.getElementById('dobCancel');
+    const dobSubmit = document.getElementById('dobSubmit');
+
+    let pendingHref = null;
+
+    function openDobModal(href) {
+      pendingHref = href;
+      dobError.style.display = 'none';
+      dobInput.value = '';
+      dobModal.style.display = 'flex';
+      dobModal.setAttribute('aria-hidden', 'false');
+      setTimeout(() => dobInput.focus(), 50);
+    }
+
+    function closeDobModal() {
+      dobModal.style.display = 'none';
+      dobModal.setAttribute('aria-hidden', 'true');
+      pendingHref = null;
+    }
+
+    function calculateAge(dob) {
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+      return age;
+    }
+
+    function hasRecentDobApproval() {
+      const stamp = localStorage.getItem('hoh_dob_ok_until');
+      if (!stamp) return false;
+      return Date.now() < Number(stamp);
+    }
+
+    function setDobApproval24h() {
+      const until = Date.now() + (24 * 60 * 60 * 1000);
+      localStorage.setItem('hoh_dob_ok_until', String(until));
+    }
+
+    // Intercept gated links
+    document.querySelectorAll('a[data-dob-gated="true"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        if (hasRecentDobApproval()) return; // allow
+        e.preventDefault();
+        openDobModal(a.href);
+      });
+    });
+
+    function handleDobSubmit() {
+      if (!dobInput.value) {
+        dobError.textContent = "Please enter your date of birth.";
+        dobError.style.display = 'block';
+        return;
+      }
+
+      const dob = new Date(dobInput.value);
+      const age = calculateAge(dob);
+
+      if (age >= 18) {
+        setDobApproval24h();
+        closeDobModal();
+        if (pendingHref) window.open(pendingHref, "_blank", "noopener");
+      } else {
+        dobError.textContent = "Sorry — you must be 18 or older.";
+        dobError.style.display = 'block';
+        dobError.style.animation = 'none';
+        // re-trigger shake
+        void dobError.offsetWidth;
+        dobError.style.animation = '';
+      }
+    }
+
+    dobSubmit.addEventListener('click', handleDobSubmit);
+    dobCancel.addEventListener('click', closeDobModal);
+    dobClose.addEventListener('click', closeDobModal);
+
+    dobModal.addEventListener('click', (e) => {
+      if (e.target === dobModal) closeDobModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (dobModal.style.display === 'flex' && e.key === 'Escape') closeDobModal();
+      if (dobModal.style.display === 'flex' && e.key === 'Enter') handleDobSubmit();
+    });
+  </script>
 </body>
 </html>
