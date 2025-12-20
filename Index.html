@@ -1,656 +1,2043 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <base target="_blank" />
+  <base target="_blank">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HoundOfHades | Links</title>
+  <title>My Social Links</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Satisfy&display=swap" rel="stylesheet">
-
-  <!-- Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;600&family=Montserrat:wght@400;600&family=Open+Sans:wght@400;600&family=Poppins:wght@400;600&family=Roboto:wght@400&family=Oswald:wght@400;600&family=Raleway:wght@400;600&family=Roboto+Slab:wght@400;600&family=Bebas+Neue:wght@400;600&family=Jost:wght@400;600&family=Outfit:wght@400;600&family=Pacifico:wght@400;600&family=Comfortaa:wght@400;600&family=Lobster:wght@400;600&family=Caveat:wght@400;600&family=Figtree:wght@400;600&family=Satisfy:wght@400;600&family=Archivo+Black:wght@400;600&family=Urbanist:wght@400;600&family=Luckiest+Guy:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
   <style>
-    :root{
-      --bg1:#333;
-      --bg2:#111;
-      --panel: rgba(15, 15, 18, 0.72);
-      --panel-border: rgba(255,255,255,0.14);
-      --text: rgba(255,255,255,0.92);
-      --text-strong:#fff;
-      --muted: rgba(255,255,255,0.72);
-      --shadow: 0 18px 40px rgba(0,0,0,0.55);
-      --radius: 18px;
-    }
-
-    html{
-      height:100%;
-      background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+    html {
+      height: 100%;
+      background: linear-gradient(to bottom, #333, #111);
       background-attachment: fixed;
-      overscroll-behavior:none;
+      background-size: cover;
+      background-repeat: no-repeat;
+      margin: 0;
+      padding: 0;
+      overscroll-behavior: none;
     }
 
-    body{
-      margin:0;
-      padding:0;
-      min-height:100%;
-      font-family:'Poppins', sans-serif;
-      color: var(--text);
-      text-align:center;
-      position:relative;
-      overscroll-behavior:none;
-
-      /* Default background (you can change in JS or inline) */
-      background-position:center;
-      background-size:cover;
-      background-repeat:no-repeat;
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      color: white;
+      text-align: center;
+      min-height: 100%;
+      position: relative;
+      overscroll-behavior: none;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
-    /* Backdrop overlay controls */
-    #background-overlay{
-      position:fixed;
-      inset:0;
-      background-color: rgba(0,0,0,0.40); /* default darken */
-      z-index:1;
-      pointer-events:none;
-      backdrop-filter: blur(0px);
-      -webkit-backdrop-filter: blur(0px);
-    }
-    #grain-overlay{
-      position:fixed;
-      inset:0;
-      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/2k_Dissolve_Noise_Texture.png/1024px-2k_Dissolve_Noise_Texture.png");
-      background-size:cover;
-      opacity:0;
-      mix-blend-mode: overlay;
-      z-index:2;
-      pointer-events:none;
+    .container {
+      width: 40%;
+      max-width: 600px;
+      margin-top: 5vh;
+      display: inline-block;
+      margin-bottom: 10vh;
     }
 
-    .container{
-      width: min(600px, 92vw);
-      margin: 5vh auto 10vh;
-      position:relative;
-      z-index:3;
+    #youtube-embed-container {
+      position: relative;
+      width: 100%;
+      margin-bottom: 1rem;
+      display: none;
+      z-index: 2;
     }
 
-    /* Profile */
-    .profile-picture{
-      width:150px;
-      height:150px;
-      border:3px solid #fff;
-      border-radius:50%;
-      margin: 0 auto 16px;
-      overflow:hidden;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-    }
-    .profile-picture img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
+    .youtube-iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
     }
 
-    h1{
-      margin: 0 0 10px;
-      font-family: 'Satisfy', cursive;
+    .youtube-embed-wrapper {
+      padding-top: 56.25%;
+      position: relative;
+    }
+
+    .profile-picture {
+      height: 150px;
+      border: 3px solid white;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      display: block;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      position: relative;
+      transition: transform 0.1s;
+      max-width: 150px;
+      width: 150px;
+    }
+
+    .profile-picture::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle closest-side, rgba(255, 255, 255, 0.3), transparent);
+      transform: translate(-50%, -75%) rotate(45deg);
+      transition: opacity 0.1s, transform 0.1s;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .profile-picture img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    h1 {
+      margin-bottom: 0.5rem;
       font-size: 2.5rem;
-      color:#000; /* your original */
-      text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+      z-index: 2;
+      position: relative;
     }
 
-    /* Social Icons */
-    .social-icons-container{
-      margin: 8px 0 12px;
+    .about-card {
+      margin: 14px auto 16px;
+      padding: 16px 16px;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+      text-align: left;
+      z-index: 2;
+      position: relative;
+      backdrop-filter: blur(4px);
     }
-    .social-icon-link{
-      color: inherit;
-      text-decoration:none;
-      margin: 0 6px;
-      display:inline-block;
+
+    .about-card h2 {
+      margin: 0 0 8px;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      opacity: 0.95;
     }
-    .social-icon-link i{
+
+    .about-card p {
+      margin: 0;
+      line-height: 1.45;
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .social-icons-container i {
       font-size: 30px;
-      transition: transform .25s ease, filter .25s ease;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+      margin: 0px 15px;
+      display: inline-block;
+      margin-bottom: 8px;
+      position: relative;
+      z-index: 2;
     }
-    .social-icon-link:hover i{
+
+    .social-icon-link {
+      color: inherit;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+
+    .social-icon-link i {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .social-icon-link:hover i {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    }
+
+    .link {
+      background-color: white;
+      color: black;
+      padding: 0.8rem;
+      margin: 0.5rem 0;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 8px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      font-size: 1.25rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .link:hover {
       transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     }
 
-    /* About Me Card (1) soft fade-in, (2) mythic styling, (4) mobile-friendly */
-    .about-me-card{
-      margin: 14px 0 18px;
-      padding: 16px;
-      border-radius: var(--radius);
-      text-align:left;
+    .menu-item label { white-space: nowrap; }
 
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-
-      position:relative;
-      overflow:hidden;
-    }
-    .about-me-card::before{
-      content:"";
-      position:absolute;
-      inset:-40% -30%;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10), transparent 55%);
-      transform: rotate(8deg);
-      pointer-events:none;
-    }
-    .about-me-card h2{
-      margin:0 0 10px;
-      font-size:1.25rem;
-      color: var(--text-strong);
-      position:relative;
-      z-index:1;
-      letter-spacing: .3px;
-    }
-    .about-me-card p{
-      margin:0;
-      line-height:1.55;
-      font-size:1.02rem;
-      color: var(--text);
-      position:relative;
-      z-index:1;
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
     }
 
-    .fade-in{
-      opacity:0;
-      transform: translateY(10px);
-      animation: fadeUp 700ms ease forwards;
-    }
-    @keyframes fadeUp{
-      to{ opacity:1; transform: translateY(0); }
-    }
-    @media (prefers-reduced-motion: reduce){
-      .fade-in{ animation:none; opacity:1; transform:none; }
-      .animated-link,.animated-wobble,.animated-wiggle{ animation:none !important; }
+    .font-selector {
+      background: white;
+      color: black;
+      border: 1px solid #ddd;
+      padding: 8px;
+      border-radius: 5px;
+      margin-left: 10px;
     }
 
-    /* Links */
-    .link{
-      background-color:#000;
-      color:#fff;
-      padding: 0.85rem 0.9rem;
-      margin: 0.55rem 0;
-      border-radius: 20px; /* pill-ish default */
-      text-decoration:none;
-      font-weight:600;
-      font-size: 1.12rem;
-
-      display:flex;
-      align-items:center;
-      gap: 10px;
-
-      transition: transform .22s ease, box-shadow .22s ease;
-      box-shadow: 0 10px 22px rgba(0,0,0,0.30);
-      position:relative;
-    }
-    .link:hover{
-      transform: translateY(-3px);
-      box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+    .input-label {
+      margin-right: 10px;
+      white-space: nowrap;
+      color: #fff;
     }
 
-    .favicon-container{
-      width:24px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex:0 0 24px;
-    }
-    .link-icon{
-      height:20px;
-      width:20px;
-      display:inline-block;
-    }
-    .link-title{
-      flex:1;
-      text-align:center;
-    }
-    .lock-icon-container{
-      width:24px;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      flex:0 0 24px;
-      opacity:0.95;
+    .input-wrapper {
+      background: #fff;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      flex-grow: 0;
     }
 
-    /* Animations */
+    .input-field {
+      border: none;
+      outline: none;
+      padding: 0px;
+      border-radius: 5px 0 0 5px;
+      flex-grow: 0;
+    }
+
+    .submit-btn {
+      background-color: #53ae62;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      padding: 10px 20px;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-btn i { font-size: 1.1rem; }
+
+    .submit-btn:hover { background-color: #439551; }
+
+    .icon-btn i,
+    .icon-btn-delete i { font-size: 1.5em; }
+
+    #youtube-form input[type="text"] {
+      background-color: white;
+      color: black;
+      padding: 8px 12px;
+      border-radius: 5px 5px 0px 0px;
+      border: none;
+      width: calc(100%);
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    #youtube-form button {
+      background-color: #53ae62;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 0px 0px 5px 5px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+      transition: background-color 0.3s;
+      font-weight: bold;
+    }
+
+    #youtube-form button:hover { background-color: #439551; }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 70px;
+      height: 34px;
+      border-radius: 34px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #c9c9c9;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider { background-color: #57bd46; }
+    input:checked + .slider:before { transform: translateX(36px); }
+
+    .upload-btn,
+    .apply-btn {
+      background-color: #53ae62;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      text-align: center;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      font-size: 14px;
+      cursor: pointer;
+      border-radius: 34px;
+      transition: transform 0.3s;
+    }
+
+    .upload-btn span { margin-left: 8px; font-size: 16px; }
+
+    .button-container {
+      display: flex;
+      justify-content: stretch;
+      align-items: stretch;
+      margin-top: 30px;
+      width: 100%;
+    }
+
+    .apply-btn,
+    .save-btn {
+      flex: 1;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      border-radius: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-decoration: none;
+      padding: 15px 32px;
+      border: none;
+      flex-direction: column;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+
+    .save-btn { background-color: white; color: black; }
+
+    .upload-btn:hover,
+    .apply-btn:hover,
+    .save-btn:hover { transform: translateY(-2px); }
+
+    .social-link-input {
+      background-color: white;
+      color: black;
+      border-radius: 5px;
+      border: none;
+      padding: 8px;
+      width: 30%;
+    }
+
+    .icon-btn,
+    .icon-btn-delete {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      color: white;
+      flex-shrink: 0;
+      margin-left: 10px;
+    }
+
+    /* FIX: menus should be hidden by default; JS toggles them on */
+    .menu {
+      display: none;
+      background: #1b1b1b;
+      border-radius: 20px;
+      padding: 20px;
+      width: 400px;
+      color: white;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      box-shadow: 0 18px 40px rgba(0,0,0,.45);
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: space-between;
+      background-color: white;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .social-link-input,
+    #name-input,
+    #profile-pic-link,
+    #background-link {
+      flex-grow: 1;
+      margin: 0 10px;
+      padding: 1px;
+    }
+
+    .input-group .icon-btn,
+    .icon-btn-delete {
+      border: none;
+      padding: 10px 10px 10px 10px;
+      margin: 0;
+      font-size: .8rem;
+    }
+
+    .input-group .icon-btn {
+      background: #53ae62;
+      color: white;
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+
+    .input-group .icon-btn-delete {
+      background: #bc2e2e;
+      color: white;
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+
+    .input-group .icon-btn-delete:hover { background: #9e2b2b; }
+    .input-group .icon-btn:hover { background-color: #439551; }
+
+    .input-group input {
+      padding: 10px 0px 10px 5px;
+      margin: 0;
+      font-size: .8rem;
+      border: none;
+      flex-grow: 1;
+      max-width: 128.5px;
+    }
+
+    .options-menu {
+      display: none;
+      position: fixed;
+      background: #1b1b1b;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      color: white;
+      z-index: 1100;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+
+    .options-menu-title { margin-top: 9px; }
+
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 22px;
+      color: white;
+    }
+
     @keyframes popAnimation {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.11); }
     }
+
     @keyframes wobbleAnimation {
-      0%,100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-6px); }
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      50% { transform: translateX(8px); }
+      75% { transform: translateX(-8px); }
     }
+
     @keyframes wiggleAnimation {
-      0%,100% { transform: rotate(0deg); }
+      0%, 100% { transform: rotate(0deg); }
       25% { transform: rotate(-1deg); }
       50% { transform: rotate(2deg); }
       75% { transform: rotate(-1deg); }
     }
-    .animated-link{ animation: popAnimation 3s infinite; }
-    .animated-wobble{ animation: wobbleAnimation 3s infinite; }
-    .animated-wiggle{ animation: wiggleAnimation 3s infinite; }
 
-    /* Lock overlays */
-    .overlay{
-      position:absolute;
-      inset:0;
-      z-index:5;
-      cursor:pointer;
-      background: rgba(0,0,0,0); /* invisible click shield */
+    .animated-link { animation: popAnimation 3s infinite; }
+    .animated-wobble { animation: wobbleAnimation 3s infinite; }
+    .animated-wiggle { animation: wiggleAnimation 3s infinite; }
+
+    .animation-btn {
+      background-color: #1b1b1b;
+      color: white;
+      padding: 6px 10px;
+      margin: 5px 0;
+      font-size: 0.9rem;
+      border: 1px solid white;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, transform 0.3s, box-shadow 0.3s;
+      box-shadow: none;
     }
 
-    /* Keypad / DOB popups */
-    .modal-overlay{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,0.72);
-      z-index:9999;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding: 18px;
+    .animation-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-    .modal{
-      background:#fff;
-      color:#000;
-      border-radius: 12px;
-      width: min(360px, 92vw);
-      padding: 18px;
-      box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+
+    .btn-on {
+      background-color: white;
+      color: black;
+      border: 1px solid white;
     }
-    .modal h3{
-      margin: 0 0 10px;
-      font-size: 1.1rem;
+
+    .btn-off {
+      background-color: #1b1b1b;
+      color: white;
+      border: 1px solid white;
     }
-    .modal .hint{
-      margin: 0 0 10px;
-      color:#444;
-      font-size: 0.95rem;
+
+    .link-title { flex-grow: 1; text-align: center; }
+    .bx-lock-alt { margin-left: auto; }
+
+    .dob-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
     }
-    .code-display{
-      display:flex;
-      justify-content:space-between;
-      gap: 10px;
-      margin: 12px 0 14px;
-    }
-    .code-slot{
-      flex:1;
-      height: 44px;
-      background:#f2f2f2;
-      border-radius: 8px;
-      font-size: 28px;
-      line-height: 44px;
-      text-align:center;
-    }
-    .keypad{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 10px 0 14px;
-    }
-    .keypad button{
-      background:#e6e6e6;
-      border:none;
-      border-radius: 999px;
-      height: 54px;
-      font-size: 20px;
-      cursor:pointer;
-    }
-    .actions{
-      display:flex;
-      gap: 10px;
-      justify-content:space-between;
-    }
-    .actions button{
-      flex:1;
-      border:none;
+
+    .dob-popup {
+      background: white;
+      padding: 20px;
       border-radius: 10px;
-      padding: 10px 12px;
-      cursor:pointer;
-      color:#fff;
-      background:#6f6f6f;
-      font-weight:600;
+      text-align: center;
+      min-width: 237px;
+      min-height: 160px;
     }
-    .actions button.primary{ background:#53ae62; }
-    .error{
-      color:#c40000;
+
+    .dob-input {
+      margin-bottom: 10px;
       margin-top: 10px;
-      display:none;
-      font-weight:600;
-      font-size: 0.95rem;
-    }
-    input[type="date"]{
-      width: 100%;
-      box-sizing:border-box;
       padding: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-family: inherit;
-      margin: 10px 0 0;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      width: calc(90%);
+      min-width: 90%;
+      font-family: 'Poppins';
+      color: black;
     }
 
-    /* Responsive */
-    @media (max-width: 968px){
-      h1{ font-size: 1.6rem; }
-      .profile-picture{ width: 110px; height:110px; }
-      .link{ font-size: 1rem; }
-      .about-me-card{ padding: 14px; border-radius: 16px; }
-      .about-me-card h2{ font-size: 1.1rem; }
-      .about-me-card p{ font-size: 0.98rem; }
+    .dob-popup button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #6f6f6f;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .dob-instruction { color: #aaa; margin-bottom: 2px; font-size: 0.9em; }
+
+    .dob-actions { display: flex; justify-content: space-evenly; margin-top: 10px; }
+
+    .position-btn-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 218.41px;
+      height: 37px;
+    }
+
+    .position-btn {
+      flex: 1;
+      border: none;
+      background-color: #ffffff;
+      color: rgb(49, 49, 49);
+      font-weight: bold;
+      cursor: pointer;
+      border: 1px solid rgb(234, 234, 234);
+      transition: background-color 0.3s;
+      border-radius: 0;
+      margin: 0;
+      height: 100%;
+    }
+
+    .position-btn:first-child { border-top-left-radius: 5px; border-bottom-left-radius: 5px; }
+    .position-btn:last-child { border-top-right-radius: 5px; border-bottom-right-radius: 5px; }
+
+    .favicon-container, .lock-icon-container {
+      width: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .link-icon { height: 20px; }
+
+    .move-btn-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .move-btn {
+      background-color: transparent;
+      color: rgb(79, 79, 79);
+      cursor: pointer;
+      border: none;
+      font-size: 16px;
+    }
+
+    .move-btn:hover { color: rgb(20, 20, 20); }
+
+    #background-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .container, #social-icons-container, .profile-picture, .link, .about-card {
+      z-index: 2;
+    }
+
+    #background-effects-menu {
+      display: none;
+      background: #1b1b1b;
+      border-radius: 20px;
+      padding: 20px;
+      width: 400px;
+      color: white;
+      position: absolute;
+      top: 490px;
+      right: 20px;
+      z-index: 1000;
+      box-shadow: 0 18px 40px rgba(0,0,0,.55);
+    }
+
+    #grain-overlay { mix-blend-mode: overlay; }
+
+    .profile-shape-menu { display: flex; justify-content: center; }
+
+    .shape-option {
+      background-color: #53ae62;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 4px;
+      margin: 10px 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .shape-option:hover { background-color: #439551; }
+
+    /* Responsive / mobile-friendly */
+    @media (max-width: 968px) {
+      .container { width: 92%; }
+      h1 { font-size: 1.55rem; }
+      .profile-picture { width: 110px; height: 110px; max-width: 110px; }
+      .link { font-size: 1rem; }
+      .about-card p { font-size: 0.95rem; }
+      .menu, #background-effects-menu { width: calc(100% - 28px); right: 14px; left: 14px; }
     }
   </style>
 </head>
 
-<body
-  style="background-image:url('https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png');"
->
+<body style="background-image: url('https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png?ex=691e8ed6&is=691d3d56&hm=3ef76f976e480c1b5e901464b9b0e0a9a64c8d540b0887b041b7141cf9b85c1b&');">
 
-  <!-- Background overlays -->
-  <div id="background-overlay" aria-hidden="true"></div>
-  <div id="grain-overlay" aria-hidden="true"></div>
-
-  <main class="container" aria-label="Link in bio page">
+  <div class="container">
     <div class="profile-picture">
-      <img
-        src="https://cdn.discordapp.com/attachments/1260649586364518440/1440548501565079573/Messenger_creation_2863993610432510.jpg"
-        alt="Profile picture"
-      />
+      <img src="https://cdn.discordapp.com/attachments/1260649586364518440/1440548501565079573/Messenger_creation_2863993610432510.jpg?ex=691e8ed6&is=691d3d56&hm=02628aeba93a949dddd26d1922a6e5df859c3077ff523d3ba5afeadc2f2ddc90&" alt="Profile Picture">
     </div>
 
-    <h1 id="display-name">HoundOfHades</h1>
+    <h1 style="font-family: Satisfy; color: rgb(0, 0, 0);">HoundOfHades</h1>
 
-    <div class="social-icons-container" id="social-icons-container" aria-label="Social links">
-      <a href="https://www.instagram.com/hound.0f.hades?igsh=MXFqdXZqb3JxeXl3dQ==" class="social-icon-link" aria-label="Instagram">
-        <i class="bx bxl-instagram"></i>
-      </a>
-      <a href="https://www.tiktok.com/@hound..of..hades?_t=ZP-8wb22Zh1O86&_r=1" class="social-icon-link" aria-label="TikTok">
-        <i class="bx bxl-tiktok"></i>
-      </a>
-      <a href="https://x.com/Hound_0f_Hades?s=09" class="social-icon-link" aria-label="X (Twitter)">
-        <i class="fa-brands fa-x-twitter" style="font-size:25px; position:relative; top:-4px;"></i>
-      </a>
+    <div class="social-icons-container" id="social-icons-container" style="text-align: center; margin-top: 10px;">
+      <a href="https://www.instagram.com/hound.0f.hades?igsh=MXFqdXZqb3JxeXl3dQ==" target="_blank" class="social-icon-link" rel="noopener noreferrer"><i class="bx bxl-instagram"></i></a>
+      <a href="https://www.tiktok.com/@hound..of..hades?_t=ZP-8wb22Zh1O86&_r=1" target="_blank" class="social-icon-link" rel="noopener noreferrer"><i class="bx bxl-tiktok"></i></a>
+      <a href="https://x.com/Hound_0f_Hades?s=09" target="_blank" class="social-icon-link" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" style="font-size: 25px; position: relative; top: -4px;"></i></a>
     </div>
 
-    <!-- About Me (placed best: under name + socials, above buttons) -->
-    <section class="about-me-card fade-in" aria-label="About me">
+    <!-- ABOUT ME (added + mobile-friendly) -->
+    <div class="about-card" id="about-card">
       <h2>About Me</h2>
       <p>
-        As a true bibliophile, I find immense joy in the written fantasy world—whether through reading or audiobooks. But my passions extend far beyond the literary realm. I’m an avid crafter, a curious explorer, and a passionate seeker of new culinary adventures.
+        As a true bibliophile, I find so much joy in fantasy worlds—whether I’m reading or listening to audiobooks.
+        My passions stretch far beyond books, though: I’m an avid crafter, a curious explorer, and always excited to chase my next culinary adventure.
+        Travel fuels my spirit (both close to home and internationally), with Ireland, Scotland, and Greece at the top of my dream destination list—especially Greece, thanks to my love of Greek mythology.
         <br><br>
-        The thrill of travel—both domestically and internationally—fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list (Greece especially, thanks to my fascination with Greek mythology).
+        This past year I’ve stepped into the captivating world of cosplay, and creating outfits has been an absolute delight.
+        Cooking (and all kinds of food exploration) is another thrill I never get tired of—and I can’t wait to dive even deeper into these creative pursuits.
         <br><br>
-        This past year, I’ve delved into the captivating world of cosplay, creating outfits that have been an absolute delight. Whether I’m cooking or chasing new flavors, culinary exploration is its own kind of magic.
-        <br><br>
-        Beyond these creative outlets, spending quality time with my loved ones—especially my partner—and friends is what brings me the greatest joy and fulfillment.
+        Beyond all of that, what truly brings me the greatest joy is spending quality time with my loved ones, my partner, and friends.
       </p>
-    </section>
+    </div>
 
-    <!-- LINKS (locked links supported) -->
-    <nav aria-label="Main links">
-      <!-- Fetlife (DOB lock) -->
-      <a class="link" href="https://fetlife.com/Hound0fHades" data-lock-type="dob" id="link-fetlife" style="background-color:#ff0000; color:#ffffff;">
-        <div class="favicon-container">
-          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=fetlife.com" />
-        </div>
-        <span class="link-title">Fetlife</span>
-        <div class="lock-icon-container">
-          <i class="bx bx-lock-alt link-icon" aria-hidden="true"></i>
-        </div>
-        <div class="overlay" aria-label="Locked link. Tap to verify." data-target="link-fetlife"></div>
-      </a>
+    <!-- YouTube Embed Container (Initially hidden) -->
+    <div id="youtube-embed-container" style="display: none; margin-top: 1rem; margin-bottom: 1rem;"></div>
 
-      <!-- CashApp (wiggle) -->
-      <a class="link animated-wiggle" href="https://cash.app/$Hound0fHades" style="background-color:#000; color:#fff;" id="link-cashapp">
-        <div class="favicon-container">
-          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=cash.app" />
-        </div>
-        <span class="link-title">CashApp</span>
-        <div class="lock-icon-container"></div>
-      </a>
+    <!-- LIVE LINKS (what visitors see) -->
+    <a class="link" data-form-id="link-form-12" href="https://fetlife.com/Hound0fHades" data-lock-option="dob" style="background-color: rgb(255, 0, 0); color: white;">
+      <div class="favicon-container"><img src="https://www.google.com/s2/favicons?sz=32&domain=fetlife.com" alt="" class="link-icon" style="visibility: visible;"></div>
+      <span class="link-title">Fetlife</span>
+      <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display: inline-block;"></i></div>
+    </a>
 
-      <!-- Venmo (wiggle) -->
-      <a class="link animated-wiggle" href="https://venmo.com/code?user_id=4332566748333514766&created=1748006970" style="background-color:#000; color:#fff;" id="link-venmo">
-        <div class="favicon-container">
-          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=venmo.com" />
-        </div>
-        <span class="link-title">Venmo</span>
-        <div class="lock-icon-container"></div>
-      </a>
+    <a class="link animated-wiggle" data-form-id="link-form-7" href="https://cash.app/$Hound0fHades" style="border-radius: 20px; background-color: rgb(0, 0, 0); color: white;">
+      <div class="favicon-container"><img src="https://www.google.com/s2/favicons?sz=32&domain=cash.app" alt="" class="link-icon" style="visibility: visible;"></div>
+      <span class="link-title">CashApp</span>
+      <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display: none;"></i></div>
+    </a>
 
-      <!-- Jewelry (wobble) -->
-      <a class="link animated-wobble" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q?ref_=wl_share" style="background-color:#000; color:#fff;" id="link-jewelry">
-        <div class="favicon-container">
-          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=amazon.com" />
-        </div>
-        <span class="link-title">Jewelry</span>
-        <div class="lock-icon-container"></div>
-      </a>
+    <a class="link animated-wiggle" data-form-id="link-form-8" href="https://venmo.com/code?user_id=4332566748333514766&created=1748006970" style="border-radius: 20px; background-color: rgb(0, 0, 0); color: white;">
+      <div class="favicon-container"><img src="https://www.google.com/s2/favicons?sz=32&domain=venmo.com" alt="" class="link-icon" style="visibility: visible;"></div>
+      <span class="link-title">Venmo</span>
+      <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display: none;"></i></div>
+    </a>
 
-      <!-- Desires (wobble) -->
-      <a class="link animated-wobble" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY?ref_=wl_share" style="background-color:#000; color:#fff;" id="link-desires">
-        <div class="favicon-container">
-          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=amazon.com" />
-        </div>
-        <span class="link-title">Desires</span>
-        <div class="lock-icon-container"></div>
-      </a>
+    <a class="link animated-wobble" data-form-id="link-form-9" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q?ref_=wl_share" style="border-radius: 20px; background-color: rgb(0, 0, 0); color: white;">
+      <div class="favicon-container"><img src="https://www.google.com/s2/favicons?sz=32&domain=www.amazon.com" alt="" class="link-icon" style="visibility: visible;"></div>
+      <span class="link-title">Jewelry</span>
+      <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display: none;"></i></div>
+    </a>
 
-      <!-- SnapChat (CODE lock) -->
-      <a class="link animated-wiggle" href="https://www.snapchat.com/add/hound0fhades?share_id=aeHhRGklm6Q&locale=en-US"
-         data-lock-type="code" data-lock-code="1395" id="link-snap" style="background-color:#000; color:#fff;">
-        <div class="favicon-container">
-          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=snapchat.com" />
+    <a class="link animated-wobble" data-form-id="link-form-10" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY?ref_=wl_share" style="border-radius: 20px; background-color: rgb(0, 0, 0); color: white;">
+      <div class="favicon-container"><img src="https://www.google.com/s2/favicons?sz=32&domain=www.amazon.com" alt="" class="link-icon" style="visibility: visible;"></div>
+      <span class="link-title">Desires</span>
+      <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display: none;"></i></div>
+    </a>
+
+    <a class="link" data-form-id="link-form-11" href="https://www.snapchat.com/add/hound0fhades?share_id=aeHhRGklm6Q&locale=en-US" data-lock-option="code" style="border-radius: 20px; background-color: rgb(0, 0, 0); color: white;" data-lock-code="1395">
+      <div class="favicon-container"><img src="https://www.google.com/s2/favicons?sz=32&domain=www.snapchat.com" alt="" class="link-icon" style="visibility: visible;"></div>
+      <span class="link-title">SnapChat</span>
+      <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display: inline-block;"></i></div>
+    </a>
+  </div>
+
+  <!-- Background overlays -->
+  <div id="background-overlay" style="backdrop-filter: blur(0px);"></div>
+  <div id="grain-overlay" style="display:block; position:absolute; top:0; left:0; width:100%; height:100%; background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/2k_Dissolve_Noise_Texture.png/1024px-2k_Dissolve_Noise_Texture.png'); background-size:cover; opacity:0;"></div>
+
+  <!-- Configuration Keypad Overlay -->
+  <div id="config-keypad-overlay" style="display:none;" data-form-id="">
+    <div class="keypad-popup" style="background:white; padding:20px; border-radius:10px; min-width:185px;">
+      <div class="code-display" style="display:flex; justify-content:space-between; margin-bottom:20px;">
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+      </div>
+      <div class="keypad" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px;">
+        <button onclick="enterConfigCodeDigit('1')">1</button>
+        <button onclick="enterConfigCodeDigit('2')">2</button>
+        <button onclick="enterConfigCodeDigit('3')">3</button>
+        <button onclick="enterConfigCodeDigit('4')">4</button>
+        <button onclick="enterConfigCodeDigit('5')">5</button>
+        <button onclick="enterConfigCodeDigit('6')">6</button>
+        <button onclick="enterConfigCodeDigit('7')">7</button>
+        <button onclick="enterConfigCodeDigit('8')">8</button>
+        <button onclick="enterConfigCodeDigit('9')">9</button>
+        <div></div>
+        <button onclick="enterConfigCodeDigit('0')">0</button>
+        <div></div>
+      </div>
+      <div class="keypad-actions" style="display:flex; justify-content:space-between;">
+        <button onclick="acceptConfigCode()" style="background:#6f6f6f;color:white;border:none;border-radius:5px;padding:10px 20px;cursor:pointer;margin:2px;">Set Code</button>
+        <button onclick="cancelConfigCode()" style="background:#6f6f6f;color:white;border:none;border-radius:5px;padding:10px 20px;cursor:pointer;margin:2px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- User Keypad Overlay -->
+  <div id="keypad-overlay" style="display:none;">
+    <div class="keypad-popup" style="background:white; padding:20px; border-radius:10px; min-width:185px;">
+      <div class="code-display" style="display:flex; justify-content:space-between; margin-bottom:20px;">
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+        <div class="code-slot" style="width:40px;height:40px;background:#f0f0f0;border-radius:5px;color:#000;font-size:30px;line-height:40px;text-align:center;"></div>
+      </div>
+      <div class="keypad" style="display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:20px;">
+        <button onclick="enterCodeDigit('1')">1</button>
+        <button onclick="enterCodeDigit('2')">2</button>
+        <button onclick="enterCodeDigit('3')">3</button>
+        <button onclick="enterCodeDigit('4')">4</button>
+        <button onclick="enterCodeDigit('5')">5</button>
+        <button onclick="enterCodeDigit('6')">6</button>
+        <button onclick="enterCodeDigit('7')">7</button>
+        <button onclick="enterCodeDigit('8')">8</button>
+        <button onclick="enterCodeDigit('9')">9</button>
+        <div></div>
+        <button onclick="enterCodeDigit('0')">0</button>
+        <div></div>
+      </div>
+      <div class="keypad-actions" style="display:flex; justify-content:space-between;">
+        <button onclick="acceptCode()" style="background:#6f6f6f;color:white;border:none;border-radius:5px;padding:10px 20px;cursor:pointer;margin:2px;">Accept</button>
+        <button onclick="cancelCode()" style="background:#6f6f6f;color:white;border:none;border-radius:5px;padding:10px 20px;cursor:pointer;margin:2px;">Cancel</button>
+      </div>
+      <p id="keypad-error" style="color:red; display:none; margin-top:10px;">Incorrect pin</p>
+    </div>
+  </div>
+
+  <!-- Editor Menu (hidden unless you display it manually) -->
+  <div class="menu" id="main-menu" style="display:none;">
+    <!-- Name -->
+    <div class="menu-item">
+      <label for="name-input" class="input-label">Name</label>
+      <input type="color" id="name-color-picker" class="input-field" style="visibility:hidden;width:0;height:0;position:absolute;">
+      <button class="icon-btn color-picker-trigger" id="color-picker-trigger" style="margin-left: 80px;">
+        <i class="bx bxs-palette" style="color: rgb(0, 0, 0);"></i>
+      </button>
+      <div class="input-wrapper">
+        <input type="text" id="name-input" placeholder="Your Name" class="input-field" value="Hound Of Hades">
+        <button class="submit-btn" id="submit-name"><i class="bx bx-check"></i></button>
+      </div>
+    </div>
+
+    <!-- Profile Picture -->
+    <div class="menu-item">
+      <label for="profile-pic-link" class="input-label">Profile Picture</label>
+      <button class="icon-btn" id="profile-shape-trigger" style="margin-left: 20px;">
+        <i class="bx bxs-palette"></i>
+      </button>
+      <div class="input-wrapper">
+        <input type="text" id="profile-pic-link" placeholder="Enter image URL" class="input-field"
+          value="https://cdn.discordapp.com/attachments/1260649586364518440/1440548501565079573/Messenger_creation_2863993610432510.jpg?ex=691e8ed6&is=691d3d56&hm=02628aeba93a949dddd26d1922a6e5df859c3077ff523d3ba5afeadc2f2ddc90&">
+        <button class="submit-btn" id="submit-profile-pic"><i class="bx bx-check"></i></button>
+      </div>
+    </div>
+
+    <!-- Background -->
+    <div class="menu-item">
+      <label for="background-link" class="input-label">Background</label>
+      <button class="icon-btn" id="background-effects-trigger" style="margin-left: 25px;">
+        <i class="bx bxs-palette"></i>
+      </button>
+      <div class="input-wrapper">
+        <input type="text" id="background-link" placeholder="Enter image URL" class="input-field"
+          value="https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png?ex=691e8ed6&is=691d3d56&hm=3ef76f976e480c1b5e901464b9b0e0a9a64c8d540b0887b041b7141cf9b85c1b&">
+        <button class="submit-btn" id="submit-background"><i class="bx bx-check"></i></button>
+      </div>
+    </div>
+
+    <!-- Font -->
+    <div class="menu-item">
+      <label for="font-selector" class="input-label">Choose Font</label>
+      <select id="font-selector" class="font-selector">
+        <option value="Poppins" style="font-family: 'Poppins', sans-serif;">Poppins</option>
+        <option value="Roboto" style="font-family: 'Roboto', sans-serif;">Roboto</option>
+        <option value="Montserrat" style="font-family: 'Montserrat', sans-serif;">Montserrat</option>
+        <option value="Open Sans" style="font-family: 'Open Sans', sans-serif;">Open Sans</option>
+        <option value="Lato" style="font-family: 'Lato', sans-serif;">Lato</option>
+        <option value="Oswald" style="font-family: 'Oswald', sans-serif;">Oswald</option>
+        <option value="Raleway" style="font-family: 'Raleway', sans-serif;">Raleway</option>
+        <option value="Roboto Slab" style="font-family: 'Roboto Slab', serif;">Roboto Slab</option>
+        <option value="Bebas Neue" style="font-family: 'Bebas Neue', cursive;">Bebas Neue</option>
+        <option value="Jost" style="font-family: 'Jost', sans-serif;">Jost</option>
+        <option value="Outfit" style="font-family: 'Outfit', sans-serif;">Outfit</option>
+        <option value="Pacifico" style="font-family: 'Pacifico', cursive;">Pacifico</option>
+        <option value="Comfortaa" style="font-family: 'Comfortaa', cursive;">Comfortaa</option>
+        <option value="Lobster" style="font-family: 'Lobster', cursive;">Lobster</option>
+        <option value="Caveat" style="font-family: 'Caveat', cursive;">Caveat</option>
+        <option value="Figtree" style="font-family: 'Figtree', sans-serif;">Figtree</option>
+        <option value="Satisfy" style="font-family: 'Satisfy', cursive;">Satisfy</option>
+        <option value="Archivo Black" style="font-family: 'Archivo Black', sans-serif;">Archivo Black</option>
+        <option value="Urbanist" style="font-family: 'Urbanist', sans-serif;">Urbanist</option>
+        <option value="Luckiest Guy" style="font-family: 'Luckiest Guy', cursive;">Luckiest Guy</option>
+      </select>
+    </div>
+
+    <!-- Main Links Toggle -->
+    <div class="menu-item">
+      <label for="main-links">Main Links</label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="main-links-toggle" checked="checked">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- Main Links Submenu (ONLY ONE INSTANCE — fixed duplicate ID issue) -->
+    <div class="menu main-links-menu" id="main-links-menu" style="display:none; top:490px;">
+      <div id="link-form-container">
+        <!-- Existing forms -->
+        <div class="input-group" id="link-form-12">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('link-form-12')"><i class="bx bx-chevron-up"></i></button>
+            <button class="move-btn" onclick="moveFormDown('link-form-12')"><i class="bx bx-chevron-down"></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input" value="Fetlife">
+          <input type="text" placeholder="URL" class="link-url-input" value="https://fetlife.com/Hound0fHades">
+          <button class="icon-btn" onclick="confirmLink('link-form-12')"><i class="bx bx-check" style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('link-form-12')"><i class="bx bx-cog" style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('link-form-12')"><i class="bx bx-x" style="color:white;"></i></button>
         </div>
-        <span class="link-title">SnapChat</span>
-        <div class="lock-icon-container">
-          <i class="bx bx-lock-alt link-icon" aria-hidden="true"></i>
+
+        <div class="input-group" id="link-form-7">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('link-form-7')"><i class="bx bx-chevron-up"></i></button>
+            <button class="move-btn" onclick="moveFormDown('link-form-7')"><i class="bx bx-chevron-down"></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input" value="CashApp">
+          <input type="text" placeholder="URL" class="link-url-input" value="https://cash.app/$Hound0fHades">
+          <button class="icon-btn" onclick="confirmLink('link-form-7')"><i class="bx bx-check" style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('link-form-7')"><i class="bx bx-cog" style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('link-form-7')"><i class="bx bx-x" style="color:white;"></i></button>
         </div>
-        <div class="overlay" aria-label="Locked link. Tap to enter code." data-target="link-snap"></div>
-      </a>
-    </nav>
-  </main>
+
+        <div class="input-group" id="link-form-8">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('link-form-8')"><i class="bx bx-chevron-up"></i></button>
+            <button class="move-btn" onclick="moveFormDown('link-form-8')"><i class="bx bx-chevron-down"></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input" value="Venmo">
+          <input type="text" placeholder="URL" class="link-url-input" value="https://venmo.com/code?user_id=4332566748333514766&created=1748006970">
+          <button class="icon-btn" onclick="confirmLink('link-form-8')"><i class="bx bx-check" style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('link-form-8')"><i class="bx bx-cog" style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('link-form-8')"><i class="bx bx-x" style="color:white;"></i></button>
+        </div>
+
+        <div class="input-group" id="link-form-9">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('link-form-9')"><i class="bx bx-chevron-up"></i></button>
+            <button class="move-btn" onclick="moveFormDown('link-form-9')"><i class="bx bx-chevron-down"></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input" value="Jewelry">
+          <input type="text" placeholder="URL" class="link-url-input" value="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q?ref_=wl_share">
+          <button class="icon-btn" onclick="confirmLink('link-form-9')"><i class="bx bx-check" style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('link-form-9')"><i class="bx bx-cog" style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('link-form-9')"><i class="bx bx-x" style="color:white;"></i></button>
+        </div>
+
+        <div class="input-group" id="link-form-10">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('link-form-10')"><i class="bx bx-chevron-up"></i></button>
+            <button class="move-btn" onclick="moveFormDown('link-form-10')"><i class="bx bx-chevron-down"></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input" value="Desires">
+          <input type="text" placeholder="URL" class="link-url-input" value="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY?ref_=wl_share">
+          <button class="icon-btn" onclick="confirmLink('link-form-10')"><i class="bx bx-check" style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('link-form-10')"><i class="bx bx-cog" style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('link-form-10')"><i class="bx bx-x" style="color:white;"></i></button>
+        </div>
+
+        <div class="input-group" id="link-form-11">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('link-form-11')"><i class="bx bx-chevron-up"></i></button>
+            <button class="move-btn" onclick="moveFormDown('link-form-11')"><i class="bx bx-chevron-down"></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input" value="SnapChat">
+          <input type="text" placeholder="URL" class="link-url-input" value="https://www.snapchat.com/add/hound0fhades?share_id=aeHhRGklm6Q&locale=en-US">
+          <button class="icon-btn" onclick="confirmLink('link-form-11')"><i class="bx bx-check" style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('link-form-11')"><i class="bx bx-cog" style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('link-form-11')"><i class="bx bx-x" style="color:white;"></i></button>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:10px;">
+        <button class="icon-btn" id="add-link-btn"><i class="bx bx-plus" style="color: green; font-size: 24px;"></i></button>
+      </div>
+    </div>
+
+    <!-- YouTube Toggle -->
+    <div class="menu-item">
+      <label for="youtube">YouTube Embed</label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="youtube-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div id="youtube-form" style="display:none;">
+      <input type="text" id="youtube-link" placeholder="Enter YouTube Video Link" value="">
+      <button id="youtube-submit">Submit</button>
+    </div>
+
+    <!-- Social Icons Toggle -->
+    <div class="menu-item">
+      <label for="social-icons">Social Icons</label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="social-icons-toggle">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="button-container">
+      <button class="save-btn" id="save-progress-btn">Save Progress</button>
+      <button class="apply-btn" id="download-btn">Download</button>
+    </div>
+  </div>
+
+  <!-- Background Effects Menu -->
+  <div class="background-effects-menu" id="background-effects-menu">
+    <span class="close-btn" onclick="toggleBackgroundEffectsMenu(false)"><i class="bx bx-x"></i></span>
+    <div class="menu-item" style="margin-top: 20px;">
+      <label for="background-darken-slider" class="input-label">Darken</label>
+      <input type="range" id="background-darken-slider" class="background-darken-slider" min="0" max="10" value="0">
+    </div>
+    <div class="menu-item">
+      <label for="background-blur-slider" class="input-label">Blur</label>
+      <input type="range" id="background-blur-slider" class="background-blur-slider" min="0" max="10" value="0">
+    </div>
+    <div class="menu-item">
+      <label for="background-grain-slider" class="input-label">Grain</label>
+      <input type="range" id="background-grain-slider" class="background-grain-slider" min="0" max="10" value="0">
+    </div>
+  </div>
+
+  <!-- Profile Shape Menu -->
+  <div class="menu profile-shape-menu" id="profile-shape-menu" style="display:none; top:490px;">
+    <div class="shape-option" data-shape="circle">Circle</div>
+    <div class="shape-option" data-shape="square">Square</div>
+    <div class="shape-option" data-shape="none">None</div>
+  </div>
+
+  <!-- Social Icons Menu -->
+  <div class="menu social-icons-menu" id="social-icons-menu" style="display:none; top:490px;">
+    <div class="menu-item" id="social-form-youtube">
+      <label>YouTube</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-youtube" style="max-width:none;" value="">
+        <button class="icon-btn" onclick="submitSocialLink('youtube')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('youtube')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item" id="social-form-instagram">
+      <label>Instagram</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-instagram" style="max-width:none;" value="https://www.instagram.com/hound.0f.hades?igsh=MXFqdXZqb3JxeXl3dQ==">
+        <button class="icon-btn" onclick="submitSocialLink('instagram')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('instagram')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item" id="social-form-facebook">
+      <label>Facebook</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-facebook" style="max-width:none;" value="">
+        <button class="icon-btn" onclick="submitSocialLink('facebook')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('facebook')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item" id="social-form-linkedin">
+      <label>LinkedIn</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-linkedin" style="max-width:none;" value="">
+        <button class="icon-btn" onclick="submitSocialLink('linkedin')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('linkedin')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item" id="social-form-discord">
+      <label>Discord</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-discord-alt" style="max-width:none;" value="">
+        <button class="icon-btn" onclick="submitSocialLink('discord-alt')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('discord-alt')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item" id="social-form-tiktok">
+      <label>TikTok</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-tiktok" style="max-width:none;" value="https://www.tiktok.com/@hound..of..hades?_t=ZP-8wb22Zh1O86&_r=1">
+        <button class="icon-btn" onclick="submitSocialLink('tiktok')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('tiktok')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item" id="social-form-x">
+      <label>X</label>
+      <div class="input-group">
+        <input type="text" placeholder="Insert Link" class="social-link-input" id="input-x" style="max-width:none;" value="https://x.com/Hound_0f_Hades?s=09">
+        <button class="icon-btn" onclick="submitSocialLink('x')"><i class="bx bx-check" style="color:white;"></i></button>
+        <button class="icon-btn-delete" onclick="removeSocialLink('x')"><i class="bx bx-x" style="color:white;"></i></button>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <label for="social-position">Position</label>
+      <div class="position-btn-container">
+        <button class="position-btn animation-btn" id="position-top">Top</button>
+        <button class="position-btn animation-btn" id="position-bottom">Bottom</button>
+      </div>
+    </div>
+  </div>
 
   <script>
-    // ========= Background effect defaults (you can tweak) =========
-    // You can raise/lower these defaults:
-    // darken: 0.0 to 1.0, blur px, grain opacity 0.0 to 1.0
-    (function initBackgroundFX(){
-      const overlay = document.getElementById('background-overlay');
-      const grain = document.getElementById('grain-overlay');
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.40)'; // darken
-      overlay.style.backdropFilter = 'blur(0px)';          // blur
-      grain.style.opacity = '0.00';                        // grain
-    })();
+    // ====== BASIC UI ======
+    document.getElementById('submit-name').addEventListener('click', function () {
+      const nameValue = document.getElementById('name-input').value;
+      document.querySelector('h1').textContent = nameValue;
+    });
 
-    // ========= Lock logic =========
-    let entered = "";
+    document.getElementById('color-picker-trigger').addEventListener('click', function () {
+      document.getElementById('name-color-picker').click();
+    });
 
-    function openModal(contentHtml) {
-      const wrap = document.createElement('div');
-      wrap.className = 'modal-overlay';
-      wrap.innerHTML = contentHtml;
-      document.body.appendChild(wrap);
-      return wrap;
+    document.getElementById('name-color-picker').addEventListener('change', function () {
+      const color = this.value;
+      document.querySelector('h1').style.color = color;
+      document.getElementById('color-picker-trigger').querySelector('i').style.color = color;
+    });
+
+    document.getElementById('submit-profile-pic').addEventListener('click', function () {
+      const imageUrl = document.getElementById('profile-pic-link').value;
+      if (imageUrl) document.querySelector('.profile-picture img').src = imageUrl;
+    });
+
+    document.getElementById('submit-background').addEventListener('click', function () {
+      const backgroundUrl = document.getElementById('background-link').value;
+      if (backgroundUrl) {
+        document.body.style.backgroundImage = 'url(' + backgroundUrl + ')';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundRepeat = 'no-repeat';
+      }
+    });
+
+    // ====== SUBMENU TOGGLING ======
+    function toggleSubMenu(subMenuId, isOpen) {
+      const subMenu = document.getElementById(subMenuId);
+      if (subMenu) subMenu.style.display = isOpen ? 'block' : 'none';
+      toggleOtherSubMenu(subMenuId);
     }
 
-    function closeModal(modalEl){
-      if(modalEl && modalEl.parentNode) modalEl.parentNode.removeChild(modalEl);
+    function closeAllOptionsMenus() {
+      document.querySelectorAll('.options-menu').forEach(menu => menu.style.display = 'none');
     }
 
-    function unlockLinkById(linkId){
-      const link = document.getElementById(linkId);
-      if(!link) return;
+    function toggleOtherSubMenu(currentSubMenuId) {
+      const subMenus = {
+        'main-links-menu': 'main-links-toggle',
+        'social-icons-menu': 'social-icons-toggle',
+        'youtube-form': 'youtube-toggle',
+        'background-effects-menu': 'background-effects-trigger',
+        'profile-shape-menu': 'profile-shape-trigger',
+      };
 
-      // remove overlay
-      const ov = link.querySelector('.overlay');
-      if(ov) ov.remove();
-
-      // hide lock icon
-      const lockIcon = link.querySelector('.bx-lock-alt');
-      if(lockIcon) lockIcon.style.display = 'none';
-    }
-
-    function showCodePrompt(linkId){
-      entered = "";
-      const modal = openModal(`
-        <div class="modal" role="dialog" aria-modal="true" aria-label="Enter code">
-          <h3>Enter 4-digit code</h3>
-          <p class="hint">This link is locked.</p>
-
-          <div class="code-display" aria-label="Code display">
-            <div class="code-slot" data-slot="0"></div>
-            <div class="code-slot" data-slot="1"></div>
-            <div class="code-slot" data-slot="2"></div>
-            <div class="code-slot" data-slot="3"></div>
-          </div>
-
-          <div class="keypad" aria-label="Keypad">
-            ${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-digit="${n}">${n}</button>`).join("")}
-            <div></div>
-            <button type="button" data-digit="0">0</button>
-            <div></div>
-          </div>
-
-          <div class="actions">
-            <button type="button" class="primary" id="btn-accept">Accept</button>
-            <button type="button" id="btn-cancel">Cancel</button>
-          </div>
-          <div class="error" id="code-error">Incorrect pin</div>
-        </div>
-      `);
-
-      function updateSlots(){
-        modal.querySelectorAll('.code-slot').forEach((slot, i)=>{
-          slot.textContent = entered[i] ? "•" : "";
-        });
+      for (const [menuId, toggleId] of Object.entries(subMenus)) {
+        if (menuId !== currentSubMenuId) {
+          const toggle = document.getElementById(toggleId);
+          const menu = document.getElementById(menuId);
+          if (toggle && toggle.type === 'checkbox') toggle.checked = false;
+          if (menu) menu.style.display = 'none';
+        }
       }
 
-      modal.addEventListener('click', (e)=>{
-        const btn = e.target.closest('button');
-        if(!btn) return;
-
-        if(btn.dataset.digit !== undefined){
-          if(entered.length < 4){
-            entered += btn.dataset.digit;
-            updateSlots();
-          }
-        }
-        if(btn.id === 'btn-cancel'){
-          closeModal(modal);
-        }
-        if(btn.id === 'btn-accept'){
-          const link = document.getElementById(linkId);
-          const correct = link?.dataset.lockCode || "";
-          if(entered === correct){
-            closeModal(modal);
-            unlockLinkById(linkId);
-          } else {
-            modal.querySelector('#code-error').style.display = 'block';
-            entered = "";
-            updateSlots();
-          }
-        }
-      });
-
-      document.addEventListener('keydown', function handler(ev){
-        if(!document.body.contains(modal)){
-          document.removeEventListener('keydown', handler);
-          return;
-        }
-        if(ev.key >= '0' && ev.key <= '9'){
-          if(entered.length < 4){
-            entered += ev.key;
-            updateSlots();
-          }
-        } else if(ev.key === 'Enter'){
-          modal.querySelector('#btn-accept').click();
-        } else if(ev.key === 'Escape'){
-          closeModal(modal);
-        }
-      }, { once:false });
-    }
-
-    function showDobPrompt(linkId){
-      const modal = openModal(`
-        <div class="modal" role="dialog" aria-modal="true" aria-label="Age verification">
-          <h3>Age Verification</h3>
-          <p class="hint">Enter your date of birth to continue.</p>
-          <input type="date" id="dob-input" />
-          <div class="actions" style="margin-top:14px;">
-            <button type="button" class="primary" id="btn-submit">Submit</button>
-            <button type="button" id="btn-cancel">Cancel</button>
-          </div>
-          <div class="error" id="dob-error">You must be 18 years or older</div>
-        </div>
-      `);
-
-      function calculateAge(d){
-        const today = new Date();
-        let age = today.getFullYear() - d.getFullYear();
-        const m = today.getMonth() - d.getMonth();
-        if(m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
-        return age;
+      if (currentSubMenuId === 'main-links-menu' && !document.getElementById('main-links-toggle').checked) {
+        closeAllOptionsMenus();
       }
+    }
 
-      modal.addEventListener('click', (e)=>{
-        const btn = e.target.closest('button');
-        if(!btn) return;
+    document.getElementById('main-links-toggle').addEventListener('change', function () {
+      toggleSubMenu('main-links-menu', this.checked);
+      if (!this.checked) closeAllOptionsMenus();
+      adjustSocialMenuPosition();
+    });
 
-        if(btn.id === 'btn-cancel'){
-          closeModal(modal);
-        }
-        if(btn.id === 'btn-submit'){
-          const val = modal.querySelector('#dob-input').value;
-          if(!val){
-            modal.querySelector('#dob-error').style.display = 'block';
-            return;
-          }
-          const dob = new Date(val);
-          if(calculateAge(dob) >= 18){
-            closeModal(modal);
-            unlockLinkById(linkId);
+    document.getElementById('social-icons-toggle').addEventListener('change', function () {
+      toggleSubMenu('social-icons-menu', this.checked);
+      if (this.checked) closeAllOptionsMenus();
+    });
+
+    document.getElementById('youtube-toggle').addEventListener('change', function () {
+      toggleSubMenu('youtube-form', this.checked);
+      const youtubeEmbedContainer = document.getElementById('youtube-embed-container');
+      youtubeEmbedContainer.style.display = this.checked ? 'block' : 'none';
+      youtubeEmbedContainer.innerHTML = '';
+      if (this.checked) closeAllOptionsMenus();
+    });
+
+    function adjustSocialMenuPosition() {
+      const mainLinksMenu = document.getElementById('main-links-menu');
+      const socialIconsMenu = document.getElementById('social-icons-menu');
+      if (mainLinksMenu && socialIconsMenu) {
+        socialIconsMenu.style.top = '490px';
+      }
+    }
+
+    // ====== LOCKS ======
+    let enteredConfigCode = '';
+    let enteredCode = '';
+
+    function applyLockOption(formId, option) {
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (!link) return;
+
+      link.dataset.lockOption = option;
+
+      if (option === 'code') {
+        if (link.dataset.lockCode) {
+          const newCode = prompt('A code is already set for this link. Enter a new code (4 digits):', link.dataset.lockCode);
+          if (newCode && newCode.length === 4) {
+            link.dataset.lockCode = newCode;
+            alert('Code updated successfully!');
+            highlightLockOptionButton(formId, 'code');
           } else {
-            modal.querySelector('#dob-error').style.display = 'block';
+            alert('Invalid code. The code must be 4 digits.');
           }
+        } else {
+          showConfigKeypad(formId);
+        }
+      } else if (option === 'dob') {
+        addLockIcon(link);
+        createOverlay(formId, 'dob');
+        highlightLockOptionButton(formId, 'dob');
+      } else {
+        delete link.dataset.lockCode;
+        removeLockIcon(link);
+        const overlay = document.querySelector(`.overlay[data-form-id="${formId}"]`);
+        if (overlay) overlay.remove();
+        highlightLockOptionButton(formId, 'none');
+      }
+    }
+
+    function highlightLockOptionButton(formId, option) {
+      const optionsMenu = document.getElementById(`options-menu-${formId}`);
+      if (!optionsMenu) return;
+      const lockOptionButtons = optionsMenu.querySelectorAll('.lock-option-btn');
+      lockOptionButtons.forEach(button => {
+        if (button.textContent.toLowerCase() === option) {
+          button.classList.add('btn-on'); button.classList.remove('btn-off');
+        } else {
+          button.classList.remove('btn-on'); button.classList.add('btn-off');
         }
       });
-
-      document.addEventListener('keydown', function handler(ev){
-        if(!document.body.contains(modal)){
-          document.removeEventListener('keydown', handler);
-          return;
-        }
-        if(ev.key === 'Escape') closeModal(modal);
-        if(ev.key === 'Enter') modal.querySelector('#btn-submit').click();
-      }, { once:false });
     }
+
+    function setDefaultLockOption(formId = null) {
+      const links = formId ? [document.querySelector(`.link[data-form-id="${formId}"]`)] : document.querySelectorAll('.link');
+      links.forEach(link => {
+        if (!link) return;
+        const linkFormId = link.getAttribute('data-form-id');
+        highlightLockOptionButton(linkFormId, 'none');
+      });
+    }
+
+    function showConfigKeypad(formId) {
+      const overlay = document.getElementById('config-keypad-overlay');
+      overlay.style.display = 'flex';
+      overlay.dataset.formId = formId;
+    }
+
+    function enterConfigCodeDigit(digit) {
+      if (enteredConfigCode.length < 4) {
+        enteredConfigCode += digit;
+        updateConfigCodeDisplay();
+      }
+    }
+
+    function updateConfigCodeDisplay() {
+      const codeSlots = document.querySelectorAll('#config-keypad-overlay .code-slot');
+      codeSlots.forEach((slot, index) => {
+        slot.textContent = enteredConfigCode[index] ? '•' : '';
+      });
+    }
+
+    function acceptConfigCode() {
+      if (enteredConfigCode.length === 4) {
+        const formId = document.getElementById('config-keypad-overlay').dataset.formId;
+        const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+        if (link) {
+          link.dataset.lockCode = enteredConfigCode;
+          createOverlay(formId, 'code');
+          addLockIcon(link);
+          highlightLockOptionButton(formId, 'code');
+        }
+        alert('Code set successfully!');
+        hideConfigKeypad();
+      } else {
+        alert('Please enter a 4-digit code.');
+      }
+    }
+
+    function cancelConfigCode() { hideConfigKeypad(); }
+
+    function hideConfigKeypad() {
+      document.getElementById('config-keypad-overlay').style.display = 'none';
+      enteredConfigCode = '';
+      updateConfigCodeDisplay();
+    }
+
+    function showKeypad(formId) {
+      const overlay = document.getElementById('keypad-overlay');
+      overlay.style.display = 'flex';
+      overlay.dataset.formId = formId;
+      enteredCode = '';
+      updateCodeDisplay();
+      document.getElementById('keypad-error').style.display = 'none';
+    }
+
+    function hideKeypad() {
+      document.getElementById('keypad-overlay').style.display = 'none';
+      enteredCode = '';
+      updateCodeDisplay();
+      document.getElementById('keypad-error').style.display = 'none';
+    }
+
+    function enterCodeDigit(digit) {
+      if (enteredCode.length < 4) {
+        enteredCode += digit;
+        updateCodeDisplay();
+      }
+    }
+
+    function updateCodeDisplay() {
+      const codeSlots = document.querySelectorAll('#keypad-overlay .code-slot');
+      codeSlots.forEach((slot, index) => {
+        slot.textContent = enteredCode[index] ? '•' : '';
+      });
+    }
+
+    function acceptCode() {
+      const formId = document.getElementById('keypad-overlay').dataset.formId;
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      const overlay = document.querySelector(`.overlay[data-form-id="${formId}"]`);
+      const keypadError = document.getElementById('keypad-error');
+
+      if (link && enteredCode === link.dataset.lockCode) {
+        hideKeypad();
+        if (overlay) overlay.remove();
+        removeLockIcon(link);
+        keypadError.style.display = 'none';
+      } else {
+        keypadError.style.display = 'block';
+        enteredCode = '';
+        updateCodeDisplay();
+      }
+    }
+
+    function cancelCode() { hideKeypad(); }
+
+    function addLockIcon(link) {
+      const icon = link.querySelector('.bx-lock-alt');
+      if (icon) icon.style.display = 'inline-block';
+    }
+
+    function removeLockIcon(link) {
+      const icon = link.querySelector('.bx-lock-alt');
+      if (icon) icon.style.display = 'none';
+    }
+
+    function createOverlay(formId, lockType) {
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (!link) return;
+
+      let overlay = document.querySelector(`.overlay[data-form-id="${formId}"]`);
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        overlay.setAttribute('data-form-id', formId);
+        document.body.appendChild(overlay);
+      }
+      overlay.setAttribute('data-lock-type', lockType);
+      overlay.style.position = 'absolute';
+      overlay.style.width = `${link.offsetWidth}px`;
+      overlay.style.height = `${link.offsetHeight}px`;
+      overlay.style.top = `${link.offsetTop}px`;
+      overlay.style.left = `${link.offsetLeft}px`;
+      overlay.style.zIndex = '10';
+      overlay.style.cursor = 'pointer';
+    }
+
+    window.addEventListener('resize', function () {
+      document.querySelectorAll('.overlay').forEach(overlay => {
+        const formId = overlay.getAttribute('data-form-id');
+        const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+        if (!link) return;
+        overlay.style.width = `${link.offsetWidth}px`;
+        overlay.style.height = `${link.offsetHeight}px`;
+        overlay.style.top = `${link.offsetTop}px`;
+        overlay.style.left = `${link.offsetLeft}px`;
+      });
+    });
 
     // Overlay click handler
-    document.addEventListener('click', (e)=>{
-      const ov = e.target.closest('.overlay');
-      if(!ov) return;
+    document.addEventListener('click', function (event) {
+      if (event.target.classList.contains('overlay')) {
+        const formId = event.target.getAttribute('data-form-id');
+        const lockType = event.target.getAttribute('data-lock-type');
+        if (lockType === 'dob') showDobPrompt(formId);
+        if (lockType === 'code') showKeypad(formId);
+      }
+    });
 
-      const linkId = ov.dataset.target;
-      const link = document.getElementById(linkId);
-      if(!link) return;
+    // DOB lock
+    function showDobPrompt(formId) {
+      const dobOverlay = document.createElement('div');
+      dobOverlay.id = `dob-overlay-${formId}`;
+      dobOverlay.className = 'dob-overlay';
+      dobOverlay.innerHTML = `
+        <div class="dob-popup">
+          <p class="dob-instruction">Enter your date of birth:</p>
+          <input type="date" id="dob-input-${formId}" class="dob-input">
+          <div class="dob-actions">
+            <button onclick="checkDob('${formId}')">Submit</button>
+            <button onclick="closeDobPopup('${formId}')">Cancel</button>
+          </div>
+          <p id="dob-error-${formId}" style="color:red; display:none;">You must be 18 years or older</p>
+        </div>`;
+      document.body.appendChild(dobOverlay);
 
-      const lockType = link.dataset.lockType;
-      if(lockType === 'code') showCodePrompt(linkId);
-      if(lockType === 'dob')  showDobPrompt(linkId);
+      const dobInput = document.getElementById(`dob-input-${formId}`);
+      dobInput.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') checkDob(formId);
+      });
+
+      const escHandler = function (event) {
+        if (event.key === 'Escape') {
+          closeDobPopup(formId);
+          document.removeEventListener('keydown', escHandler);
+        }
+      };
+      document.addEventListener('keydown', escHandler);
+    }
+
+    function checkDob(formId) {
+      const dobInput = document.getElementById(`dob-input-${formId}`);
+      const dob = new Date(dobInput.value);
+      const age = calculateAge(dob);
+      const dobError = document.getElementById(`dob-error-${formId}`);
+
+      if (age >= 18) {
+        const dobOverlay = document.getElementById(`dob-overlay-${formId}`);
+        if (dobOverlay) dobOverlay.remove();
+        unlockLink(formId);
+        dobError.style.display = 'none';
+      } else {
+        dobError.style.display = 'block';
+      }
+    }
+
+    function calculateAge(dob) {
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+      return age;
+    }
+
+    function unlockLink(formId) {
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (!link) return;
+      const lockIcon = link.querySelector('.bx-lock-alt');
+      if (lockIcon) lockIcon.style.display = 'none';
+      const overlay = document.querySelector(`.overlay[data-form-id="${formId}"]`);
+      if (overlay) overlay.remove();
+    }
+
+    function closeDobPopup(formId) {
+      const dobOverlay = document.getElementById(`dob-overlay-${formId}`);
+      if (dobOverlay) dobOverlay.remove();
+    }
+
+    // ====== BACKGROUND EFFECTS MENU ======
+    function toggleBackgroundEffectsMenu(show) {
+      const menu = document.getElementById('background-effects-menu');
+      menu.style.display = show ? 'block' : 'none';
+    }
+
+    document.getElementById('background-effects-trigger').addEventListener('click', function () {
+      toggleBackgroundEffectsMenu(true);
+    });
+
+    document.getElementById('background-darken-slider').addEventListener('input', function () {
+      const level = this.value;
+      document.getElementById('background-overlay').style.backgroundColor = `rgba(0, 0, 0, ${level / 10})`;
+    });
+
+    document.getElementById('background-blur-slider').addEventListener('input', function () {
+      const blurLevel = this.value;
+      document.getElementById('background-overlay').style.backdropFilter = `blur(${blurLevel}px)`;
+    });
+
+    document.getElementById('background-grain-slider').addEventListener('input', function () {
+      const grainLevel = this.value;
+      document.getElementById('grain-overlay').style.opacity = grainLevel / 20;
+    });
+
+    // ====== PROFILE SHAPE ======
+    document.getElementById('profile-shape-trigger').addEventListener('click', function () {
+      toggleSubMenu('profile-shape-menu', true);
+    });
+
+    document.querySelectorAll('.shape-option').forEach(option => {
+      option.addEventListener('click', function () {
+        applyProfileShape(this.dataset.shape);
+        toggleSubMenu('profile-shape-menu', false);
+      });
+    });
+
+    function applyProfileShape(shape) {
+      const profilePic = document.querySelector('.profile-picture');
+      const profilePicImg = document.querySelector('.profile-picture img');
+
+      switch (shape) {
+        case 'circle':
+          profilePic.style.maxWidth = '150px';
+          profilePic.style.width = '150px';
+          profilePic.style.height = '150px';
+          profilePic.style.borderRadius = '50%';
+          profilePic.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)';
+          profilePic.style.border = '3px solid white';
+          profilePicImg.style.objectFit = 'cover';
+          break;
+        case 'square':
+          profilePic.style.maxWidth = '150px';
+          profilePic.style.width = '150px';
+          profilePic.style.height = '150px';
+          profilePic.style.borderRadius = '0';
+          profilePic.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.5)';
+          profilePic.style.border = '3px solid white';
+          profilePicImg.style.objectFit = 'cover';
+          break;
+        case 'none':
+          profilePic.style.maxWidth = '200px';
+          profilePic.style.width = '200px';
+          profilePic.style.height = 'auto';
+          profilePic.style.borderRadius = '0%';
+          profilePic.style.boxShadow = 'none';
+          profilePic.style.border = '0px solid transparent';
+          profilePicImg.style.objectFit = 'contain';
+          break;
+      }
+    }
+
+    // ====== FONT CHOICE ======
+    document.getElementById('font-selector').addEventListener('change', function () {
+      const selectedFont = this.value;
+      document.querySelector('h1').style.fontFamily = selectedFont;
+      document.querySelectorAll('.link').forEach(link => link.style.fontFamily = selectedFont);
+    });
+
+    // ====== YOUTUBE EMBED ======
+    function getYoutubeVideoID(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? match[2] : null;
+    }
+
+    document.getElementById('youtube-submit').addEventListener('click', function () {
+      const videoLink = document.getElementById('youtube-link').value;
+      const videoID = getYoutubeVideoID(videoLink);
+      const youtubeEmbedContainer = document.getElementById('youtube-embed-container');
+      const youtubeForm = document.getElementById('youtube-form');
+
+      if (videoID) {
+        const embedUrl = `https://www.youtube.com/embed/${videoID}?autoplay=0`;
+        youtubeEmbedContainer.innerHTML = `
+          <div class="youtube-embed-wrapper">
+            <iframe class="youtube-iframe" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+          </div>`;
+        youtubeEmbedContainer.style.display = 'block';
+        youtubeForm.style.display = 'none';
+        document.getElementById('youtube-link').value = '';
+      }
+    });
+
+    // ====== SOCIAL ICONS ADD/REMOVE (with safety guards) ======
+    function submitSocialLink(platform) {
+      const inputId = 'input-' + platform;
+      const inputEl = document.getElementById(inputId);
+      if (!inputEl) return;
+
+      const link = inputEl.value;
+      if (!link) return;
+
+      const iconContainer = document.getElementById('social-icons-container');
+      const iconClass = platform === 'x' ? 'fa-brands fa-x-twitter' : 'bx bxl-' + platform;
+      const iconStyle = platform === 'x' ? 'style="font-size: 25px; position: relative; top: -4px;"' : '';
+
+      const selector = platform === 'x' ? 'fa-x-twitter' : 'bxl-' + platform;
+      const existingIcon = iconContainer.querySelector(`.social-icon-link i.${selector}`);
+
+      if (!existingIcon) {
+        iconContainer.innerHTML += `<a href="${link}" target="_blank" class="social-icon-link" rel="noopener noreferrer"><i class="${iconClass}" ${iconStyle}></i></a>`;
+      } else {
+        existingIcon.parentElement.href = link;
+      }
+    }
+
+    function removeSocialLink(platform) {
+      const iconContainer = document.getElementById('social-icons-container');
+      const iconClass = platform === 'x' ? 'fa-x-twitter' : 'bxl-' + platform;
+      const icon = iconContainer.querySelector(`.social-icon-link i.${iconClass}`);
+      if (icon && icon.parentNode) icon.parentNode.remove();
+
+      const inputId = 'input-' + platform;
+      const inputEl = document.getElementById(inputId);
+      if (inputEl) inputEl.value = '';
+    }
+
+    document.getElementById('position-top').addEventListener('click', function () {
+      const socialIconsContainer = document.getElementById('social-icons-container');
+      const nameElement = document.querySelector('h1');
+      const container = document.querySelector('.container');
+      container.insertBefore(socialIconsContainer, nameElement.nextSibling);
+    });
+
+    document.getElementById('position-bottom').addEventListener('click', function () {
+      const socialIconsContainer = document.getElementById('social-icons-container');
+      socialIconsContainer.style.marginTop = '20px';
+      document.querySelector('.container').appendChild(socialIconsContainer);
+    });
+
+    // ====== LINKS BUILDER ======
+    function getLuminance(color) {
+      const rgb = parseInt(color.substring(1), 16);
+      const r = (rgb >> 16) & 0xff;
+      const g = (rgb >> 8) & 0xff;
+      const b = (rgb >> 0) & 0xff;
+      return 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255);
+    }
+
+    function confirmLink(formId) {
+      const form = document.getElementById(formId);
+      if (!form) return;
+
+      const titleInput = form.querySelector('.link-title-input').value.trim();
+      const urlInput = form.querySelector('.link-url-input').value.trim();
+
+      let link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (!link) {
+        link = document.createElement('a');
+        link.className = 'link';
+        link.setAttribute('data-form-id', formId);
+        document.querySelector('.container').appendChild(link);
+      }
+
+      link.innerHTML = `
+        <div class="favicon-container"><img src="" alt="" class="link-icon" style="visibility:hidden;"></div>
+        <span class="link-title">${titleInput}</span>
+        <div class="lock-icon-container"><i class="bx bx-lock-alt link-icon" style="display:none;"></i></div>`;
+
+      if (link.dataset.lockOption === 'code' || link.dataset.lockOption === 'dob') {
+        const lockIcon = link.querySelector('.bx-lock-alt');
+        lockIcon.style.display = 'inline-block';
+      }
+
+      if (urlInput) {
+        try {
+          const domain = new URL(urlInput).hostname;
+          const faviconURL = `https://www.google.com/s2/favicons?sz=32&domain=${domain}`;
+          const favicon = link.querySelector('.favicon-container img');
+
+          const img = new Image();
+          img.onload = function () { favicon.src = faviconURL; favicon.style.visibility = 'visible'; };
+          img.onerror = function () { favicon.style.visibility = 'hidden'; };
+          img.src = faviconURL;
+        } catch (error) {
+          console.error("Invalid URL for favicon:", urlInput);
+        }
+      }
+
+      link.href = urlInput;
+
+      if (form === document.querySelector('.input-group:last-child')) {
+        addLinkForm();
+      }
+    }
+
+    function deleteLink(formId) {
+      const form = document.getElementById(formId);
+      if (form) form.remove();
+
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (link) link.remove();
+
+      const overlay = document.querySelector(`.overlay[data-form-id="${formId}"]`);
+      if (overlay) overlay.remove();
+
+      const optionsMenu = document.getElementById(`options-menu-${formId}`);
+      if (optionsMenu) optionsMenu.remove();
+    }
+
+    document.getElementById('add-link-btn').addEventListener('click', addLinkForm);
+
+    let formCount = 0;
+
+    function addLinkForm() {
+      const formContainer = document.getElementById('link-form-container');
+      const formId = `link-form-${formCount++}`;
+      const formHtml = `
+        <div class="input-group" id="${formId}">
+          <div class="move-btn-container">
+            <button class="move-btn" onclick="moveFormUp('${formId}')"><i class='bx bx-chevron-up'></i></button>
+            <button class="move-btn" onclick="moveFormDown('${formId}')"><i class='bx bx-chevron-down'></i></button>
+          </div>
+          <input type="text" placeholder="Title" class="link-title-input">
+          <input type="text" placeholder="URL" class="link-url-input">
+          <button class="icon-btn" onclick="confirmLink('${formId}')"><i class='bx bx-check' style="color:white;"></i></button>
+          <button class="icon-btn options-btn" onclick="showOptions('${formId}')"><i class='bx bx-cog' style="color:white;"></i></button>
+          <button class="icon-btn-delete" onclick="deleteLink('${formId}')"><i class='bx bx-x' style="color:white;"></i></button>
+        </div>`;
+      formContainer.insertAdjacentHTML('beforeend', formHtml);
+
+      createOptionsSubMenu(formId);
+      setDefaultLockOption(formId);
+    }
+
+    function moveFormUp(formId) {
+      const formElement = document.getElementById(formId);
+      const previousForm = formElement ? formElement.previousElementSibling : null;
+      if (previousForm && previousForm.classList.contains('input-group')) {
+        formElement.parentNode.insertBefore(formElement, previousForm);
+
+        const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+        const previousLink = document.querySelector(`.link[data-form-id="${previousForm.id}"]`);
+        if (link && previousLink) link.parentNode.insertBefore(link, previousLink);
+      }
+    }
+
+    function moveFormDown(formId) {
+      const formElement = document.getElementById(formId);
+      const nextForm = formElement ? formElement.nextElementSibling : null;
+      if (nextForm && nextForm.classList.contains('input-group')) {
+        nextForm.parentNode.insertBefore(formElement, nextForm.nextSibling);
+
+        const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+        const nextLink = document.querySelector(`.link[data-form-id="${nextForm.id}"]`);
+        if (link && nextLink) nextLink.parentNode.insertBefore(link, nextLink.nextSibling);
+      }
+    }
+
+    // Prevent "options-menu-null"
+    function createOptionsSubMenu(formId, title) {
+      if (!formId || formId === 'null' || formId === 'undefined') return;
+
+      if (!document.getElementById(`options-menu-${formId}`)) {
+        const optionsMenu = document.createElement('div');
+        optionsMenu.id = `options-menu-${formId}`;
+        optionsMenu.className = 'options-menu';
+        optionsMenu.innerHTML = `
+          <span class="close-btn" onclick="closeOptionsMenu('${formId}')"><i class='bx bx-x'></i></span>
+          <div class="animation-options-header">${title ? `<strong>${title}</strong>` : 'Options'}</div>
+
+          <div class="options-menu-title">Animation</div>
+          <button class="animation-btn" onclick="applyAnimation('${formId}', 'none')">None</button>
+          <button class="animation-btn" onclick="applyAnimation('${formId}', 'pop')">Pop</button>
+          <button class="animation-btn" onclick="applyAnimation('${formId}', 'wobble')">Wobble</button>
+          <button class="animation-btn" onclick="applyAnimation('${formId}', 'wiggle')">Wiggle</button>
+
+          <div class="options-menu-title">Favicon</div>
+          <button class="animation-btn favicon-toggle-btn btn-on" id="favicon-toggle-${formId}" onclick="toggleFavicon('${formId}', this)">ON</button>
+          <button class="animation-btn apply-all-btn" onclick="applyToAll('${formId}')">Apply To All</button>
+
+          <div class="options-menu-title">Button Color</div>
+          <input type="color" id="button-color-picker-${formId}" class="input-field" style="visibility:hidden; width:0; height:0; position:absolute;">
+          <button class="animation-btn" id="color-picker-trigger-${formId}" style="background-color:#c9c9c9;"><i class='bx bx-droplet'></i></button>
+          <button class="animation-btn apply-all-btn" onclick="applyColorToAll('${formId}')">Apply To All</button>
+
+          <div class="options-menu-title">Button Shape</div>
+          <button class="animation-btn" onclick="applyButtonShape('${formId}', 'squared')">Squared</button>
+          <button class="animation-btn btn-on" onclick="applyButtonShape('${formId}', 'rounded')">Rounded</button>
+          <button class="animation-btn" onclick="applyButtonShape('${formId}', 'pill')">Pill</button>
+          <button class="animation-btn apply-all-btn" onclick="applyShapeToAll('${formId}')">Apply To All</button>
+
+          <div class="options-menu-title">Locked Link</div>
+          <button class="animation-btn lock-option-btn btn-on" onclick="applyLockOption('${formId}', 'none')">None</button>
+          <button class="animation-btn lock-option-btn" onclick="applyLockOption('${formId}', 'code')">Code</button>
+          <button class="animation-btn lock-option-btn" onclick="applyLockOption('${formId}', 'dob')">DOB</button>
+        `;
+        document.body.appendChild(optionsMenu);
+
+        const colorPicker = document.getElementById(`button-color-picker-${formId}`);
+        const colorPickerTrigger = document.getElementById(`color-picker-trigger-${formId}`);
+        colorPickerTrigger.addEventListener('click', () => colorPicker.click());
+
+        colorPicker.addEventListener('change', function () {
+          const color = this.value;
+          const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+          if (link) {
+            link.style.backgroundColor = color;
+            link.style.color = getLuminance(color) > 0.5 ? 'black' : 'white';
+          }
+          colorPickerTrigger.style.backgroundColor = color;
+        });
+      }
+    }
+
+    function applyColorToAll(formId) {
+      const currentOptions = document.getElementById(`options-menu-${formId}`);
+      if (!currentOptions) return;
+      const colorPicker = currentOptions.querySelector(`#button-color-picker-${formId}`);
+      if (!colorPicker) return;
+      const selectedColor = colorPicker.value;
+
+      document.querySelectorAll('.link').forEach(link => {
+        const linkFormId = link.getAttribute('data-form-id');
+        const linkOptionsMenu = document.getElementById(`options-menu-${linkFormId}`);
+        if (!linkOptionsMenu) return;
+
+        const linkColorPicker = linkOptionsMenu.querySelector(`#button-color-picker-${linkFormId}`);
+        const trigger = linkOptionsMenu.querySelector(`#color-picker-trigger-${linkFormId}`);
+
+        if (linkColorPicker) linkColorPicker.value = selectedColor;
+        link.style.backgroundColor = selectedColor;
+        link.style.color = getLuminance(selectedColor) > 0.5 ? 'black' : 'white';
+        if (trigger) trigger.style.backgroundColor = selectedColor;
+      });
+    }
+
+    function updateYoutubeEmbedBorderRadius(shape) {
+      const youtubeIframe = document.querySelector('.youtube-iframe');
+      if (!youtubeIframe) return;
+      if (shape === 'squared') youtubeIframe.style.borderRadius = '0px';
+      if (shape === 'rounded') youtubeIframe.style.borderRadius = '8px';
+      if (shape === 'pill') youtubeIframe.style.borderRadius = '20px';
+    }
+
+    function applyButtonShape(formId, shape) {
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (link) {
+        if (shape === 'squared') link.style.borderRadius = '0px';
+        if (shape === 'rounded') link.style.borderRadius = '8px';
+        if (shape === 'pill') link.style.borderRadius = '20px';
+      }
+    }
+
+    function applyShapeToAll(formId) {
+      const currentOptions = document.getElementById(`options-menu-${formId}`);
+      if (!currentOptions) return;
+
+      const shapeButtons = currentOptions.querySelectorAll('.animation-btn:not(.apply-all-btn)');
+      let selectedShape = 'rounded';
+      shapeButtons.forEach(btn => {
+        if (btn.classList.contains('btn-on')) selectedShape = btn.textContent.toLowerCase();
+      });
+
+      document.querySelectorAll('.link').forEach(link => {
+        const linkFormId = link.getAttribute('data-form-id');
+        applyButtonShape(linkFormId, selectedShape);
+      });
+
+      updateYoutubeEmbedBorderRadius(selectedShape);
+    }
+
+    function toggleFavicon(formId, button) {
+      const link = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (!link) return;
+      const img = link.querySelector('img');
+      if (!img) return;
+
+      if (button.textContent === 'ON') {
+        img.style.display = 'none';
+        button.textContent = 'OFF';
+        button.classList.remove('btn-on');
+        button.classList.add('btn-off');
+      } else {
+        img.style.display = 'inline';
+        button.textContent = 'ON';
+        button.classList.remove('btn-off');
+        button.classList.add('btn-on');
+      }
+    }
+
+    function applyToAll(formId) {
+      const currentOptions = document.getElementById(`options-menu-${formId}`);
+      if (!currentOptions) return;
+      const faviconToggleBtn = currentOptions.querySelector(`#favicon-toggle-${formId}`);
+      if (!faviconToggleBtn) return;
+      const shouldHide = faviconToggleBtn.textContent === 'ON';
+
+      document.querySelectorAll('.favicon-toggle-btn').forEach(btn => {
+        const otherFormId = btn.id.replace('favicon-toggle-', '');
+        if (otherFormId === formId) return;
+        btn.textContent = shouldHide ? 'OFF' : 'ON';
+        toggleFavicon(otherFormId, btn);
+      });
+    }
+
+    function applyAnimation(formId, animationType) {
+      const linkToAnimate = document.querySelector(`.link[data-form-id="${formId}"]`);
+      if (!linkToAnimate) return;
+
+      linkToAnimate.classList.remove('animated-link', 'animated-wobble', 'animated-wiggle');
+
+      if (animationType === 'none') return;
+
+      if (animationType === 'pop') linkToAnimate.classList.add('animated-link');
+      if (animationType === 'wobble') linkToAnimate.classList.add('animated-wobble');
+      if (animationType === 'wiggle') linkToAnimate.classList.add('animated-wiggle');
+    }
+
+    function showOptions(formId) {
+      const optionsMenu = document.getElementById(`options-menu-${formId}`);
+      if (optionsMenu) {
+        optionsMenu.style.display = 'block';
+        positionOptionsMenu(formId);
+      }
+    }
+
+    function positionOptionsMenu(formId) {
+      const mainLinksMenu = document.getElementById('main-links-menu');
+      const optionsMenu = document.getElementById(`options-menu-${formId}`);
+      if (!mainLinksMenu || !optionsMenu) return;
+
+      const rect = mainLinksMenu.getBoundingClientRect();
+      optionsMenu.style.width = '400px';
+      optionsMenu.style.height = `400px`;
+      optionsMenu.style.top = `${rect.top + window.scrollY}px`;
+      optionsMenu.style.left = `${rect.left}px`;
+    }
+
+    function closeOptionsMenu(formId) {
+      const optionsMenu = document.getElementById(`options-menu-${formId}`);
+      if (optionsMenu) optionsMenu.style.display = 'none';
+    }
+
+    // ====== SAVE / DOWNLOAD ======
+    document.getElementById('save-progress-btn').addEventListener('click', function () {
+      const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+      inputs.forEach(input => input.setAttribute('value', input.value));
+
+      const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+      checkboxes.forEach(checkbox => checkbox.checked ? checkbox.setAttribute('checked', 'checked') : checkbox.removeAttribute('checked'));
+
+      const htmlContent = `<!DOCTYPE html>\n` + document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+
+      const userName = document.querySelector('h1').textContent.trim() || 'No-Name';
+      const currentDate = new Date().toISOString().slice(0, 10);
+      const filename = `SAVE-LinkInBio-${userName}-${currentDate}.html`;
+
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = filename;
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    });
+
+    function downloadHTML() {
+      const visibleConfigMenus = Array.from(document.querySelectorAll('.menu, .options-menu, #background-effects-menu')).filter(menu => {
+        return window.getComputedStyle(menu).display !== 'none';
+      });
+
+      const configMenus = document.querySelectorAll('.menu, .options-menu, #background-effects-menu');
+      configMenus.forEach(menu => menu.style.display = 'none');
+
+      const htmlContent = document.documentElement.outerHTML;
+
+      visibleConfigMenus.forEach(menu => menu.style.display = '');
+
+      const userName = document.querySelector('h1').textContent.trim() || 'No-Name';
+      const currentDate = new Date().toISOString().slice(0, 10);
+      const filename = `LinkInBio-${userName}-${currentDate}.txt`;
+
+      const blob = new Blob([htmlContent], { type: 'text/plain' });
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(blob);
+      downloadLink.download = filename;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+
+    document.getElementById('download-btn').addEventListener('click', function () {
+      setTimeout(downloadHTML, 100);
+    });
+
+    // ====== KEYBOARD SHORTCUTS ======
+    document.addEventListener('keydown', function (event) {
+      if (event.key >= '0' && event.key <= '9') {
+        if (document.getElementById('keypad-overlay').style.display === 'flex') enterCodeDigit(event.key);
+        else if (document.getElementById('config-keypad-overlay').style.display === 'flex') enterConfigCodeDigit(event.key);
+      } else if (event.key === 'Enter') {
+        if (document.getElementById('keypad-overlay').style.display === 'flex') acceptCode();
+        else if (document.getElementById('config-keypad-overlay').style.display === 'flex') acceptConfigCode();
+      } else if (event.key === 'Escape') {
+        if (document.getElementById('keypad-overlay').style.display === 'flex') cancelCode();
+        else if (document.getElementById('config-keypad-overlay').style.display === 'flex') cancelConfigCode();
+      }
+    });
+
+    // ====== ENTER KEYS ======
+    document.getElementById('name-input').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('submit-name').click(); });
+    document.getElementById('profile-pic-link').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('submit-profile-pic').click(); });
+    document.getElementById('background-link').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('submit-background').click(); });
+    document.getElementById('youtube-link').addEventListener('keypress', e => { if (e.key === 'Enter') document.getElementById('youtube-submit').click(); });
+
+    document.querySelectorAll('.social-link-input').forEach(input => {
+      input.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+          const platform = input.id.replace('input-', '');
+          submitSocialLink(platform);
+        }
+      });
+    });
+
+    // ====== INIT (FIX: use addEventListener instead of overwriting window.onload) ======
+    window.addEventListener('load', function () {
+      adjustSocialMenuPosition();
+
+      // Init formCount from existing forms
+      const existingForms = document.querySelectorAll('#link-form-container .input-group');
+      formCount = existingForms.length;
+
+      // Create options menus for existing forms + attach live update
+      existingForms.forEach(form => {
+        const formId = form.getAttribute('id');
+        if (!formId) return;
+
+        createOptionsSubMenu(formId);
+
+        const titleEl = form.querySelector('.link-title-input');
+        const urlEl = form.querySelector('.link-url-input');
+        if (titleEl) titleEl.addEventListener('input', () => confirmLink(formId));
+        if (urlEl) urlEl.addEventListener('input', () => confirmLink(formId));
+      });
+
+      // Recreate overlays for locked links
+      document.querySelectorAll('.link[data-lock-option]').forEach(link => {
+        const formId = link.getAttribute('data-form-id');
+        const lockType = link.getAttribute('data-lock-option');
+        createOverlay(formId, lockType);
+      });
+
+      setDefaultLockOption();
+      hideKeypad();
+      document.getElementById('grain-overlay').style.display = 'block';
     });
   </script>
 </body>
