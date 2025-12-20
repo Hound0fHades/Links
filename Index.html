@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base target="_blank" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HoundOfHades | Links</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Satisfy&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#333;
+      --bg2:#111;
+      --panel: rgba(15, 15, 18, 0.72);
+      --panel-border: rgba(255,255,255,0.14);
+      --text: rgba(255,255,255,0.92);
+      --text-strong:#fff;
+      --muted: rgba(255,255,255,0.72);
+      --shadow: 0 18px 40px rgba(0,0,0,0.55);
+      --radius: 18px;
+    }
+
+    html{
+      height:100%;
+      background: linear-gradient(to bottom, var(--bg1), var(--bg2));
+      background-attachment: fixed;
+      overscroll-behavior:none;
+    }
+
+    body{
+      margin:0;
+      padding:0;
+      min-height:100%;
+      font-family:'Poppins', sans-serif;
+      color: var(--text);
+      text-align:center;
+      position:relative;
+      overscroll-behavior:none;
+
+      /* Default background (you can change in JS or inline) */
+      background-position:center;
+      background-size:cover;
+      background-repeat:no-repeat;
+    }
+
+    /* Backdrop overlay controls */
+    #background-overlay{
+      position:fixed;
+      inset:0;
+      background-color: rgba(0,0,0,0.40); /* default darken */
+      z-index:1;
+      pointer-events:none;
+      backdrop-filter: blur(0px);
+      -webkit-backdrop-filter: blur(0px);
+    }
+    #grain-overlay{
+      position:fixed;
+      inset:0;
+      background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/7/7a/2k_Dissolve_Noise_Texture.png/1024px-2k_Dissolve_Noise_Texture.png");
+      background-size:cover;
+      opacity:0;
+      mix-blend-mode: overlay;
+      z-index:2;
+      pointer-events:none;
+    }
+
+    .container{
+      width: min(600px, 92vw);
+      margin: 5vh auto 10vh;
+      position:relative;
+      z-index:3;
+    }
+
+    /* Profile */
+    .profile-picture{
+      width:150px;
+      height:150px;
+      border:3px solid #fff;
+      border-radius:50%;
+      margin: 0 auto 16px;
+      overflow:hidden;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    }
+    .profile-picture img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+
+    h1{
+      margin: 0 0 10px;
+      font-family: 'Satisfy', cursive;
+      font-size: 2.5rem;
+      color:#000; /* your original */
+      text-shadow: 0 2px 10px rgba(0,0,0,0.25);
+    }
+
+    /* Social Icons */
+    .social-icons-container{
+      margin: 8px 0 12px;
+    }
+    .social-icon-link{
+      color: inherit;
+      text-decoration:none;
+      margin: 0 6px;
+      display:inline-block;
+    }
+    .social-icon-link i{
+      font-size: 30px;
+      transition: transform .25s ease, filter .25s ease;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+    }
+    .social-icon-link:hover i{
+      transform: translateY(-3px);
+    }
+
+    /* About Me Card (1) soft fade-in, (2) mythic styling, (4) mobile-friendly */
+    .about-me-card{
+      margin: 14px 0 18px;
+      padding: 16px;
+      border-radius: var(--radius);
+      text-align:left;
+
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+
+      position:relative;
+      overflow:hidden;
+    }
+    .about-me-card::before{
+      content:"";
+      position:absolute;
+      inset:-40% -30%;
+      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10), transparent 55%);
+      transform: rotate(8deg);
+      pointer-events:none;
+    }
+    .about-me-card h2{
+      margin:0 0 10px;
+      font-size:1.25rem;
+      color: var(--text-strong);
+      position:relative;
+      z-index:1;
+      letter-spacing: .3px;
+    }
+    .about-me-card p{
+      margin:0;
+      line-height:1.55;
+      font-size:1.02rem;
+      color: var(--text);
+      position:relative;
+      z-index:1;
+    }
+
+    .fade-in{
+      opacity:0;
+      transform: translateY(10px);
+      animation: fadeUp 700ms ease forwards;
+    }
+    @keyframes fadeUp{
+      to{ opacity:1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .fade-in{ animation:none; opacity:1; transform:none; }
+      .animated-link,.animated-wobble,.animated-wiggle{ animation:none !important; }
+    }
+
+    /* Links */
+    .link{
+      background-color:#000;
+      color:#fff;
+      padding: 0.85rem 0.9rem;
+      margin: 0.55rem 0;
+      border-radius: 20px; /* pill-ish default */
+      text-decoration:none;
+      font-weight:600;
+      font-size: 1.12rem;
+
+      display:flex;
+      align-items:center;
+      gap: 10px;
+
+      transition: transform .22s ease, box-shadow .22s ease;
+      box-shadow: 0 10px 22px rgba(0,0,0,0.30);
+      position:relative;
+    }
+    .link:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.35);
+    }
+
+    .favicon-container{
+      width:24px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      flex:0 0 24px;
+    }
+    .link-icon{
+      height:20px;
+      width:20px;
+      display:inline-block;
+    }
+    .link-title{
+      flex:1;
+      text-align:center;
+    }
+    .lock-icon-container{
+      width:24px;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      flex:0 0 24px;
+      opacity:0.95;
+    }
+
+    /* Animations */
+    @keyframes popAnimation {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    @keyframes wobbleAnimation {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-6px); }
+    }
+    @keyframes wiggleAnimation {
+      0%,100% { transform: rotate(0deg); }
+      25% { transform: rotate(-1deg); }
+      50% { transform: rotate(2deg); }
+      75% { transform: rotate(-1deg); }
+    }
+    .animated-link{ animation: popAnimation 3s infinite; }
+    .animated-wobble{ animation: wobbleAnimation 3s infinite; }
+    .animated-wiggle{ animation: wiggleAnimation 3s infinite; }
+
+    /* Lock overlays */
+    .overlay{
+      position:absolute;
+      inset:0;
+      z-index:5;
+      cursor:pointer;
+      background: rgba(0,0,0,0); /* invisible click shield */
+    }
+
+    /* Keypad / DOB popups */
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background: rgba(0,0,0,0.72);
+      z-index:9999;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding: 18px;
+    }
+    .modal{
+      background:#fff;
+      color:#000;
+      border-radius: 12px;
+      width: min(360px, 92vw);
+      padding: 18px;
+      box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+    }
+    .modal h3{
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+    .modal .hint{
+      margin: 0 0 10px;
+      color:#444;
+      font-size: 0.95rem;
+    }
+    .code-display{
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      margin: 12px 0 14px;
+    }
+    .code-slot{
+      flex:1;
+      height: 44px;
+      background:#f2f2f2;
+      border-radius: 8px;
+      font-size: 28px;
+      line-height: 44px;
+      text-align:center;
+    }
+    .keypad{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 10px 0 14px;
+    }
+    .keypad button{
+      background:#e6e6e6;
+      border:none;
+      border-radius: 999px;
+      height: 54px;
+      font-size: 20px;
+      cursor:pointer;
+    }
+    .actions{
+      display:flex;
+      gap: 10px;
+      justify-content:space-between;
+    }
+    .actions button{
+      flex:1;
+      border:none;
+      border-radius: 10px;
+      padding: 10px 12px;
+      cursor:pointer;
+      color:#fff;
+      background:#6f6f6f;
+      font-weight:600;
+    }
+    .actions button.primary{ background:#53ae62; }
+    .error{
+      color:#c40000;
+      margin-top: 10px;
+      display:none;
+      font-weight:600;
+      font-size: 0.95rem;
+    }
+    input[type="date"]{
+      width: 100%;
+      box-sizing:border-box;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+      margin: 10px 0 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px){
+      h1{ font-size: 1.6rem; }
+      .profile-picture{ width: 110px; height:110px; }
+      .link{ font-size: 1rem; }
+      .about-me-card{ padding: 14px; border-radius: 16px; }
+      .about-me-card h2{ font-size: 1.1rem; }
+      .about-me-card p{ font-size: 0.98rem; }
+    }
+  </style>
+</head>
+
+<body
+  style="background-image:url('https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png');"
+>
+
+  <!-- Background overlays -->
+  <div id="background-overlay" aria-hidden="true"></div>
+  <div id="grain-overlay" aria-hidden="true"></div>
+
+  <main class="container" aria-label="Link in bio page">
+    <div class="profile-picture">
+      <img
+        src="https://cdn.discordapp.com/attachments/1260649586364518440/1440548501565079573/Messenger_creation_2863993610432510.jpg"
+        alt="Profile picture"
+      />
+    </div>
+
+    <h1 id="display-name">HoundOfHades</h1>
+
+    <div class="social-icons-container" id="social-icons-container" aria-label="Social links">
+      <a href="https://www.instagram.com/hound.0f.hades?igsh=MXFqdXZqb3JxeXl3dQ==" class="social-icon-link" aria-label="Instagram">
+        <i class="bx bxl-instagram"></i>
+      </a>
+      <a href="https://www.tiktok.com/@hound..of..hades?_t=ZP-8wb22Zh1O86&_r=1" class="social-icon-link" aria-label="TikTok">
+        <i class="bx bxl-tiktok"></i>
+      </a>
+      <a href="https://x.com/Hound_0f_Hades?s=09" class="social-icon-link" aria-label="X (Twitter)">
+        <i class="fa-brands fa-x-twitter" style="font-size:25px; position:relative; top:-4px;"></i>
+      </a>
+    </div>
+
+    <!-- About Me (placed best: under name + socials, above buttons) -->
+    <section class="about-me-card fade-in" aria-label="About me">
+      <h2>About Me</h2>
+      <p>
+        As a true bibliophile, I find immense joy in the written fantasy world—whether through reading or audiobooks. But my passions extend far beyond the literary realm. I’m an avid crafter, a curious explorer, and a passionate seeker of new culinary adventures.
+        <br><br>
+        The thrill of travel—both domestically and internationally—fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list (Greece especially, thanks to my fascination with Greek mythology).
+        <br><br>
+        This past year, I’ve delved into the captivating world of cosplay, creating outfits that have been an absolute delight. Whether I’m cooking or chasing new flavors, culinary exploration is its own kind of magic.
+        <br><br>
+        Beyond these creative outlets, spending quality time with my loved ones—especially my partner—and friends is what brings me the greatest joy and fulfillment.
+      </p>
+    </section>
+
+    <!-- LINKS (locked links supported) -->
+    <nav aria-label="Main links">
+      <!-- Fetlife (DOB lock) -->
+      <a class="link" href="https://fetlife.com/Hound0fHades" data-lock-type="dob" id="link-fetlife" style="background-color:#ff0000; color:#ffffff;">
+        <div class="favicon-container">
+          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=fetlife.com" />
+        </div>
+        <span class="link-title">Fetlife</span>
+        <div class="lock-icon-container">
+          <i class="bx bx-lock-alt link-icon" aria-hidden="true"></i>
+        </div>
+        <div class="overlay" aria-label="Locked link. Tap to verify." data-target="link-fetlife"></div>
+      </a>
+
+      <!-- CashApp (wiggle) -->
+      <a class="link animated-wiggle" href="https://cash.app/$Hound0fHades" style="background-color:#000; color:#fff;" id="link-cashapp">
+        <div class="favicon-container">
+          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=cash.app" />
+        </div>
+        <span class="link-title">CashApp</span>
+        <div class="lock-icon-container"></div>
+      </a>
+
+      <!-- Venmo (wiggle) -->
+      <a class="link animated-wiggle" href="https://venmo.com/code?user_id=4332566748333514766&created=1748006970" style="background-color:#000; color:#fff;" id="link-venmo">
+        <div class="favicon-container">
+          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=venmo.com" />
+        </div>
+        <span class="link-title">Venmo</span>
+        <div class="lock-icon-container"></div>
+      </a>
+
+      <!-- Jewelry (wobble) -->
+      <a class="link animated-wobble" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q?ref_=wl_share" style="background-color:#000; color:#fff;" id="link-jewelry">
+        <div class="favicon-container">
+          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=amazon.com" />
+        </div>
+        <span class="link-title">Jewelry</span>
+        <div class="lock-icon-container"></div>
+      </a>
+
+      <!-- Desires (wobble) -->
+      <a class="link animated-wobble" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY?ref_=wl_share" style="background-color:#000; color:#fff;" id="link-desires">
+        <div class="favicon-container">
+          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=amazon.com" />
+        </div>
+        <span class="link-title">Desires</span>
+        <div class="lock-icon-container"></div>
+      </a>
+
+      <!-- SnapChat (CODE lock) -->
+      <a class="link animated-wiggle" href="https://www.snapchat.com/add/hound0fhades?share_id=aeHhRGklm6Q&locale=en-US"
+         data-lock-type="code" data-lock-code="1395" id="link-snap" style="background-color:#000; color:#fff;">
+        <div class="favicon-container">
+          <img class="link-icon" alt="" src="https://www.google.com/s2/favicons?sz=32&domain=snapchat.com" />
+        </div>
+        <span class="link-title">SnapChat</span>
+        <div class="lock-icon-container">
+          <i class="bx bx-lock-alt link-icon" aria-hidden="true"></i>
+        </div>
+        <div class="overlay" aria-label="Locked link. Tap to enter code." data-target="link-snap"></div>
+      </a>
+    </nav>
+  </main>
+
+  <script>
+    // ========= Background effect defaults (you can tweak) =========
+    // You can raise/lower these defaults:
+    // darken: 0.0 to 1.0, blur px, grain opacity 0.0 to 1.0
+    (function initBackgroundFX(){
+      const overlay = document.getElementById('background-overlay');
+      const grain = document.getElementById('grain-overlay');
+      overlay.style.backgroundColor = 'rgba(0,0,0,0.40)'; // darken
+      overlay.style.backdropFilter = 'blur(0px)';          // blur
+      grain.style.opacity = '0.00';                        // grain
+    })();
+
+    // ========= Lock logic =========
+    let entered = "";
+
+    function openModal(contentHtml) {
+      const wrap = document.createElement('div');
+      wrap.className = 'modal-overlay';
+      wrap.innerHTML = contentHtml;
+      document.body.appendChild(wrap);
+      return wrap;
+    }
+
+    function closeModal(modalEl){
+      if(modalEl && modalEl.parentNode) modalEl.parentNode.removeChild(modalEl);
+    }
+
+    function unlockLinkById(linkId){
+      const link = document.getElementById(linkId);
+      if(!link) return;
+
+      // remove overlay
+      const ov = link.querySelector('.overlay');
+      if(ov) ov.remove();
+
+      // hide lock icon
+      const lockIcon = link.querySelector('.bx-lock-alt');
+      if(lockIcon) lockIcon.style.display = 'none';
+    }
+
+    function showCodePrompt(linkId){
+      entered = "";
+      const modal = openModal(`
+        <div class="modal" role="dialog" aria-modal="true" aria-label="Enter code">
+          <h3>Enter 4-digit code</h3>
+          <p class="hint">This link is locked.</p>
+
+          <div class="code-display" aria-label="Code display">
+            <div class="code-slot" data-slot="0"></div>
+            <div class="code-slot" data-slot="1"></div>
+            <div class="code-slot" data-slot="2"></div>
+            <div class="code-slot" data-slot="3"></div>
+          </div>
+
+          <div class="keypad" aria-label="Keypad">
+            ${[1,2,3,4,5,6,7,8,9].map(n=>`<button type="button" data-digit="${n}">${n}</button>`).join("")}
+            <div></div>
+            <button type="button" data-digit="0">0</button>
+            <div></div>
+          </div>
+
+          <div class="actions">
+            <button type="button" class="primary" id="btn-accept">Accept</button>
+            <button type="button" id="btn-cancel">Cancel</button>
+          </div>
+          <div class="error" id="code-error">Incorrect pin</div>
+        </div>
+      `);
+
+      function updateSlots(){
+        modal.querySelectorAll('.code-slot').forEach((slot, i)=>{
+          slot.textContent = entered[i] ? "•" : "";
+        });
+      }
+
+      modal.addEventListener('click', (e)=>{
+        const btn = e.target.closest('button');
+        if(!btn) return;
+
+        if(btn.dataset.digit !== undefined){
+          if(entered.length < 4){
+            entered += btn.dataset.digit;
+            updateSlots();
+          }
+        }
+        if(btn.id === 'btn-cancel'){
+          closeModal(modal);
+        }
+        if(btn.id === 'btn-accept'){
+          const link = document.getElementById(linkId);
+          const correct = link?.dataset.lockCode || "";
+          if(entered === correct){
+            closeModal(modal);
+            unlockLinkById(linkId);
+          } else {
+            modal.querySelector('#code-error').style.display = 'block';
+            entered = "";
+            updateSlots();
+          }
+        }
+      });
+
+      document.addEventListener('keydown', function handler(ev){
+        if(!document.body.contains(modal)){
+          document.removeEventListener('keydown', handler);
+          return;
+        }
+        if(ev.key >= '0' && ev.key <= '9'){
+          if(entered.length < 4){
+            entered += ev.key;
+            updateSlots();
+          }
+        } else if(ev.key === 'Enter'){
+          modal.querySelector('#btn-accept').click();
+        } else if(ev.key === 'Escape'){
+          closeModal(modal);
+        }
+      }, { once:false });
+    }
+
+    function showDobPrompt(linkId){
+      const modal = openModal(`
+        <div class="modal" role="dialog" aria-modal="true" aria-label="Age verification">
+          <h3>Age Verification</h3>
+          <p class="hint">Enter your date of birth to continue.</p>
+          <input type="date" id="dob-input" />
+          <div class="actions" style="margin-top:14px;">
+            <button type="button" class="primary" id="btn-submit">Submit</button>
+            <button type="button" id="btn-cancel">Cancel</button>
+          </div>
+          <div class="error" id="dob-error">You must be 18 years or older</div>
+        </div>
+      `);
+
+      function calculateAge(d){
+        const today = new Date();
+        let age = today.getFullYear() - d.getFullYear();
+        const m = today.getMonth() - d.getMonth();
+        if(m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
+        return age;
+      }
+
+      modal.addEventListener('click', (e)=>{
+        const btn = e.target.closest('button');
+        if(!btn) return;
+
+        if(btn.id === 'btn-cancel'){
+          closeModal(modal);
+        }
+        if(btn.id === 'btn-submit'){
+          const val = modal.querySelector('#dob-input').value;
+          if(!val){
+            modal.querySelector('#dob-error').style.display = 'block';
+            return;
+          }
+          const dob = new Date(val);
+          if(calculateAge(dob) >= 18){
+            closeModal(modal);
+            unlockLinkById(linkId);
+          } else {
+            modal.querySelector('#dob-error').style.display = 'block';
+          }
+        }
+      });
+
+      document.addEventListener('keydown', function handler(ev){
+        if(!document.body.contains(modal)){
+          document.removeEventListener('keydown', handler);
+          return;
+        }
+        if(ev.key === 'Escape') closeModal(modal);
+        if(ev.key === 'Enter') modal.querySelector('#btn-submit').click();
+      }, { once:false });
+    }
+
+    // Overlay click handler
+    document.addEventListener('click', (e)=>{
+      const ov = e.target.closest('.overlay');
+      if(!ov) return;
+
+      const linkId = ov.dataset.target;
+      const link = document.getElementById(linkId);
+      if(!link) return;
+
+      const lockType = link.dataset.lockType;
+      if(lockType === 'code') showCodePrompt(linkId);
+      if(lockType === 'dob')  showDobPrompt(linkId);
+    });
+  </script>
+</body>
+</html>
