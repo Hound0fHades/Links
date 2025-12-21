@@ -11,618 +11,523 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
   <style>
-    :root {
-      /* Base */
-      --bg-overlay: rgba(0,0,0,.55);
-      --card-bg: rgba(0,0,0,.55);
+    :root{
+      /* Background image (local file in your repo) */
+      --bg-image: url("./cerberuslinkbackground.png");
+
+      /* Auto-shift palette (set by JS) */
+      --accent: #e53935;
+      --accent2: #ffb300;
+
+      /* Base UI */
+      --bg-overlay: rgba(0,0,0,.58);
+      --card-bg: rgba(0,0,0,.56);
       --card-blur: 12px;
       --border: rgba(255,255,255,.16);
       --text: #ffffff;
       --muted: rgba(255,255,255,.78);
       --muted2: rgba(255,255,255,.62);
-
-      /* Seasonal accents (auto-swapped) */
-      --accent: #e53935;
-      --accent2: #ffb300;
-
-      /* Buttons */
       --btn: rgba(0,0,0,.65);
 
       /* Glow */
-      --glow: rgba(255,255,255,.18);
-      --glow-strong: rgba(255, 180, 0, .24);
+      --glow: rgba(255, 255, 255, .16);
+      --glow-strong: rgba(255, 180, 0, .22);
 
-      /* Background + Profile (your filenames) */
-      --bg-image: url("cerberuslinkbackground.png");
+      /* Profile */
       --avatar-border: rgba(255,255,255,.95);
 
       /* Tabs */
-      --tab-bg: rgba(0,0,0,.30);
+      --tab-bg: rgba(0,0,0,.28);
       --tab-active: rgba(255,255,255,.10);
 
-      /* NEW: Seasonal container colors (auto-swapped) */
-      --section-bg: rgba(0,0,0,.25);
-      --details-bg: rgba(0,0,0,.22);
-      --pill-bg: rgba(0,0,0,.22);
-      --music-bg: rgba(0,0,0,.28);
+      /* Card “holiday ring” (set by JS) */
+      --ring: rgba(255,255,255,.18);
+      --ring2: rgba(255,255,255,.10);
+
+      /* Sigils */
+      --sigil-opacity: .14;
+      --sigil-speed: 26s;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      color: var(--text);
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
+      color:var(--text);
       background:
         linear-gradient(var(--bg-overlay), var(--bg-overlay)),
         var(--bg-image);
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 40px 15px;
-      position: relative;
-      overflow-x: hidden;
+      background-size:cover;
+      background-position:center;
+      background-attachment:fixed;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding:40px 15px;
+      overflow-x:hidden;
     }
 
-    /* Subtle animated sigils (page) */
+    /* Subtle animated sigils across the page */
     body::before{
       content:"";
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: .22;
-      mix-blend-mode: screen;
+      position:fixed;
+      inset:-40%;
+      pointer-events:none;
+      opacity:var(--sigil-opacity);
       background:
-        radial-gradient(circle at 20% 25%, rgba(255,255,255,.10) 0 2px, transparent 3px),
-        radial-gradient(circle at 75% 35%, rgba(255,255,255,.09) 0 2px, transparent 3px),
-        radial-gradient(circle at 50% 70%, rgba(255,255,255,.08) 0 2px, transparent 3px),
-        conic-gradient(from 120deg at 50% 50%, rgba(255,255,255,.07), transparent 20%, rgba(255,255,255,.05), transparent 45%, rgba(255,255,255,.06), transparent 75%);
-      filter: blur(.2px);
-      animation: sigilDrift 14s linear infinite;
-      transform: translateZ(0);
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.12), transparent 45%),
+        radial-gradient(circle at 70% 60%, rgba(255,255,255,.10), transparent 55%),
+        conic-gradient(from 90deg, rgba(255,255,255,.10), transparent 20%, rgba(255,255,255,.08), transparent 55%, rgba(255,255,255,.10));
+      filter: blur(0.2px);
+      animation: sigilDrift var(--sigil-speed) linear infinite;
+      mix-blend-mode: screen;
     }
-
     @keyframes sigilDrift{
-      0% { transform: translate3d(0,0,0) rotate(0deg); }
-      50% { transform: translate3d(0,-10px,0) rotate(8deg); }
-      100% { transform: translate3d(0,0,0) rotate(0deg); }
+      0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1); }
+      50%  { transform: translate3d( 2%,  1%, 0) rotate(180deg) scale(1.02); }
+      100% { transform: translate3d(-2%, -1%, 0) rotate(360deg) scale(1); }
     }
 
-    .card {
-      width: 100%;
-      max-width: 560px;
-      background: var(--card-bg);
+    .card{
+      width:100%;
+      max-width:560px;
+      background:var(--card-bg);
       backdrop-filter: blur(var(--card-blur));
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px 18px 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
+      border-radius:18px;
+      padding:22px 18px 24px;
+      position:relative;
+      overflow:hidden;
+
+      /* Auto holiday ring */
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,.55),
+        0 0 0 1px var(--ring) inset,
+        0 0 0 10px rgba(0,0,0,.08) inset;
     }
 
-    /* Accent rim (seasonal) */
+    /* A soft aura that shifts with the holiday palette */
     .card::before{
       content:"";
       position:absolute;
       inset:-2px;
-      background:
-        radial-gradient(circle at 15% 15%, rgba(255,255,255,.10), transparent 45%),
-        radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--accent2) 30%, transparent), transparent 55%),
-        radial-gradient(circle at 40% 95%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 55%);
-      opacity: .65;
       pointer-events:none;
-    }
-
-    /* Card sigils */
-    .sigils {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: .16;
-      filter: blur(.15px);
-    }
-
-    .sigils::before,
-    .sigils::after{
-      content:"";
-      position:absolute;
-      width: 520px;
-      height: 520px;
-      border-radius: 50%;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%,-50%);
       background:
-        conic-gradient(from 0deg,
-          transparent 0 14%,
-          rgba(255,255,255,.18) 14% 15%,
-          transparent 15% 28%,
-          rgba(255,255,255,.14) 28% 29%,
-          transparent 29% 46%,
-          rgba(255,255,255,.16) 46% 47%,
-          transparent 47% 66%,
-          rgba(255,255,255,.12) 66% 67%,
-          transparent 67% 100%);
-      animation: spinSigil 22s linear infinite;
+        radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 55%),
+        radial-gradient(circle at 75% 75%, color-mix(in srgb, var(--accent2) 25%, transparent), transparent 60%),
+        linear-gradient(135deg, var(--ring2), transparent 45%, var(--ring2));
+      opacity:.85;
+      filter: blur(0.2px);
     }
 
-    .sigils::after{
-      width: 380px;
-      height: 380px;
-      opacity: .9;
-      background:
-        conic-gradient(from 90deg,
-          transparent 0 18%,
-          rgba(255,255,255,.12) 18% 19%,
-          transparent 19% 41%,
-          rgba(255,255,255,.10) 41% 42%,
-          transparent 42% 68%,
-          rgba(255,255,255,.11) 68% 69%,
-          transparent 69% 100%);
-      animation-duration: 30s;
-      animation-direction: reverse;
-    }
-
-    @keyframes spinSigil {
-      from { transform: translate(-50%,-50%) rotate(0deg); }
-      to   { transform: translate(-50%,-50%) rotate(360deg); }
-    }
-
-    /* Music toggle */
-    .music-btn{
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--music-bg);
-      color: var(--text);
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: transform .18s ease, box-shadow .22s ease, background .22s ease;
-      z-index: 2;
-    }
-    .music-btn:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 12px 26px rgba(0,0,0,.28);
-      background: color-mix(in srgb, var(--music-bg) 80%, rgba(255,255,255,.06));
-    }
-    .music-btn i{ font-size: 22px; }
-
-    .avatar {
-      width: 118px;
-      height: 118px;
-      border-radius: 50%;
-      border: 3px solid var(--avatar-border);
-      object-fit: cover;
-      margin: 22px auto 12px;
-      display: block;
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
-      position: relative;
-      z-index: 1;
-    }
-
-    h1 {
-      font-family: 'Satisfy', cursive;
-      font-size: 2.35rem;
-      margin: 0 0 6px;
-      letter-spacing: .3px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .tagline {
-      font-size: .92rem;
-      color: var(--muted2);
-      margin: 0 0 14px;
-      position: relative;
-      z-index: 1;
+    /* Header row (holiday label + music toggle) */
+    .headrow{
+      position:relative;
+      z-index:2;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:12px;
     }
 
     .season-pill{
       display:inline-flex;
       align-items:center;
-      gap:8px;
-      font-weight: 900;
-      font-size: .78rem;
-      letter-spacing: .2px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: var(--pill-bg);
-      margin: 0 0 14px;
-      position: relative;
-      z-index: 1;
+      gap:10px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      font-weight:900;
+      font-size:.88rem;
+      line-height:1;
+      white-space:nowrap;
     }
-
     .season-dot{
-      width:10px;height:10px;border-radius:999px;
+      width:10px; height:10px;
+      border-radius:999px;
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 0 3px rgba(255,255,255,.08);
+      box-shadow: 0 0 0 4px rgba(255,255,255,.08);
     }
 
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 16px;
-      position: relative;
-      z-index: 1;
+    .music-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color:inherit;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .22s ease;
+      font-weight:900;
+      font-size:.88rem;
+      user-select:none;
+    }
+    .music-btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.22); }
+    .music-btn i{ font-size:18px; }
+
+    .avatar{
+      position:relative;
+      z-index:2;
+      width:118px;
+      height:118px;
+      border-radius:50%;
+      border:3px solid var(--avatar-border);
+      object-fit:cover;
+      margin: 10px auto 12px;
+      display:block;
+      box-shadow: 0 10px 22px rgba(0,0,0,.25);
     }
 
-    .socials a {
-      color: inherit;
-      font-size: 26px;
+    h1{
+      position:relative;
+      z-index:2;
+      font-family:'Satisfy',cursive;
+      font-size:2.35rem;
+      margin:0 0 6px;
+      letter-spacing:.3px;
+      text-align:center;
+    }
+
+    .tagline{
+      position:relative;
+      z-index:2;
+      font-size:.92rem;
+      color:var(--muted2);
+      margin:0 0 14px;
+      text-align:center;
+    }
+
+    .socials{
+      position:relative;
+      z-index:2;
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      margin-bottom:16px;
+    }
+    .socials a{
+      color:inherit;
+      font-size:26px;
       transition: transform .2s ease, opacity .2s ease;
     }
-    .socials a:hover { transform: translateY(-3px); opacity: .86; }
+    .socials a:hover{ transform: translateY(-3px); opacity:.86; }
 
-    /* Tabs */
-    .tabs {
-      display: grid;
+    .tabs{
+      position:relative;
+      z-index:2;
+      display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      gap:10px;
       margin: 10px 0 16px;
-      position: relative;
-      z-index: 1;
+    }
+    .tab{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:var(--tab-bg);
+      color:var(--text);
+      cursor:pointer;
+      font-weight:900;
+      font-size:.9rem;
+      transition: transform .18s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .tab:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
+    .tab.active{ background:var(--tab-active); }
+
+    .panel{ display:none; text-align:left; position:relative; z-index:2; }
+    .panel.active{ display:block; }
+
+    .section-card{
+      background: rgba(0,0,0,.25);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px 14px;
+      margin-bottom:14px;
     }
 
-    .tab {
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: var(--tab-bg);
-      color: var(--text);
-      cursor: pointer;
-      font-weight: 800;
-      font-size: .9rem;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+    .section-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      font-weight:900;
+      margin:0 0 10px;
     }
 
-    .tab:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
-    .tab.active { background: var(--tab-active); }
-
-    /* Panels */
-    .panel { display: none; text-align: left; position: relative; z-index: 1; }
-    .panel.active { display: block; }
-
-    /* SECTION BOXES (now seasonal!) */
-    .section-card {
-      background: var(--section-bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 14px;
-      margin-bottom: 14px;
-      transition: background .35s ease;
+    /* About collapsible */
+    details.about{
+      border-radius:14px;
+      padding:12px 12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
     }
-
-    .section-title {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-weight: 900;
-      margin: 0 0 10px;
-      text-align: left;
+    details.about summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-weight:900;
+      user-select:none;
     }
+    details.about summary::-webkit-details-marker{ display:none; }
 
-    /* About collapsible (now seasonal!) */
-    details.about {
-      border-radius: 14px;
-      padding: 12px 12px;
-      border: 1px solid var(--border);
-      background: var(--details-bg);
-      transition: background .35s ease;
-    }
-
-    details.about summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 900;
-      user-select: none;
-    }
-    details.about summary::-webkit-details-marker { display: none; }
-
-    .summary-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .chevron {
+    .summary-left{ display:flex; align-items:center; gap:8px; }
+    .chevron{
       transition: transform .25s ease;
       animation: bounce 1.6s infinite;
-      font-size: 22px;
+      font-size:22px;
     }
-    details[open] .chevron { transform: rotate(180deg); animation: none; }
+    details[open] .chevron{ transform: rotate(180deg); animation:none; }
 
-    .readmore {
-      font-size: .82rem;
-      color: var(--muted2);
-      font-weight: 800;
-      margin-left: 8px;
+    @keyframes bounce{
+      0%,100%{ transform: translateY(0); }
+      50%{ transform: translateY(-3px); }
     }
 
-    details[open] .readmore::after { content: "Read less"; }
-    details:not([open]) .readmore::after { content: "Read more"; }
-
-    @keyframes bounce {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    .about p {
-      margin: 12px 0 0;
-      font-size: .95rem;
-      line-height: 1.58;
-      color: var(--muted);
+    .about p{
+      margin:12px 0 0;
+      font-size:.95rem;
+      line-height:1.58;
+      color:var(--muted);
     }
 
     /* Links */
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .links{ display:flex; flex-direction:column; gap:12px; }
 
-    .link-btn {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 16px;
-      border-radius: 999px;
-      background: var(--btn);
-      color: inherit;
-      text-decoration: none;
-      font-weight: 900;
-      border: 1px solid var(--border);
+    .link-btn{
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:14px 16px;
+      border-radius:999px;
+      background:var(--btn);
+      color:inherit;
+      text-decoration:none;
+      font-weight:900;
+      border:1px solid var(--border);
       transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
-      overflow: hidden;
+      overflow:hidden;
     }
 
     /* Hover glow */
-    .link-btn::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
+    .link-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
       background:
-        radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--accent2) 40%, transparent), transparent 45%),
-        radial-gradient(circle at 70% 70%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 55%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.10), transparent 60%);
-      opacity: 0;
+        radial-gradient(circle at 30% 30%, var(--glow-strong), transparent 45%),
+        radial-gradient(circle at 70% 70%, var(--glow), transparent 55%);
+      opacity:0;
       transition: opacity .25s ease;
-      pointer-events: none;
+      pointer-events:none;
     }
-
-    .link-btn:hover {
+    .link-btn:hover{
       transform: translateY(-2px);
       box-shadow: 0 14px 30px rgba(0,0,0,.25);
       border-color: rgba(255,255,255,.25);
     }
-    .link-btn:hover::before { opacity: 1; }
+    .link-btn:hover::before{ opacity:1; }
 
-    .link-left {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 1;
+    .link-left{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      z-index:1;
     }
 
-    .hint {
-      font-size: .85rem;
-      color: var(--muted2);
-      margin: 8px 0 0;
+    .danger-badge{
+      font-size:.72rem;
+      font-weight:900;
+      padding:5px 10px;
+      border-radius:999px;
+      background: rgba(229,57,53,.16);
+      border: 1px solid rgba(229,57,53,.35);
+      z-index:1;
     }
 
-    footer {
-      margin-top: 10px;
-      text-align: center;
-      font-size: .75rem;
+    footer{
+      position:relative;
+      z-index:2;
+      margin-top:10px;
+      text-align:center;
+      font-size:.75rem;
       color: rgba(255,255,255,.6);
-      position: relative;
-      z-index: 1;
     }
 
-    /* Modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
+    /* DOB Gate modal (for 18+ links) */
+    .modal-overlay{
+      position:fixed;
+      inset:0;
       background: rgba(0,0,0,.65);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 18px;
-      z-index: 9999;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:9999;
     }
-
-    .modal {
-      width: 100%;
-      max-width: 430px;
-      border-radius: 18px;
+    .modal{
+      width:100%;
+      max-width:430px;
+      border-radius:18px;
       background: rgba(15, 12, 20, .85);
-      border: 1px solid rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(14px);
-      padding: 18px 16px;
+      padding:18px 16px;
       box-shadow: 0 18px 45px rgba(0,0,0,.35);
       animation: popIn .22s ease-out;
-      color: #fff;
+      color:#fff;
     }
-
-    @keyframes popIn {
-      from { transform: translateY(8px) scale(.98); opacity: 0; }
-      to   { transform: translateY(0) scale(1); opacity: 1; }
+    @keyframes popIn{
+      from{ transform: translateY(8px) scale(.98); opacity:0; }
+      to{ transform: translateY(0) scale(1); opacity:1; }
     }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
+    .modal-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:10px;
     }
-
-    .modal-title {
-      font-weight: 900;
-      font-size: 1.05rem;
+    .modal-title{
+      font-weight:900;
+      font-size:1.05rem;
     }
-
-    .close-x {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 22px;
-      color: inherit;
-      opacity: .8;
+    .close-x{
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      font-size:22px;
+      color:inherit;
+      opacity:.8;
       transition: transform .15s ease, opacity .15s ease;
     }
-    .close-x:hover { transform: rotate(6deg); opacity: 1; }
+    .close-x:hover{ transform: rotate(6deg); opacity:1; }
 
-    .modal p {
-      margin: 8px 0 12px;
-      line-height: 1.45;
+    .modal p{
+      margin:8px 0 12px;
+      line-height:1.45;
       color: rgba(255,255,255,.82);
     }
 
-    .field-row {
-      display: grid;
-      gap: 10px;
-      margin: 12px 0 10px;
+    .dob-row{
+      display:grid;
+      gap:10px;
+      margin:12px 0 10px;
     }
-
-    .field-row label {
-      font-size: .85rem;
-      font-weight: 900;
-      opacity: .92;
+    .dob-row label{
+      font-size:.85rem;
+      font-weight:900;
+      opacity:.9;
     }
-
     input[type="date"], input[type="password"]{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.22);
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
-      color: inherit;
-      font-family: inherit;
-      font-weight: 700;
-      outline: none;
+      color:inherit;
+      font-family:inherit;
+      font-weight:700;
     }
 
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      margin-top:10px;
     }
-
-    .btn {
-      flex: 1;
-      border: none;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 12px 12px;
-      font-weight: 900;
+    .btn{
+      flex:1;
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:12px 12px;
+      font-weight:900;
       transition: transform .15s ease, box-shadow .2s ease;
     }
-
-    .btn.primary {
+    .btn.primary{
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #0b0b0f;
+      color:#0b0b0f;
     }
-
-    .btn.ghost {
+    .btn.ghost{
       background: rgba(255,255,255,.10);
-      color: inherit;
-      border: 1px solid rgba(255,255,255,.18);
+      color:inherit;
+      border:1px solid rgba(255,255,255,.18);
     }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
 
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
-
-    .error {
-      display: none;
-      margin-top: 10px;
-      font-weight: 900;
-      font-size: .9rem;
-      color: #ff6b6b;
+    .error{
+      display:none;
+      margin-top:10px;
+      font-weight:900;
+      font-size:.9rem;
+      color:#ff6b6b;
       animation: shake .25s ease;
     }
-
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-4px); }
+    @keyframes shake{
+      0%,100%{ transform: translateX(0); }
+      25%{ transform: translateX(-6px); }
+      50%{ transform: translateX(6px); }
+      75%{ transform: translateX(-4px); }
     }
 
-    @media (max-width: 480px) {
-      body { padding: 26px 12px; }
-      h1 { font-size: 2.05rem; }
-      .tabs { grid-template-columns: 1fr; }
+    @media (max-width: 480px){
+      body{ padding: 26px 12px; }
+      h1{ font-size: 2.05rem; }
+      .tabs{ grid-template-columns: 1fr; }
+      .headrow{ flex-wrap: wrap; justify-content:center; }
+      .season-pill, .music-btn{ width:100%; justify-content:center; }
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <div class="sigils" aria-hidden="true"></div>
 
-    <!-- Music toggle -->
-    <button class="music-btn" id="musicToggle" type="button" aria-label="Toggle music">
-      <i class="bx bx-music"></i>
-    </button>
+    <!-- Holiday label + Music toggle -->
+    <div class="headrow">
+      <div class="season-pill" id="seasonPill" aria-live="polite">
+        <span class="season-dot" aria-hidden="true"></span>
+        <span id="seasonName">Season</span>
+      </div>
 
-    <!-- Put theme.mp3 in the same folder as index.html -->
-    <audio id="bgMusic" preload="none" loop>
-      <source src="theme.mp3" type="audio/mpeg">
-    </audio>
+      <button class="music-btn" id="musicToggle" type="button" aria-pressed="false">
+        <i class="bx bx-music"></i>
+        <span id="musicLabel">Music</span>
+      </button>
+    </div>
 
-    <img class="avatar" src="houndsprofile.jpg" alt="Hound Of Hades" />
+    <img class="avatar" src="./houndsprofile.jpg" alt="Hound Of Hades" />
 
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-    <div class="season-pill" id="seasonPill" title="Auto-updates with the Wheel of the Year">
-      <span class="season-dot" aria-hidden="true"></span>
-      <span id="seasonName">Seasonal</span>
-    </div>
-
     <div class="socials">
-      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
-        <i class="bx bxl-instagram"></i>
-      </a>
-      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
-        <i class="bx bxl-tiktok"></i>
-      </a>
-      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X / Twitter">
-        <i class="fa-brands fa-x-twitter"></i>
-      </a>
+      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener"><i class="bx bxl-instagram"></i></a>
+      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener"><i class="bx bxl-tiktok"></i></a>
+      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
     </div>
 
     <!-- Tabs -->
     <div class="tabs" role="tablist" aria-label="Sections">
       <button class="tab active" data-tab="links" type="button">Links</button>
       <button class="tab" data-tab="about" type="button">About</button>
-      <button class="tab" data-tab="support" type="button">Support</button>
+      <button class="tab" data-tab="support" type="button">Tributes</button>
     </div>
 
-    <!-- PANELS -->
-    <section class="panel active" id="panel-links">
+    <!-- LINKS -->
+    <section class="panel active" id="panel-links" aria-labelledby="Links">
       <div class="section-card">
         <div class="section-title">
           <span>Featured</span>
-          <span></span>
         </div>
 
         <div class="links">
@@ -634,10 +539,10 @@
               <i class="bx bx-lock-alt"></i>
               <span>FetLife</span>
             </span>
-            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+            <span class="danger-badge">18+</span>
           </a>
 
-          <!-- Snapchat (PASSWORD gated: "I Bite") -->
+          <!-- Snapchat (Password gated: "I Bite") -->
           <a class="link-btn" href="https://www.snapchat.com/add/hound0fhades"
              target="_blank" rel="noopener"
              data-pass-gated="true">
@@ -645,17 +550,61 @@
               <i class="bx bxl-snapchat"></i>
               <span>Snapchat</span>
             </span>
-            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+            <i class="bx bx-key" aria-hidden="true" style="z-index:1; font-size:18px; opacity:.9;"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">
+          <span>Offerings</span>
+        </div>
+
+        <div class="links">
+          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-gift"></i>
+              <span>Jewelry Wishlist</span>
+            </span>
+          </a>
+
+          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-heart"></i>
+              <span>Desires Wishlist</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <div class="section-title">
+          <span>Tributes</span>
+        </div>
+
+        <div class="links">
+          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bxs-wallet"></i>
+              <span>CashApp</span>
+            </span>
+          </a>
+
+          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-dollar-circle"></i>
+              <span>Venmo</span>
+            </span>
           </a>
         </div>
       </div>
     </section>
 
-    <section class="panel" id="panel-about">
+    <!-- ABOUT -->
+    <section class="panel" id="panel-about" aria-labelledby="About">
       <div class="section-card">
         <div class="section-title">
           <span>About</span>
-          <span></span>
         </div>
 
         <details class="about">
@@ -663,7 +612,6 @@
             <span class="summary-left">
               <i class="bx bx-book-heart"></i>
               <span>About Me</span>
-              <span class="readmore"></span>
             </span>
             <i class="bx bx-chevron-down chevron"></i>
           </summary>
@@ -684,32 +632,43 @@
       </div>
     </section>
 
-    <section class="panel" id="panel-support">
+    <!-- TRIBUTES -->
+    <section class="panel" id="panel-support" aria-labelledby="Tributes">
       <div class="section-card">
         <div class="section-title">
-          <span>Support</span>
-          <span></span>
+          <span>Offerings <span aria-hidden="true" style="opacity:.9;">ᛉ</span></span>
+          <span style="font-weight:900; opacity:.85;">(Wishlists first)</span>
         </div>
 
         <div class="links">
-          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
-            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
-          </a>
-
-          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
-            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
-          </a>
-
+          <!-- Offerings first -->
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-gift"></i><span>Jewelry Wishlist</span></span>
-            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+            <span class="link-left">
+              <i class="bx bx-gift"></i>
+              <span>Jewelry Wishlist</span>
+            </span>
           </a>
 
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-heart"></i><span>Desires Wishlist</span></span>
-            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
+            <span class="link-left">
+              <i class="bx bx-heart"></i>
+              <span>Desires Wishlist</span>
+            </span>
+          </a>
+
+          <!-- Then tributes -->
+          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bxs-wallet"></i>
+              <span>CashApp</span>
+            </span>
+          </a>
+
+          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
+            <span class="link-left">
+              <i class="bx bx-dollar-circle"></i>
+              <span>Venmo</span>
+            </span>
           </a>
         </div>
       </div>
@@ -718,7 +677,10 @@
     <footer>© Hound Of Hades</footer>
   </main>
 
-  <!-- DOB Gate Modal (FetLife) -->
+  <!-- Audio (replace ./music.mp3 with your file name in the repo) -->
+  <audio id="bgMusic" src="./music.mp3" loop preload="none"></audio>
+
+  <!-- DOB Gate Modal (FetLife 18+) -->
   <div class="modal-overlay" id="dobModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dobTitle">
       <div class="modal-header">
@@ -728,7 +690,7 @@
 
       <p>This link is for adults only. Please confirm you are <strong>18+</strong> by entering your date of birth.</p>
 
-      <div class="field-row">
+      <div class="dob-row">
         <label for="dobInput">Date of birth</label>
         <input id="dobInput" type="date" />
       </div>
@@ -750,11 +712,11 @@
         <button class="close-x" id="passClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
       </div>
 
-      <p>Enter the password to open Snapchat.</p>
+      <p>Enter the password to continue.</p>
 
-      <div class="field-row">
+      <div class="dob-row">
         <label for="passInput">Password</label>
-        <input id="passInput" type="password" autocomplete="off" />
+        <input id="passInput" type="password" autocomplete="off" placeholder="••••••••" />
       </div>
 
       <div class="modal-actions">
@@ -762,7 +724,7 @@
         <button class="btn primary" id="passSubmit" type="button">Continue</button>
       </div>
 
-      <div class="error" id="passError">Wrong password.</div>
+      <div class="error" id="passError">Incorrect password.</div>
     </div>
   </div>
 
@@ -780,163 +742,109 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
+
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
+
         Object.values(panels).forEach(p => p.classList.remove('active'));
         panels[target].classList.add('active');
       });
     });
 
     // -----------------------------
-    // Seasonal Pagan color shifts (Wheel of the Year)
-    // Also updates SECTION BOXES automatically
+    // Seasonal Pagan color shifts (Wheel-ish, Northern Hemisphere defaults)
+    // Applies to: --accent, --accent2, ring colors + label
     // -----------------------------
     const seasonNameEl = document.getElementById('seasonName');
 
-    function ymd(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
-
-    function setThemeVars(t) {
-      const r = document.documentElement.style;
-
-      r.setProperty('--accent', t.accent);
-      r.setProperty('--accent2', t.accent2);
-
-      r.setProperty('--bg-overlay', t.overlay);
-      r.setProperty('--card-bg', t.card);
-
-      // NEW: section containers + pills + details + music button follow the sabbat mood
-      r.setProperty('--section-bg', t.section);
-      r.setProperty('--details-bg', t.details);
-      r.setProperty('--pill-bg', t.pill);
-      r.setProperty('--music-bg', t.music);
-
-      r.setProperty('--btn', t.btn);
-      r.setProperty('--glow-strong', t.glow);
+    function mmdd(d){
+      const m = String(d.getMonth()+1).padStart(2,'0');
+      const day = String(d.getDate()).padStart(2,'0');
+      return `${m}-${day}`;
     }
 
-    function getWheelTheme(now = new Date()) {
-      const y = now.getFullYear();
-
-      const sabbats = [
-        { key:'Imbolc',     date:new Date(y,1,1),
-          accent:'#8dd6ff', accent2:'#ffffff',
-          overlay:'rgba(0,0,0,.48)', card:'rgba(0,0,0,.52)',
-          section:'rgba(5, 20, 30, .28)', details:'rgba(5, 20, 30, .24)', pill:'rgba(5, 20, 30, .22)', music:'rgba(5, 20, 30, .30)',
-          btn:'rgba(0,0,0,.62)', glow:'rgba(141,214,255,.26)'
-        },
-        { key:'Ostara',     date:new Date(y,2,20),
-          accent:'#6dd6a5', accent2:'#d7ffea',
-          overlay:'rgba(0,0,0,.46)', card:'rgba(0,0,0,.50)',
-          section:'rgba(10, 30, 18, .28)', details:'rgba(10, 30, 18, .24)', pill:'rgba(10, 30, 18, .22)', music:'rgba(10, 30, 18, .30)',
-          btn:'rgba(0,0,0,.62)', glow:'rgba(109,214,165,.24)'
-        },
-        { key:'Beltane',    date:new Date(y,4,1),
-          accent:'#ff4d6d', accent2:'#ffd166',
-          overlay:'rgba(0,0,0,.47)', card:'rgba(0,0,0,.52)',
-          section:'rgba(40, 10, 18, .28)', details:'rgba(40, 10, 18, .24)', pill:'rgba(40, 10, 18, .22)', music:'rgba(40, 10, 18, .30)',
-          btn:'rgba(0,0,0,.64)', glow:'rgba(255,77,109,.22)'
-        },
-        { key:'Litha',      date:new Date(y,5,21),
-          accent:'#ffb300', accent2:'#fff0b3',
-          overlay:'rgba(0,0,0,.45)', card:'rgba(0,0,0,.50)',
-          section:'rgba(45, 24, 6, .28)', details:'rgba(45, 24, 6, .24)', pill:'rgba(45, 24, 6, .22)', music:'rgba(45, 24, 6, .30)',
-          btn:'rgba(0,0,0,.62)', glow:'rgba(255,179,0,.24)'
-        },
-        { key:'Lughnasadh', date:new Date(y,7,1),
-          accent:'#f97316', accent2:'#ffd3a5',
-          overlay:'rgba(0,0,0,.48)', card:'rgba(0,0,0,.52)',
-          section:'rgba(35, 16, 8, .30)', details:'rgba(35, 16, 8, .26)', pill:'rgba(35, 16, 8, .24)', music:'rgba(35, 16, 8, .32)',
-          btn:'rgba(0,0,0,.64)', glow:'rgba(249,115,22,.22)'
-        },
-        { key:'Mabon',      date:new Date(y,8,22),
-          accent:'#b08968', accent2:'#ffd6a5',
-          overlay:'rgba(0,0,0,.50)', card:'rgba(0,0,0,.54)',
-          section:'rgba(28, 18, 10, .30)', details:'rgba(28, 18, 10, .26)', pill:'rgba(28, 18, 10, .24)', music:'rgba(28, 18, 10, .32)',
-          btn:'rgba(0,0,0,.66)', glow:'rgba(176,137,104,.22)'
-        },
-        { key:'Samhain',    date:new Date(y,9,31),
-          accent:'#a855f7', accent2:'#f97316',
-          overlay:'rgba(0,0,0,.56)', card:'rgba(0,0,0,.58)',
-          section:'rgba(22, 8, 30, .34)', details:'rgba(22, 8, 30, .30)', pill:'rgba(22, 8, 30, .28)', music:'rgba(22, 8, 30, .36)',
-          btn:'rgba(0,0,0,.68)', glow:'rgba(168,85,247,.22)'
-        },
-        { key:'Yule',       date:new Date(y,11,21),
-          accent:'#60a5fa', accent2:'#d4af37',
-          overlay:'rgba(0,0,0,.54)', card:'rgba(0,0,0,.56)',
-          section:'rgba(8, 14, 28, .32)', details:'rgba(8, 14, 28, .28)', pill:'rgba(8, 14, 28, .26)', music:'rgba(8, 14, 28, .34)',
-          btn:'rgba(0,0,0,.68)', glow:'rgba(96,165,250,.20)'
-        },
-      ];
-
-      const sorted = sabbats.slice().sort((a,b) => a.date - b.date);
-      let chosen = sorted[0];
-
-      for (const s of sorted) if (now >= s.date) chosen = s;
-
-      if (now < sorted[0].date) {
-        chosen = { ...sorted.find(s => s.key === 'Yule'), date: new Date(y-1, 11, 21) };
-      }
-
-      return chosen;
+    function setTheme(name, accent, accent2){
+      document.documentElement.style.setProperty('--accent', accent);
+      document.documentElement.style.setProperty('--accent2', accent2);
+      document.documentElement.style.setProperty('--glow-strong', `${accent}33`); // soft
+      document.documentElement.style.setProperty('--ring', `${accent}22`);
+      document.documentElement.style.setProperty('--ring2', `${accent2}18`);
+      seasonNameEl.textContent = name;
     }
 
-    function applyWheelTheme() {
-      const theme = getWheelTheme(new Date());
-      seasonNameEl.textContent = theme.key;
-      setThemeVars(theme);
-      localStorage.setItem('hoh_wheel_last', JSON.stringify({ day: ymd(new Date()), key: theme.key }));
+    function applySabbatTheme(date = new Date()){
+      // Rough seasonal windows (you can tweak anytime)
+      const key = mmdd(date);
+
+      // Helpers: compare "MM-DD" lexicographically works with leading zeros.
+      const inRange = (start, end) => (start <= end) ? (key >= start && key <= end) : (key >= start || key <= end);
+
+      if (inRange("12-15","01-10")) return setTheme("Yule",       "#7dd3fc", "#a78bfa");
+      if (inRange("01-11","02-10")) return setTheme("Imbolc",     "#fef3c7", "#93c5fd");
+      if (inRange("02-11","03-25")) return setTheme("Ostara",     "#86efac", "#fda4af");
+      if (inRange("03-26","04-30")) return setTheme("Beltane",    "#fb7185", "#fbbf24");
+      if (inRange("05-01","06-24")) return setTheme("Litha",      "#fbbf24", "#60a5fa");
+      if (inRange("06-25","08-05")) return setTheme("Lughnasadh", "#f59e0b", "#34d399");
+      if (inRange("08-06","09-24")) return setTheme("Mabon",      "#fb923c", "#a3e635");
+      if (inRange("09-25","11-10")) return setTheme("Samhain",    "#fb7185", "#a78bfa");
+      return setTheme("Winter Night", "#a78bfa", "#60a5fa");
     }
 
-    applyWheelTheme();
+    applySabbatTheme();
 
-    setInterval(() => {
-      const cached = localStorage.getItem('hoh_wheel_last');
-      const today = ymd(new Date());
-      if (!cached) return applyWheelTheme();
-      try {
-        const parsed = JSON.parse(cached);
-        if (parsed.day !== today) applyWheelTheme();
-      } catch { applyWheelTheme(); }
-    }, 60 * 1000);
+    // Optional: re-check daily in case someone leaves page open
+    setInterval(() => applySabbatTheme(), 1000 * 60 * 60);
 
     // -----------------------------
-    // Music toggle
+    // Music toggle (remembered)
+    // Put a file in your repo named: music.mp3
     // -----------------------------
+    const music = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
-    const bgMusic = document.getElementById('bgMusic');
+    const musicLabel = document.getElementById('musicLabel');
 
-    function setMusicState(on) {
-      localStorage.setItem('hoh_music', on ? 'on' : 'off');
-      const icon = musicToggle.querySelector('i');
-      icon.className = on ? 'bx bx-volume-full' : 'bx bx-volume-mute';
+    function setMusicUI(on){
+      musicToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
+      musicLabel.textContent = on ? 'Music On' : 'Music Off';
+      musicToggle.querySelector('i').className = on ? 'bx bx-music' : 'bx bx-music-off';
     }
 
-    async function startMusic() {
-      try {
-        await bgMusic.play();
-        setMusicState(true);
-      } catch {
-        setMusicState(false);
+    async function playMusic(){
+      try{
+        await music.play();
+        localStorage.setItem('hoh_music', 'on');
+        setMusicUI(true);
+      }catch(e){
+        // Autoplay can be blocked until user taps — UI stays consistent
+        localStorage.setItem('hoh_music', 'off');
+        setMusicUI(false);
       }
     }
 
-    function stopMusic() {
-      bgMusic.pause();
-      bgMusic.currentTime = 0;
-      setMusicState(false);
+    function stopMusic(){
+      music.pause();
+      music.currentTime = 0;
+      localStorage.setItem('hoh_music', 'off');
+      setMusicUI(false);
     }
 
+    // restore
     const savedMusic = localStorage.getItem('hoh_music');
-    if (savedMusic === 'on') startMusic();
-    else setMusicState(false);
+    setMusicUI(savedMusic === 'on');
+    if (savedMusic === 'on') {
+      // try, but browser may block until first interaction
+      playMusic();
+    }
 
-    musicToggle.addEventListener('click', async () => {
-      if (bgMusic.paused) await startMusic();
-      else stopMusic();
+    musicToggle.addEventListener('click', () => {
+      const isOn = localStorage.getItem('hoh_music') === 'on';
+      if (isOn) stopMusic();
+      else playMusic();
     });
 
     // -----------------------------
-    // DOB Gate (FetLife) - remembers 24h
+    // DOB Gate (FetLife)
+    // - Remembers success for 24 hours
     // -----------------------------
     const dobModal = document.getElementById('dobModal');
     const dobInput = document.getElementById('dobInput');
@@ -945,38 +853,36 @@
     const dobCancel = document.getElementById('dobCancel');
     const dobSubmit = document.getElementById('dobSubmit');
 
-    let pendingDobHref = null;
+    let pendingHref = null;
 
-    function openDobModal(href) {
-      pendingDobHref = href;
+    function openDobModal(href){
+      pendingHref = href;
       dobError.style.display = 'none';
       dobInput.value = '';
       dobModal.style.display = 'flex';
-      dobModal.setAttribute('aria-hidden', 'false');
+      dobModal.setAttribute('aria-hidden','false');
       setTimeout(() => dobInput.focus(), 50);
     }
-
-    function closeDobModal() {
+    function closeDobModal(){
       dobModal.style.display = 'none';
-      dobModal.setAttribute('aria-hidden', 'true');
-      pendingDobHref = null;
+      dobModal.setAttribute('aria-hidden','true');
+      pendingHref = null;
     }
-
-    function calculateAge(dob) {
+    function calculateAge(dob){
       const today = new Date();
       let age = today.getFullYear() - dob.getFullYear();
       const m = today.getMonth() - dob.getMonth();
       if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
       return age;
     }
-
-    function hasRecentDobApproval() {
+    function hasRecentDobApproval(){
       const stamp = localStorage.getItem('hoh_dob_ok_until');
-      return stamp && Date.now() < Number(stamp);
+      if (!stamp) return false;
+      return Date.now() < Number(stamp);
     }
-
-    function setDobApproval24h() {
-      localStorage.setItem('hoh_dob_ok_until', String(Date.now() + 24*60*60*1000));
+    function setDobApproval24h(){
+      const until = Date.now() + (24 * 60 * 60 * 1000);
+      localStorage.setItem('hoh_dob_ok_until', String(until));
     }
 
     document.querySelectorAll('a[data-dob-gated="true"]').forEach(a => {
@@ -987,8 +893,8 @@
       });
     });
 
-    function handleDobSubmit() {
-      if (!dobInput.value) {
+    function handleDobSubmit(){
+      if (!dobInput.value){
         dobError.textContent = "Please enter your date of birth.";
         dobError.style.display = 'block';
         return;
@@ -996,10 +902,10 @@
       const dob = new Date(dobInput.value);
       const age = calculateAge(dob);
 
-      if (age >= 18) {
+      if (age >= 18){
         setDobApproval24h();
         closeDobModal();
-        if (pendingDobHref) window.open(pendingDobHref, "_blank", "noopener");
+        if (pendingHref) window.open(pendingHref, "_blank", "noopener");
       } else {
         dobError.textContent = "Sorry — you must be 18 or older.";
         dobError.style.display = 'block';
@@ -1012,47 +918,63 @@
     dobSubmit.addEventListener('click', handleDobSubmit);
     dobCancel.addEventListener('click', closeDobModal);
     dobClose.addEventListener('click', closeDobModal);
-
-    dobModal.addEventListener('click', (e) => {
-      if (e.target === dobModal) closeDobModal();
-    });
+    dobModal.addEventListener('click', (e) => { if (e.target === dobModal) closeDobModal(); });
 
     // -----------------------------
-    // Password Gate (Snapchat) - password: "I Bite" (remembers 24h)
+    // Password Gate (Snapchat) — password: "I Bite"
+    // - Remembers success for 12 hours
     // -----------------------------
-    const PASS_PHRASE = "I Bite";
-
-    const passModal  = document.getElementById('passModal');
-    const passInput  = document.getElementById('passInput');
-    const passError  = document.getElementById('passError');
-    const passClose  = document.getElementById('passClose');
+    const passModal = document.getElementById('passModal');
+    const passInput = document.getElementById('passInput');
+    const passError = document.getElementById('passError');
+    const passClose = document.getElementById('passClose');
     const passCancel = document.getElementById('passCancel');
     const passSubmit = document.getElementById('passSubmit');
 
     let pendingPassHref = null;
+    const PASSWORD = "I Bite";
 
-    function openPassModal(href) {
+    function hasRecentPassApproval(){
+      const stamp = localStorage.getItem('hoh_pass_ok_until');
+      if (!stamp) return false;
+      return Date.now() < Number(stamp);
+    }
+    function setPassApproval12h(){
+      const until = Date.now() + (12 * 60 * 60 * 1000);
+      localStorage.setItem('hoh_pass_ok_until', String(until));
+    }
+
+    function openPassModal(href){
       pendingPassHref = href;
       passError.style.display = 'none';
       passInput.value = '';
       passModal.style.display = 'flex';
-      passModal.setAttribute('aria-hidden', 'false');
+      passModal.setAttribute('aria-hidden','false');
       setTimeout(() => passInput.focus(), 50);
     }
-
-    function closePassModal() {
+    function closePassModal(){
       passModal.style.display = 'none';
-      passModal.setAttribute('aria-hidden', 'true');
+      passModal.setAttribute('aria-hidden','true');
       pendingPassHref = null;
     }
-
-    function hasRecentPassApproval() {
-      const stamp = localStorage.getItem('hoh_pass_ok_until');
-      return stamp && Date.now() < Number(stamp);
-    }
-
-    function setPassApproval24h() {
-      localStorage.setItem('hoh_pass_ok_until', String(Date.now() + 24*60*60*1000));
+    function handlePassSubmit(){
+      const entered = (passInput.value || "").trim();
+      if (!entered){
+        passError.textContent = "Please enter the password.";
+        passError.style.display = 'block';
+        return;
+      }
+      if (entered.toLowerCase() === PASSWORD.toLowerCase()){
+        setPassApproval12h();
+        closePassModal();
+        if (pendingPassHref) window.open(pendingPassHref, "_blank", "noopener");
+      } else {
+        passError.textContent = "Incorrect password.";
+        passError.style.display = 'block';
+        passError.style.animation = 'none';
+        void passError.offsetWidth;
+        passError.style.animation = '';
+      }
     }
 
     document.querySelectorAll('a[data-pass-gated="true"]').forEach(a => {
@@ -1063,48 +985,22 @@
       });
     });
 
-    function handlePassSubmit() {
-      const entered = (passInput.value || "").trim();
-      if (!entered) {
-        passError.textContent = "Please enter the password.";
-        passError.style.display = 'block';
-        return;
-      }
-      if (entered === PASS_PHRASE) {
-        setPassApproval24h();
-        closePassModal();
-        if (pendingPassHref) window.open(pendingPassHref, "_blank", "noopener");
-      } else {
-        passError.textContent = "Wrong password.";
-        passError.style.display = 'block';
-        passError.style.animation = 'none';
-        void passError.offsetWidth;
-        passError.style.animation = '';
-      }
-    }
-
     passSubmit.addEventListener('click', handlePassSubmit);
     passCancel.addEventListener('click', closePassModal);
     passClose.addEventListener('click', closePassModal);
+    passModal.addEventListener('click', (e) => { if (e.target === passModal) closePassModal(); });
 
-    passModal.addEventListener('click', (e) => {
-      if (e.target === passModal) closePassModal();
-    });
-
-    // Shared Esc/Enter handling
+    // Keyboard shortcuts for modals
     document.addEventListener('keydown', (e) => {
-      const dobOpen  = dobModal.style.display === 'flex';
+      const dobOpen = dobModal.style.display === 'flex';
       const passOpen = passModal.style.display === 'flex';
 
-      if ((dobOpen || passOpen) && e.key === 'Escape') {
+      if ((dobOpen || passOpen) && e.key === 'Escape'){
         if (dobOpen) closeDobModal();
         if (passOpen) closePassModal();
       }
-
-      if ((dobOpen || passOpen) && e.key === 'Enter') {
-        if (dobOpen) handleDobSubmit();
-        if (passOpen) handlePassSubmit();
-      }
+      if (dobOpen && e.key === 'Enter') handleDobSubmit();
+      if (passOpen && e.key === 'Enter') handlePassSubmit();
     });
   </script>
 </body>
