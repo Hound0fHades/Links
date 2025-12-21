@@ -12,7 +12,7 @@
 
   <style>
     :root {
-      /* Base (dark) */
+      /* Base */
       --bg-overlay: rgba(0,0,0,.55);
       --card-bg: rgba(0,0,0,.55);
       --card-blur: 12px;
@@ -21,26 +21,30 @@
       --muted: rgba(255,255,255,.78);
       --muted2: rgba(255,255,255,.62);
 
-      /* Seasonal accents (auto-swapped by JS) */
+      /* Seasonal accents (auto-swapped) */
       --accent: #e53935;
       --accent2: #ffb300;
 
-      /* Button */
+      /* Buttons */
       --btn: rgba(0,0,0,.65);
 
       /* Glow */
       --glow: rgba(255,255,255,.18);
       --glow-strong: rgba(255, 180, 0, .24);
 
-      /* Background image (YOU REQUESTED THIS NAME) */
+      /* Background + Profile (your filenames) */
       --bg-image: url("cerberuslinkbackground.png");
-
-      /* Profile image (YOU REQUESTED THIS NAME) */
       --avatar-border: rgba(255,255,255,.95);
 
       /* Tabs */
       --tab-bg: rgba(0,0,0,.30);
       --tab-active: rgba(255,255,255,.10);
+
+      /* NEW: Seasonal container colors (auto-swapped) */
+      --section-bg: rgba(0,0,0,.25);
+      --details-bg: rgba(0,0,0,.22);
+      --pill-bg: rgba(0,0,0,.22);
+      --music-bg: rgba(0,0,0,.28);
     }
 
     * { box-sizing: border-box; }
@@ -65,7 +69,7 @@
       overflow-x: hidden;
     }
 
-    /* Subtle animated "sigils" across the whole page */
+    /* Subtle animated sigils (page) */
     body::before{
       content:"";
       position: fixed;
@@ -102,7 +106,7 @@
       overflow: hidden;
     }
 
-    /* Accent glow rim (seasonal) */
+    /* Accent rim (seasonal) */
     .card::before{
       content:"";
       position:absolute;
@@ -115,7 +119,7 @@
       pointer-events:none;
     }
 
-    /* Floating sigils inside the card */
+    /* Card sigils */
     .sigils {
       position: absolute;
       inset: 0;
@@ -170,7 +174,7 @@
       to   { transform: translate(-50%,-50%) rotate(360deg); }
     }
 
-    /* Music toggle (kept, no Dark/Light or Mythic controls) */
+    /* Music toggle */
     .music-btn{
       position: absolute;
       top: 14px;
@@ -179,7 +183,7 @@
       height: 44px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.28);
+      background: var(--music-bg);
       color: var(--text);
       cursor: pointer;
       display: grid;
@@ -190,7 +194,7 @@
     .music-btn:hover{
       transform: translateY(-1px);
       box-shadow: 0 12px 26px rgba(0,0,0,.28);
-      background: rgba(0,0,0,.36);
+      background: color-mix(in srgb, var(--music-bg) 80%, rgba(255,255,255,.06));
     }
     .music-btn i{ font-size: 22px; }
 
@@ -234,7 +238,7 @@
       padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
+      background: var(--pill-bg);
       margin: 0 0 14px;
       position: relative;
       z-index: 1;
@@ -291,12 +295,14 @@
     .panel { display: none; text-align: left; position: relative; z-index: 1; }
     .panel.active { display: block; }
 
+    /* SECTION BOXES (now seasonal!) */
     .section-card {
-      background: rgba(0,0,0,.25);
+      background: var(--section-bg);
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 14px 14px;
       margin-bottom: 14px;
+      transition: background .35s ease;
     }
 
     .section-title {
@@ -309,12 +315,13 @@
       text-align: left;
     }
 
-    /* About collapsible */
+    /* About collapsible (now seasonal!) */
     details.about {
       border-radius: 14px;
       padding: 12px 12px;
       border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
+      background: var(--details-bg);
+      transition: background .35s ease;
     }
 
     details.about summary {
@@ -387,7 +394,7 @@
       overflow: hidden;
     }
 
-    /* Hover glow (kept) */
+    /* Hover glow */
     .link-btn::before {
       content: "";
       position: absolute;
@@ -430,7 +437,7 @@
       z-index: 1;
     }
 
-    /* Modal (shared) */
+    /* Modal */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -576,17 +583,12 @@
       <i class="bx bx-music"></i>
     </button>
 
-    <!-- Put your music file in the same folder as this HTML and name it: theme.mp3
-         Or change src below to your preferred file. -->
+    <!-- Put theme.mp3 in the same folder as index.html -->
     <audio id="bgMusic" preload="none" loop>
       <source src="theme.mp3" type="audio/mpeg">
     </audio>
 
-    <img
-      class="avatar"
-      src="houndsprofile.jpg"
-      alt="Hound Of Hades"
-    />
+    <img class="avatar" src="houndsprofile.jpg" alt="Hound Of Hades" />
 
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
@@ -620,7 +622,7 @@
       <div class="section-card">
         <div class="section-title">
           <span>Featured</span>
-          <span class="hint">Tap a link — glow is intentional ✨</span>
+          <span></span>
         </div>
 
         <div class="links">
@@ -653,7 +655,7 @@
       <div class="section-card">
         <div class="section-title">
           <span>About</span>
-          <span class="hint">Short + sweet, expandable</span>
+          <span></span>
         </div>
 
         <details class="about">
@@ -686,7 +688,7 @@
       <div class="section-card">
         <div class="section-title">
           <span>Support</span>
-          <span class="hint">Everything in one place</span>
+          <span></span>
         </div>
 
         <div class="links">
@@ -778,10 +780,8 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
-
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
         Object.values(panels).forEach(p => p.classList.remove('active'));
         panels[target].classList.add('active');
       });
@@ -789,45 +789,90 @@
 
     // -----------------------------
     // Seasonal Pagan color shifts (Wheel of the Year)
+    // Also updates SECTION BOXES automatically
     // -----------------------------
     const seasonNameEl = document.getElementById('seasonName');
 
     function ymd(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
 
-    function setThemeVars({accent, accent2, overlay, cardBg, btnBg, glowStrong}) {
-      const root = document.documentElement.style;
-      root.setProperty('--accent', accent);
-      root.setProperty('--accent2', accent2);
-      root.setProperty('--bg-overlay', overlay);
-      root.setProperty('--card-bg', cardBg);
-      root.setProperty('--btn', btnBg);
-      root.setProperty('--glow-strong', glowStrong);
+    function setThemeVars(t) {
+      const r = document.documentElement.style;
+
+      r.setProperty('--accent', t.accent);
+      r.setProperty('--accent2', t.accent2);
+
+      r.setProperty('--bg-overlay', t.overlay);
+      r.setProperty('--card-bg', t.card);
+
+      // NEW: section containers + pills + details + music button follow the sabbat mood
+      r.setProperty('--section-bg', t.section);
+      r.setProperty('--details-bg', t.details);
+      r.setProperty('--pill-bg', t.pill);
+      r.setProperty('--music-bg', t.music);
+
+      r.setProperty('--btn', t.btn);
+      r.setProperty('--glow-strong', t.glow);
     }
 
     function getWheelTheme(now = new Date()) {
       const y = now.getFullYear();
 
-      // Approximate sabbat anchors (common dates)
       const sabbats = [
-        { key: 'Imbolc',     date: new Date(y, 1, 1),  accent:'#8dd6ff', accent2:'#ffffff', overlay:'rgba(0,0,0,.48)', card:'rgba(0,0,0,.52)', btn:'rgba(0,0,0,.62)', glow:'rgba(141,214,255,.26)' },
-        { key: 'Ostara',     date: new Date(y, 2, 20), accent:'#6dd6a5', accent2:'#d7ffea', overlay:'rgba(0,0,0,.46)', card:'rgba(0,0,0,.50)', btn:'rgba(0,0,0,.62)', glow:'rgba(109,214,165,.24)' },
-        { key: 'Beltane',    date: new Date(y, 4, 1),  accent:'#ff4d6d', accent2:'#ffd166', overlay:'rgba(0,0,0,.47)', card:'rgba(0,0,0,.52)', btn:'rgba(0,0,0,.64)', glow:'rgba(255,77,109,.22)' },
-        { key: 'Litha',      date: new Date(y, 5, 21), accent:'#ffb300', accent2:'#fff0b3', overlay:'rgba(0,0,0,.45)', card:'rgba(0,0,0,.50)', btn:'rgba(0,0,0,.62)', glow:'rgba(255,179,0,.24)' },
-        { key: 'Lughnasadh', date: new Date(y, 7, 1),  accent:'#f97316', accent2:'#ffd3a5', overlay:'rgba(0,0,0,.48)', card:'rgba(0,0,0,.52)', btn:'rgba(0,0,0,.64)', glow:'rgba(249,115,22,.22)' },
-        { key: 'Mabon',      date: new Date(y, 8, 22), accent:'#b08968', accent2:'#ffd6a5', overlay:'rgba(0,0,0,.50)', card:'rgba(0,0,0,.54)', btn:'rgba(0,0,0,.66)', glow:'rgba(176,137,104,.22)' },
-        { key: 'Samhain',    date: new Date(y, 9, 31), accent:'#a855f7', accent2:'#f97316', overlay:'rgba(0,0,0,.56)', card:'rgba(0,0,0,.58)', btn:'rgba(0,0,0,.68)', glow:'rgba(168,85,247,.22)' },
-        { key: 'Yule',       date: new Date(y, 11, 21),accent:'#60a5fa', accent2:'#d4af37', overlay:'rgba(0,0,0,.54)', card:'rgba(0,0,0,.56)', btn:'rgba(0,0,0,.68)', glow:'rgba(96,165,250,.20)' },
+        { key:'Imbolc',     date:new Date(y,1,1),
+          accent:'#8dd6ff', accent2:'#ffffff',
+          overlay:'rgba(0,0,0,.48)', card:'rgba(0,0,0,.52)',
+          section:'rgba(5, 20, 30, .28)', details:'rgba(5, 20, 30, .24)', pill:'rgba(5, 20, 30, .22)', music:'rgba(5, 20, 30, .30)',
+          btn:'rgba(0,0,0,.62)', glow:'rgba(141,214,255,.26)'
+        },
+        { key:'Ostara',     date:new Date(y,2,20),
+          accent:'#6dd6a5', accent2:'#d7ffea',
+          overlay:'rgba(0,0,0,.46)', card:'rgba(0,0,0,.50)',
+          section:'rgba(10, 30, 18, .28)', details:'rgba(10, 30, 18, .24)', pill:'rgba(10, 30, 18, .22)', music:'rgba(10, 30, 18, .30)',
+          btn:'rgba(0,0,0,.62)', glow:'rgba(109,214,165,.24)'
+        },
+        { key:'Beltane',    date:new Date(y,4,1),
+          accent:'#ff4d6d', accent2:'#ffd166',
+          overlay:'rgba(0,0,0,.47)', card:'rgba(0,0,0,.52)',
+          section:'rgba(40, 10, 18, .28)', details:'rgba(40, 10, 18, .24)', pill:'rgba(40, 10, 18, .22)', music:'rgba(40, 10, 18, .30)',
+          btn:'rgba(0,0,0,.64)', glow:'rgba(255,77,109,.22)'
+        },
+        { key:'Litha',      date:new Date(y,5,21),
+          accent:'#ffb300', accent2:'#fff0b3',
+          overlay:'rgba(0,0,0,.45)', card:'rgba(0,0,0,.50)',
+          section:'rgba(45, 24, 6, .28)', details:'rgba(45, 24, 6, .24)', pill:'rgba(45, 24, 6, .22)', music:'rgba(45, 24, 6, .30)',
+          btn:'rgba(0,0,0,.62)', glow:'rgba(255,179,0,.24)'
+        },
+        { key:'Lughnasadh', date:new Date(y,7,1),
+          accent:'#f97316', accent2:'#ffd3a5',
+          overlay:'rgba(0,0,0,.48)', card:'rgba(0,0,0,.52)',
+          section:'rgba(35, 16, 8, .30)', details:'rgba(35, 16, 8, .26)', pill:'rgba(35, 16, 8, .24)', music:'rgba(35, 16, 8, .32)',
+          btn:'rgba(0,0,0,.64)', glow:'rgba(249,115,22,.22)'
+        },
+        { key:'Mabon',      date:new Date(y,8,22),
+          accent:'#b08968', accent2:'#ffd6a5',
+          overlay:'rgba(0,0,0,.50)', card:'rgba(0,0,0,.54)',
+          section:'rgba(28, 18, 10, .30)', details:'rgba(28, 18, 10, .26)', pill:'rgba(28, 18, 10, .24)', music:'rgba(28, 18, 10, .32)',
+          btn:'rgba(0,0,0,.66)', glow:'rgba(176,137,104,.22)'
+        },
+        { key:'Samhain',    date:new Date(y,9,31),
+          accent:'#a855f7', accent2:'#f97316',
+          overlay:'rgba(0,0,0,.56)', card:'rgba(0,0,0,.58)',
+          section:'rgba(22, 8, 30, .34)', details:'rgba(22, 8, 30, .30)', pill:'rgba(22, 8, 30, .28)', music:'rgba(22, 8, 30, .36)',
+          btn:'rgba(0,0,0,.68)', glow:'rgba(168,85,247,.22)'
+        },
+        { key:'Yule',       date:new Date(y,11,21),
+          accent:'#60a5fa', accent2:'#d4af37',
+          overlay:'rgba(0,0,0,.54)', card:'rgba(0,0,0,.56)',
+          section:'rgba(8, 14, 28, .32)', details:'rgba(8, 14, 28, .28)', pill:'rgba(8, 14, 28, .26)', music:'rgba(8, 14, 28, .34)',
+          btn:'rgba(0,0,0,.68)', glow:'rgba(96,165,250,.20)'
+        },
       ];
 
-      // Find most recent sabbat anchor (wrap to previous year if needed)
       const sorted = sabbats.slice().sort((a,b) => a.date - b.date);
       let chosen = sorted[0];
 
-      for (const s of sorted) {
-        if (now >= s.date) chosen = s;
-      }
+      for (const s of sorted) if (now >= s.date) chosen = s;
 
-      // If we're before Imbolc (Feb 1), treat as Yule season (previous Dec 21)
       if (now < sorted[0].date) {
         chosen = { ...sorted.find(s => s.key === 'Yule'), date: new Date(y-1, 11, 21) };
       }
@@ -838,23 +883,12 @@
     function applyWheelTheme() {
       const theme = getWheelTheme(new Date());
       seasonNameEl.textContent = theme.key;
-
-      setThemeVars({
-        accent: theme.accent,
-        accent2: theme.accent2,
-        overlay: theme.overlay,
-        cardBg: theme.card,
-        btnBg: theme.btn,
-        glowStrong: theme.glow
-      });
-
-      // Tiny cache so it doesn’t “pop” on refresh during the same day
+      setThemeVars(theme);
       localStorage.setItem('hoh_wheel_last', JSON.stringify({ day: ymd(new Date()), key: theme.key }));
     }
 
     applyWheelTheme();
 
-    // Refresh once per day (soft)
     setInterval(() => {
       const cached = localStorage.getItem('hoh_wheel_last');
       const today = ymd(new Date());
@@ -882,7 +916,6 @@
         await bgMusic.play();
         setMusicState(true);
       } catch {
-        // Autoplay may be blocked until user taps — that’s normal on mobile.
         setMusicState(false);
       }
     }
@@ -894,12 +927,8 @@
     }
 
     const savedMusic = localStorage.getItem('hoh_music');
-    if (savedMusic === 'on') {
-      // Try to resume if browser allows; otherwise it’ll switch back off.
-      startMusic();
-    } else {
-      setMusicState(false);
-    }
+    if (savedMusic === 'on') startMusic();
+    else setMusicState(false);
 
     musicToggle.addEventListener('click', async () => {
       if (bgMusic.paused) await startMusic();
@@ -907,7 +936,7 @@
     });
 
     // -----------------------------
-    // DOB Gate (FetLife) - remembers success 24h
+    // DOB Gate (FetLife) - remembers 24h
     // -----------------------------
     const dobModal = document.getElementById('dobModal');
     const dobInput = document.getElementById('dobInput');
@@ -943,13 +972,11 @@
 
     function hasRecentDobApproval() {
       const stamp = localStorage.getItem('hoh_dob_ok_until');
-      if (!stamp) return false;
-      return Date.now() < Number(stamp);
+      return stamp && Date.now() < Number(stamp);
     }
 
     function setDobApproval24h() {
-      const until = Date.now() + (24 * 60 * 60 * 1000);
-      localStorage.setItem('hoh_dob_ok_until', String(until));
+      localStorage.setItem('hoh_dob_ok_until', String(Date.now() + 24*60*60*1000));
     }
 
     document.querySelectorAll('a[data-dob-gated="true"]').forEach(a => {
@@ -966,7 +993,6 @@
         dobError.style.display = 'block';
         return;
       }
-
       const dob = new Date(dobInput.value);
       const age = calculateAge(dob);
 
@@ -994,7 +1020,7 @@
     // -----------------------------
     // Password Gate (Snapchat) - password: "I Bite" (remembers 24h)
     // -----------------------------
-    const PASS_PHRASE = "I Bite"; // exact phrase
+    const PASS_PHRASE = "I Bite";
 
     const passModal  = document.getElementById('passModal');
     const passInput  = document.getElementById('passInput');
@@ -1026,7 +1052,7 @@
     }
 
     function setPassApproval24h() {
-      localStorage.setItem('hoh_pass_ok_until', String(Date.now() + 24 * 60 * 60 * 1000));
+      localStorage.setItem('hoh_pass_ok_until', String(Date.now() + 24*60*60*1000));
     }
 
     document.querySelectorAll('a[data-pass-gated="true"]').forEach(a => {
@@ -1039,13 +1065,11 @@
 
     function handlePassSubmit() {
       const entered = (passInput.value || "").trim();
-
       if (!entered) {
         passError.textContent = "Please enter the password.";
         passError.style.display = 'block';
         return;
       }
-
       if (entered === PASS_PHRASE) {
         setPassApproval24h();
         closePassModal();
@@ -1067,7 +1091,7 @@
       if (e.target === passModal) closePassModal();
     });
 
-    // Shared Esc/Enter handling (works for whichever modal is open)
+    // Shared Esc/Enter handling
     document.addEventListener('keydown', (e) => {
       const dobOpen  = dobModal.style.display === 'flex';
       const passOpen = passModal.style.display === 'flex';
