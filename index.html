@@ -28,7 +28,7 @@
       --glow: rgba(255, 255, 255, .18);
       --glow-strong: rgba(255, 180, 0, .24);
 
-      /* Background image */
+      /* Background image (theme can override this) */
       --bg-image: url("https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png");
 
       /* Profile */
@@ -127,6 +127,7 @@
       justify-content: space-between;
       gap: 10px;
       margin-bottom: 14px;
+      flex-wrap: wrap;
     }
 
     .pill {
@@ -143,6 +144,9 @@
       user-select: none;
       font-weight: 600;
       font-size: .88rem;
+      flex: 1;
+      justify-content: center;
+      min-width: 160px;
     }
 
     body.light .pill {
@@ -183,19 +187,25 @@
     }
     body.light .tagline { color: var(--light-muted2); }
 
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 18px;
-      margin-bottom: 16px;
+    .season-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 auto 14px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color: var(--muted);
+      font-weight: 800;
+      font-size: .8rem;
+      max-width: fit-content;
     }
-
-    .socials a {
-      color: inherit;
-      font-size: 26px;
-      transition: transform .2s ease, opacity .2s ease;
+    body.light .season-badge {
+      border-color: var(--light-border);
+      background: rgba(255,255,255,.55);
+      color: var(--light-muted);
     }
-    .socials a:hover { transform: translateY(-3px); opacity: .86; }
 
     /* Tabs */
     .tabs {
@@ -391,11 +401,6 @@
       border-color: rgba(229,57,53,.35);
     }
 
-    .support-grid {
-      display: grid;
-      gap: 12px;
-    }
-
     .hint {
       font-size: .85rem;
       color: var(--muted2);
@@ -559,8 +564,7 @@
       body { padding: 26px 12px; }
       h1 { font-size: 2.05rem; }
       .tabs { grid-template-columns: 1fr; }
-      .topbar { flex-wrap: wrap; justify-content: center; }
-      .pill { width: 100%; justify-content: center; }
+      .pill { width: 100%; min-width: 0; }
     }
   </style>
 </head>
@@ -579,6 +583,11 @@
         <i class="bx bxs-crown"></i>
         <span>Mythic Theme</span>
       </button>
+
+      <button class="pill" id="toggle-seasonal" type="button" title="Auto-switches the whole page to the current sabbat">
+        <i class="bx bx-calendar-star"></i>
+        <span>Seasonal (Auto)</span>
+      </button>
     </div>
 
     <img
@@ -590,10 +599,9 @@
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-    <div class="socials">
-      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener"><i class="bx bxl-instagram"></i></a>
-      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener"><i class="bx bxl-tiktok"></i></a>
-      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
+    <div class="season-badge" id="seasonBadge" style="display:none;">
+      <i class="bx bx-leaf"></i>
+      <span id="seasonText">Season</span>
     </div>
 
     <!-- Tabs -->
@@ -612,7 +620,6 @@
         </div>
 
         <div class="links">
-
           <!-- FetLife (DOB gated) -->
           <a class="link-btn" href="https://fetlife.com/Hound0fHades"
              target="_blank" rel="noopener"
@@ -622,65 +629,6 @@
               <span>FetLife</span>
             </span>
             <span class="badge danger">18+</span>
-          </a>
-
-          <a class="link-btn" href="https://www.snapchat.com/add/hound0fhades" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bxl-snapchat"></i>
-              <span>Snapchat</span>
-            </span>
-            <span class="badge">Social</span>
-          </a>
-
-        </div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-title">
-          <span>Support</span>
-          <span class="hint">Thank you for the love 🖤</span>
-        </div>
-
-        <div class="links">
-          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bxs-wallet"></i>
-              <span>CashApp</span>
-            </span>
-            <span class="badge">Tip</span>
-          </a>
-
-          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-dollar-circle"></i>
-              <span>Venmo</span>
-            </span>
-            <span class="badge">Tip</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-title">
-          <span>Wishlists</span>
-          <span class="hint">Optional goodies ✨</span>
-        </div>
-
-        <div class="links">
-          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-gift"></i>
-              <span>Jewelry Wishlist</span>
-            </span>
-            <span class="badge">Amazon</span>
-          </a>
-
-          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-heart"></i>
-              <span>Desires Wishlist</span>
-            </span>
-            <span class="badge">Amazon</span>
           </a>
         </div>
       </div>
@@ -725,7 +673,8 @@
           <span class="hint">Choose your mood up top</span>
         </div>
         <p class="hint" style="margin:0;">
-          Use <strong>Dark/Light</strong> for readability and <strong>Mythic Theme</strong> for that underworld-gold aesthetic.
+          Use <strong>Dark/Light</strong> for readability, <strong>Mythic Theme</strong> for underworld-gold,
+          and <strong>Seasonal</strong> for Wheel-of-the-Year visuals.
         </p>
       </div>
     </section>
@@ -733,34 +682,12 @@
     <section class="panel" id="panel-support" aria-labelledby="Support">
       <div class="section-card">
         <div class="section-title">
-          <span>Support & Extras</span>
-          <span class="hint">Everything in one place</span>
+          <span>Support</span>
+          <span class="hint">Section intentionally empty for now</span>
         </div>
 
-        <div class="support-grid">
-          <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
-            <span class="badge">Tip</span>
-          </a>
-
-          <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
-            <span class="badge">Tip</span>
-          </a>
-
-          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-gift"></i><span>Jewelry Wishlist</span></span>
-            <span class="badge">Amazon</span>
-          </a>
-
-          <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-heart"></i><span>Desires Wishlist</span></span>
-            <span class="badge">Amazon</span>
-          </a>
-        </div>
-
-        <p class="hint">
-          Tip: if you want, we can add a “Commission / Requests” button here later.
+        <p class="hint" style="margin:0;">
+          If you want later, we can add a single “Support” link, a commission form, or a clean contact button here.
         </p>
       </div>
     </section>
@@ -796,15 +723,20 @@
 
   <script>
     // -----------------------------
-    // Persistent toggles (Light/Dark + Mythic)
+    // Persistent toggles (Light/Dark + Mythic + Seasonal)
     // -----------------------------
     const body = document.body;
     const toggleModeBtn = document.getElementById('toggle-mode');
     const toggleMythicBtn = document.getElementById('toggle-mythic');
+    const toggleSeasonalBtn = document.getElementById('toggle-seasonal');
+
+    const seasonBadge = document.getElementById('seasonBadge');
+    const seasonText = document.getElementById('seasonText');
 
     function applySavedPreferences() {
-      const savedMode = localStorage.getItem('hoh_mode');   // "light" or "dark"
+      const savedMode = localStorage.getItem('hoh_mode');     // "light" or "dark"
       const savedMythic = localStorage.getItem('hoh_mythic'); // "on" or "off"
+      const savedSeasonal = localStorage.getItem('hoh_seasonal'); // "on" or "off"
 
       if (savedMode === 'light') body.classList.add('light');
       else body.classList.remove('light');
@@ -812,31 +744,54 @@
       if (savedMythic === 'on') body.classList.add('mythic');
       else body.classList.remove('mythic');
 
+      if (savedSeasonal === 'off') {
+        localStorage.setItem('hoh_seasonal', 'off');
+      } else if (!savedSeasonal) {
+        localStorage.setItem('hoh_seasonal', 'on');
+      }
+
       updateToggleIcons();
     }
 
     function updateToggleIcons() {
       const modeIcon = toggleModeBtn.querySelector('i');
-      if (body.classList.contains('light')) {
-        modeIcon.className = 'bx bx-sun';
-      } else {
-        modeIcon.className = 'bx bx-moon';
-      }
+      modeIcon.className = body.classList.contains('light') ? 'bx bx-sun' : 'bx bx-moon';
 
       const mythIcon = toggleMythicBtn.querySelector('i');
       mythIcon.className = body.classList.contains('mythic') ? 'bx bxs-crown' : 'bx bx-crown';
+
+      const seasonalIcon = toggleSeasonalBtn.querySelector('i');
+      const on = (localStorage.getItem('hoh_seasonal') !== 'off');
+      seasonalIcon.className = on ? 'bx bx-calendar-star' : 'bx bx-calendar';
+      toggleSeasonalBtn.style.opacity = on ? '1' : '.78';
     }
 
     toggleModeBtn.addEventListener('click', () => {
       body.classList.toggle('light');
       localStorage.setItem('hoh_mode', body.classList.contains('light') ? 'light' : 'dark');
       updateToggleIcons();
+      if (localStorage.getItem('hoh_seasonal') !== 'off') applyHolidayTheme(getAutoHolidayKey());
     });
 
     toggleMythicBtn.addEventListener('click', () => {
       body.classList.toggle('mythic');
       localStorage.setItem('hoh_mythic', body.classList.contains('mythic') ? 'on' : 'off');
       updateToggleIcons();
+      if (localStorage.getItem('hoh_seasonal') !== 'off') applyHolidayTheme(getAutoHolidayKey());
+    });
+
+    toggleSeasonalBtn.addEventListener('click', () => {
+      const now = localStorage.getItem('hoh_seasonal');
+      const next = (now === 'off') ? 'on' : 'off';
+      localStorage.setItem('hoh_seasonal', next);
+      updateToggleIcons();
+
+      if (next === 'on') {
+        applyHolidayTheme(getAutoHolidayKey());
+        seasonBadge.style.display = 'inline-flex';
+      } else {
+        seasonBadge.style.display = 'none';
+      }
     });
 
     applySavedPreferences();
@@ -864,8 +819,7 @@
     });
 
     // -----------------------------
-    // DOB Gate (animated modal) for 18+ links
-    // - Remembers success for 24 hours
+    // DOB Gate
     // -----------------------------
     const dobModal = document.getElementById('dobModal');
     const dobInput = document.getElementById('dobInput');
@@ -910,10 +864,9 @@
       localStorage.setItem('hoh_dob_ok_until', String(until));
     }
 
-    // Intercept gated links
     document.querySelectorAll('a[data-dob-gated="true"]').forEach(a => {
       a.addEventListener('click', (e) => {
-        if (hasRecentDobApproval()) return; // allow
+        if (hasRecentDobApproval()) return;
         e.preventDefault();
         openDobModal(a.href);
       });
@@ -937,7 +890,6 @@
         dobError.textContent = "Sorry — you must be 18 or older.";
         dobError.style.display = 'block';
         dobError.style.animation = 'none';
-        // re-trigger shake
         void dobError.offsetWidth;
         dobError.style.animation = '';
       }
@@ -955,6 +907,188 @@
       if (dobModal.style.display === 'flex' && e.key === 'Escape') closeDobModal();
       if (dobModal.style.display === 'flex' && e.key === 'Enter') handleDobSubmit();
     });
+
+    // ------------------------------------
+    // Wheel of the Year: Colors + Background
+    // ------------------------------------
+    const DEFAULT_BG = getComputedStyle(document.documentElement).getPropertyValue('--bg-image').trim() ||
+      'url("https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png")';
+
+    const WOTY = {
+      yule: {
+        label: "Yule",
+        bg: "./assets/woty/yule.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.58)",
+          "--accent": "#7dd3fc",
+          "--accent2":"#a78bfa",
+          "--glow-strong":"rgba(125,211,252,.22)",
+          "--glow":"rgba(167,139,250,.16)"
+        }
+      },
+      imbolc: {
+        label: "Imbolc",
+        bg: "./assets/woty/imbolc.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.34)",
+          "--accent":"#f59e0b",
+          "--accent2":"#fb7185",
+          "--glow-strong":"rgba(245,158,11,.20)",
+          "--glow":"rgba(251,113,133,.16)"
+        }
+      },
+      ostara: {
+        label: "Ostara",
+        bg: "./assets/woty/ostara.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.32)",
+          "--accent":"#22c55e",
+          "--accent2":"#a3e635",
+          "--glow-strong":"rgba(34,197,94,.18)",
+          "--glow":"rgba(163,230,53,.14)"
+        }
+      },
+      beltane: {
+        label: "Beltane",
+        bg: "./assets/woty/beltane.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.52)",
+          "--accent":"#fb7185",
+          "--accent2":"#f43f5e",
+          "--glow-strong":"rgba(251,113,133,.20)",
+          "--glow":"rgba(244,63,94,.14)"
+        }
+      },
+      litha: {
+        label: "Litha",
+        bg: "./assets/woty/litha.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.44)",
+          "--accent":"#f97316",
+          "--accent2":"#fbbf24",
+          "--glow-strong":"rgba(249,115,22,.20)",
+          "--glow":"rgba(251,191,36,.14)"
+        }
+      },
+      lughnasadh: {
+        label: "Lughnasadh",
+        bg: "./assets/woty/lughnasadh.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.50)",
+          "--accent":"#f59e0b",
+          "--accent2":"#f97316",
+          "--glow-strong":"rgba(245,158,11,.20)",
+          "--glow":"rgba(249,115,22,.14)"
+        }
+      },
+      mabon: {
+        label: "Mabon",
+        bg: "./assets/woty/mabon.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.54)",
+          "--accent":"#b45309",
+          "--accent2":"#f59e0b",
+          "--glow-strong":"rgba(180,83,9,.20)",
+          "--glow":"rgba(245,158,11,.14)"
+        }
+      },
+      samhain: {
+        label: "Samhain",
+        bg: "./assets/woty/samhain.jpg",
+        vars: {
+          "--bg-overlay": "rgba(0,0,0,.62)",
+          "--accent":"#a78bfa",
+          "--accent2":"#fb7185",
+          "--glow-strong":"rgba(167,139,250,.20)",
+          "--glow":"rgba(251,113,133,.16)"
+        }
+      }
+    };
+
+    function getAutoHolidayKey(){
+      const now = new Date();
+      const m = now.getMonth() + 1;
+      const d = now.getDate();
+
+      if ((m === 12 && d >= 20) || (m === 1)) return "yule";
+      if (m === 2 || (m === 3 && d <= 19)) return "imbolc";
+      if (m === 3 && d >= 20 || m === 4) return "ostara";
+      if (m === 5 || (m === 6 && d <= 19)) return "beltane";
+      if (m === 6 && d >= 20 || m === 7) return "litha";
+      if (m === 8 || (m === 9 && d <= 21)) return "lughnasadh";
+      if (m === 9 && d >= 22 || m === 10) return "mabon";
+      if (m === 11 || (m === 12 && d <= 19)) return "samhain";
+      return "yule";
+    }
+
+    function setVars(vars){
+      const root = document.documentElement;
+      Object.entries(vars).forEach(([k,v]) => root.style.setProperty(k, v));
+    }
+
+    function setBgImage(urlOrCss){
+      const root = document.documentElement;
+      if (!urlOrCss) {
+        root.style.setProperty('--bg-image', DEFAULT_BG);
+        return;
+      }
+      const v = (urlOrCss.startsWith('url(')) ? urlOrCss : `url("${urlOrCss}")`;
+      root.style.setProperty('--bg-image', v);
+    }
+
+    function preloadImage(src){
+      return new Promise((resolve) => {
+        if (!src) return resolve();
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = resolve;
+        img.src = src;
+      });
+    }
+
+    async function applyHolidayTheme(key){
+      const theme = WOTY[key] || WOTY.yule;
+      seasonText.textContent = theme.label;
+      seasonBadge.style.display = 'inline-flex';
+
+      if (theme.bg) {
+        await preloadImage(theme.bg);
+        setBgImage(theme.bg);
+      } else {
+        setBgImage(DEFAULT_BG);
+      }
+
+      if (theme.vars) setVars(theme.vars);
+      localStorage.setItem("hoh_currentHoliday", key);
+    }
+
+    function applySeasonIfEnabled(){
+      if (localStorage.getItem('hoh_seasonal') === 'off') {
+        seasonBadge.style.display = 'none';
+        return;
+      }
+      applyHolidayTheme(getAutoHolidayKey());
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applySeasonIfEnabled();
+    });
+
+    (function scheduleMidnightFlip(){
+      const now = new Date();
+      const midnight = new Date(now);
+      midnight.setHours(24,0,0,0);
+      const ms = midnight - now;
+
+      setTimeout(() => {
+        applySeasonIfEnabled();
+        setInterval(applySeasonIfEnabled, 6 * 60 * 60 * 1000);
+      }, ms);
+    })();
+
+    if (localStorage.getItem('hoh_seasonal') !== 'off') {
+      seasonBadge.style.display = 'inline-flex';
+    }
   </script>
 </body>
 </html>
