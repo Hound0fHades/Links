@@ -294,7 +294,7 @@
     .about p{
       margin:12px 0 0;
       font-size:.95rem;
-      line-height:1.58;
+      line-height:1.6;
       color:var(--muted);
     }
 
@@ -473,13 +473,18 @@
       .tabs{ grid-template-columns: 1fr; }
       .headrow{ flex-wrap: wrap; justify-content:center; }
       .season-pill, .music-btn{ width:100%; justify-content:center; }
+
+      /* ✅ Mobile-only readability boost */
+      .about p{
+        font-size: 1.02rem;
+        line-height: 1.68;
+      }
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-
     <div class="headrow">
       <div class="season-pill" id="seasonPill" aria-live="polite">
         <span class="season-dot" aria-hidden="true"></span>
@@ -510,7 +515,7 @@
         <i class="fa-brands fa-x-twitter"></i>
       </a>
 
-      <!-- FetLife: DOB gated -->
+      <!-- FetLife (DOB gated) -->
       <a href="https://fetlife.com/Hound0fHades"
          target="_blank" rel="noopener"
          aria-label="FetLife (18+)"
@@ -549,7 +554,7 @@
           <g filter="url(#softShadow)">
             <path fill="url(#redG)" d="M32 50c-9.5-6.1-16-12.4-16-19.6 0-5.1 3.7-9.4 9.1-9.4 2.8 0 5.2 1.2 6.9 3 1.7-1.8 4.1-3 6.9-3 5.4 0 9.1 4.3 9.1 9.4C48 37.6 41.5 43.9 32 50z"/>
             <path fill="url(#redG)" d="M24.8 24.2c-2.7-2.2-4.1-4.6-4.2-7.3 0-1.2.3-2.2 1-3.1 2.2 1.4 3.7 3.2 4.6 5.3.6 1.5.4 3.4-.4 5.1z"/>
-            <path fill="url(#redG)" d="M39.2 24.2c2.7-2.2 4.1-4.6 4.2-7.3 0-1.2-.3-2.2-1-3.1-2.2 1.4-3.7 3.2-4.6 5.3-.6 1.5-.4 3.4.4 5.1z"/>
+            <path fill="url(#redG)" d="M39.2 24.2c2.7-2.2 4.1-4.6 4.2-7.3 0-1.2-.3-2.2 1-3.1 2.2 1.4 3.7 3.2 4.6 5.3.6 1.5.4 3.4-.4 5.1z"/>
             <path fill="url(#shine)" opacity=".55"
               d="M18.5 29.5c.7-4.1 3.7-7 7.5-7 2.4 0 4.5 1 6.1 2.7
                  -5 2.2-9.5 5.6-13.6 10.1-.2-2.0-.2-3.9 0-5.8z"/>
@@ -559,7 +564,7 @@
         </svg>
       </a>
 
-      <!-- Snapchat: password gated -->
+      <!-- Snapchat (password gated) -->
       <a href="https://www.snapchat.com/add/hound0fhades"
          target="_blank" rel="noopener"
          aria-label="Snapchat (password)"
@@ -585,22 +590,24 @@
           </summary>
 
           <p>
-            As a true bibliophile, I find immense joy in fantasy worlds—whether through reading or audiobooks.
-            My passions extend far beyond the literary realm: I’m an avid crafter, curious explorer, and enthusiastic
-            seeker of new culinary experiences.
+            As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks.
             <br><br>
-            Travel fuels my spirit, both near and far, with Ireland, Scotland, and Greece at the top of my dream list—
-            inspired especially by a deep fascination with Greek mythology. Over the past year, I’ve also stepped into
-            the world of cosplay, creating outfits that have been an absolute delight.
+            But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures.
             <br><br>
-            Beyond all creative pursuits, spending meaningful time with my partner, loved ones, and friends brings
-            me the greatest joy and fulfillment.
+            The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.
+            <br><br>
+            This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight.
+            <br><br>
+            The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself. I can't wait to be immersed in more of these creative pursuits that fill me with such excitement and passion.
+            <br><br>
+            Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment.
+            <br><br>
+            The opportunity to be immersed in these enriching experiences would be a dream come true!
           </p>
         </details>
       </div>
     </section>
 
-    <!-- ✅ ONE SECTION inside Tributes -->
     <section class="panel" id="panel-tributes">
       <div class="section-card">
         <div class="section-title">
@@ -608,7 +615,6 @@
         </div>
 
         <div class="links">
-          <!-- Offerings (2) -->
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
             <span class="link-left"><i class="bx bx-gift"></i><span>Offerings</span></span>
           </a>
@@ -617,7 +623,6 @@
             <span class="link-left"><i class="bx bx-heart"></i><span>Offerings</span></span>
           </a>
 
-          <!-- Tributes (2) -->
           <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
             <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
           </a>
