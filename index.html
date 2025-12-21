@@ -12,14 +12,11 @@
 
   <style>
     :root{
-      /* Background image (local file in your repo) */
       --bg-image: url("./cerberuslinkbackground.png");
 
-      /* Auto-shift palette (set by JS) */
       --accent: #e53935;
       --accent2: #ffb300;
 
-      /* Base UI */
       --bg-overlay: rgba(0,0,0,.58);
       --card-bg: rgba(0,0,0,.56);
       --card-blur: 12px;
@@ -29,22 +26,17 @@
       --muted2: rgba(255,255,255,.62);
       --btn: rgba(0,0,0,.65);
 
-      /* Glow */
       --glow: rgba(255, 255, 255, .16);
       --glow-strong: rgba(255, 180, 0, .22);
 
-      /* Profile */
       --avatar-border: rgba(255,255,255,.95);
 
-      /* Tabs */
       --tab-bg: rgba(0,0,0,.28);
       --tab-active: rgba(255,255,255,.10);
 
-      /* Card “holiday ring” (set by JS) */
       --ring: rgba(255,255,255,.18);
       --ring2: rgba(255,255,255,.10);
 
-      /* Sigils */
       --sigil-opacity: .14;
       --sigil-speed: 26s;
     }
@@ -69,7 +61,6 @@
       overflow-x:hidden;
     }
 
-    /* Subtle animated sigils across the page */
     body::before{
       content:"";
       position:fixed;
@@ -80,7 +71,6 @@
         radial-gradient(circle at 20% 30%, rgba(255,255,255,.12), transparent 45%),
         radial-gradient(circle at 70% 60%, rgba(255,255,255,.10), transparent 55%),
         conic-gradient(from 90deg, rgba(255,255,255,.10), transparent 20%, rgba(255,255,255,.08), transparent 55%, rgba(255,255,255,.10));
-      filter: blur(0.2px);
       animation: sigilDrift var(--sigil-speed) linear infinite;
       mix-blend-mode: screen;
     }
@@ -99,8 +89,6 @@
       padding:22px 18px 24px;
       position:relative;
       overflow:hidden;
-
-      /* Auto holiday ring */
       border: 1px solid rgba(255,255,255,.14);
       box-shadow:
         0 18px 40px rgba(0,0,0,.55),
@@ -108,7 +96,6 @@
         0 0 0 10px rgba(0,0,0,.08) inset;
     }
 
-    /* A soft aura that shifts with the holiday palette */
     .card::before{
       content:"";
       position:absolute;
@@ -119,10 +106,8 @@
         radial-gradient(circle at 75% 75%, color-mix(in srgb, var(--accent2) 25%, transparent), transparent 60%),
         linear-gradient(135deg, var(--ring2), transparent 45%, var(--ring2));
       opacity:.85;
-      filter: blur(0.2px);
     }
 
-    /* Header row (holiday label + music toggle) */
     .headrow{
       position:relative;
       z-index:2;
@@ -203,6 +188,7 @@
       text-align:center;
     }
 
+    /* Social icons row (now includes FetLife + Snapchat) */
     .socials{
       position:relative;
       z-index:2;
@@ -210,13 +196,29 @@
       justify-content:center;
       gap:18px;
       margin-bottom:16px;
+      flex-wrap: wrap;
     }
+
     .socials a{
       color:inherit;
       font-size:26px;
-      transition: transform .2s ease, opacity .2s ease;
+      transition: transform .2s ease, opacity .2s ease, filter .2s ease;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:44px;
+      height:44px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.18);
+      text-decoration:none;
     }
-    .socials a:hover{ transform: translateY(-3px); opacity:.86; }
+    .socials a:hover{
+      transform: translateY(-3px);
+      opacity:.92;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+      border-color: rgba(255,255,255,.25);
+    }
 
     .tabs{
       position:relative;
@@ -260,7 +262,6 @@
       margin:0 0 10px;
     }
 
-    /* About collapsible */
     details.about{
       border-radius:14px;
       padding:12px 12px;
@@ -285,7 +286,6 @@
       font-size:22px;
     }
     details[open] .chevron{ transform: rotate(180deg); animation:none; }
-
     @keyframes bounce{
       0%,100%{ transform: translateY(0); }
       50%{ transform: translateY(-3px); }
@@ -298,7 +298,6 @@
       color:var(--muted);
     }
 
-    /* Links */
     .links{ display:flex; flex-direction:column; gap:12px; }
 
     .link-btn{
@@ -318,7 +317,6 @@
       overflow:hidden;
     }
 
-    /* Hover glow */
     .link-btn::before{
       content:"";
       position:absolute;
@@ -344,16 +342,6 @@
       z-index:1;
     }
 
-    .danger-badge{
-      font-size:.72rem;
-      font-weight:900;
-      padding:5px 10px;
-      border-radius:999px;
-      background: rgba(229,57,53,.16);
-      border: 1px solid rgba(229,57,53,.35);
-      z-index:1;
-    }
-
     footer{
       position:relative;
       z-index:2;
@@ -363,7 +351,7 @@
       color: rgba(255,255,255,.6);
     }
 
-    /* DOB Gate modal (for 18+ links) */
+    /* Modals */
     .modal-overlay{
       position:fixed;
       inset:0;
@@ -492,7 +480,6 @@
 <body>
   <main class="card">
 
-    <!-- Holiday label + Music toggle -->
     <div class="headrow">
       <div class="season-pill" id="seasonPill" aria-live="polite">
         <span class="season-dot" aria-hidden="true"></span>
@@ -510,109 +497,78 @@
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
+    <!-- ICON ROW: IG / TikTok / X / FetLife / Snapchat -->
     <div class="socials">
-      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener"><i class="bx bxl-instagram"></i></a>
-      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener"><i class="bx bxl-tiktok"></i></a>
-      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
+      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
+        <i class="bx bxl-instagram"></i>
+      </a>
+
+      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
+        <i class="bx bxl-tiktok"></i>
+      </a>
+
+      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
+        <i class="fa-brands fa-x-twitter"></i>
+      </a>
+
+      <!-- FetLife: looks like an icon, but still DOB gated -->
+      <a href="https://fetlife.com/Hound0fHades"
+         target="_blank" rel="noopener"
+         aria-label="FetLife (18+)"
+         data-dob-gated="true"
+         title="18+">
+        <i class="bx bx-lock-alt"></i>
+      </a>
+
+      <!-- Snapchat: icon, but password gated -->
+      <a href="https://www.snapchat.com/add/hound0fhades"
+         target="_blank" rel="noopener"
+         aria-label="Snapchat (password)"
+         data-pass-gated="true"
+         title="Password">
+        <i class="bx bxl-snapchat"></i>
+      </a>
     </div>
 
-    <!-- Tabs -->
     <div class="tabs" role="tablist" aria-label="Sections">
       <button class="tab active" data-tab="links" type="button">Links</button>
       <button class="tab" data-tab="about" type="button">About</button>
       <button class="tab" data-tab="support" type="button">Tributes</button>
     </div>
 
-    <!-- LINKS -->
     <section class="panel active" id="panel-links" aria-labelledby="Links">
       <div class="section-card">
-        <div class="section-title">
-          <span>Featured</span>
-        </div>
-
-        <div class="links">
-          <!-- FetLife (DOB gated) -->
-          <a class="link-btn" href="https://fetlife.com/Hound0fHades"
-             target="_blank" rel="noopener"
-             data-dob-gated="true">
-            <span class="link-left">
-              <i class="bx bx-lock-alt"></i>
-              <span>FetLife</span>
-            </span>
-            <span class="danger-badge">18+</span>
-          </a>
-
-          <!-- Snapchat (Password gated: "I Bite") -->
-          <a class="link-btn" href="https://www.snapchat.com/add/hound0fhades"
-             target="_blank" rel="noopener"
-             data-pass-gated="true">
-            <span class="link-left">
-              <i class="bx bxl-snapchat"></i>
-              <span>Snapchat</span>
-            </span>
-            <i class="bx bx-key" aria-hidden="true" style="z-index:1; font-size:18px; opacity:.9;"></i>
-          </a>
-        </div>
-      </div>
-
-      <div class="section-card">
-        <div class="section-title">
-          <span>Offerings</span>
-        </div>
-
+        <div class="section-title"><span>Offerings</span><span aria-hidden="true" style="opacity:.9;">ᛉ</span></div>
         <div class="links">
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-gift"></i>
-              <span>Jewelry Wishlist</span>
-            </span>
+            <span class="link-left"><i class="bx bx-gift"></i><span>Jewelry Wishlist</span></span>
           </a>
-
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-heart"></i>
-              <span>Desires Wishlist</span>
-            </span>
+            <span class="link-left"><i class="bx bx-heart"></i><span>Desires Wishlist</span></span>
           </a>
         </div>
       </div>
 
       <div class="section-card">
-        <div class="section-title">
-          <span>Tributes</span>
-        </div>
-
+        <div class="section-title"><span>Tributes</span></div>
         <div class="links">
           <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bxs-wallet"></i>
-              <span>CashApp</span>
-            </span>
+            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
           </a>
-
           <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-dollar-circle"></i>
-              <span>Venmo</span>
-            </span>
+            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section class="panel" id="panel-about" aria-labelledby="About">
       <div class="section-card">
-        <div class="section-title">
-          <span>About</span>
-        </div>
+        <div class="section-title"><span>About</span></div>
 
         <details class="about">
           <summary>
-            <span class="summary-left">
-              <i class="bx bx-book-heart"></i>
-              <span>About Me</span>
-            </span>
+            <span class="summary-left"><i class="bx bx-book-heart"></i><span>About Me</span></span>
             <i class="bx bx-chevron-down chevron"></i>
           </summary>
 
@@ -632,43 +588,23 @@
       </div>
     </section>
 
-    <!-- TRIBUTES -->
     <section class="panel" id="panel-support" aria-labelledby="Tributes">
       <div class="section-card">
         <div class="section-title">
           <span>Offerings <span aria-hidden="true" style="opacity:.9;">ᛉ</span></span>
-          <span style="font-weight:900; opacity:.85;">(Wishlists first)</span>
         </div>
-
         <div class="links">
-          <!-- Offerings first -->
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-gift"></i>
-              <span>Jewelry Wishlist</span>
-            </span>
+            <span class="link-left"><i class="bx bx-gift"></i><span>Jewelry Wishlist</span></span>
           </a>
-
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-heart"></i>
-              <span>Desires Wishlist</span>
-            </span>
+            <span class="link-left"><i class="bx bx-heart"></i><span>Desires Wishlist</span></span>
           </a>
-
-          <!-- Then tributes -->
           <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bxs-wallet"></i>
-              <span>CashApp</span>
-            </span>
+            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
           </a>
-
           <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-dollar-circle"></i>
-              <span>Venmo</span>
-            </span>
+            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
           </a>
         </div>
       </div>
@@ -677,10 +613,9 @@
     <footer>© Hound Of Hades</footer>
   </main>
 
-  <!-- Audio (replace ./music.mp3 with your file name in the repo) -->
   <audio id="bgMusic" src="./music.mp3" loop preload="none"></audio>
 
-  <!-- DOB Gate Modal (FetLife 18+) -->
+  <!-- DOB Gate Modal -->
   <div class="modal-overlay" id="dobModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dobTitle">
       <div class="modal-header">
@@ -729,9 +664,7 @@
   </div>
 
   <script>
-    // -----------------------------
     // Tabs
-    // -----------------------------
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       links: document.getElementById('panel-links'),
@@ -742,41 +675,30 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
-
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
         Object.values(panels).forEach(p => p.classList.remove('active'));
         panels[target].classList.add('active');
       });
     });
 
-    // -----------------------------
-    // Seasonal Pagan color shifts (Wheel-ish, Northern Hemisphere defaults)
-    // Applies to: --accent, --accent2, ring colors + label
-    // -----------------------------
+    // Seasonal color shifts
     const seasonNameEl = document.getElementById('seasonName');
-
     function mmdd(d){
       const m = String(d.getMonth()+1).padStart(2,'0');
       const day = String(d.getDate()).padStart(2,'0');
       return `${m}-${day}`;
     }
-
     function setTheme(name, accent, accent2){
       document.documentElement.style.setProperty('--accent', accent);
       document.documentElement.style.setProperty('--accent2', accent2);
-      document.documentElement.style.setProperty('--glow-strong', `${accent}33`); // soft
+      document.documentElement.style.setProperty('--glow-strong', `${accent}33`);
       document.documentElement.style.setProperty('--ring', `${accent}22`);
       document.documentElement.style.setProperty('--ring2', `${accent2}18`);
       seasonNameEl.textContent = name;
     }
-
     function applySabbatTheme(date = new Date()){
-      // Rough seasonal windows (you can tweak anytime)
       const key = mmdd(date);
-
-      // Helpers: compare "MM-DD" lexicographically works with leading zeros.
       const inRange = (start, end) => (start <= end) ? (key >= start && key <= end) : (key >= start || key <= end);
 
       if (inRange("12-15","01-10")) return setTheme("Yule",       "#7dd3fc", "#a78bfa");
@@ -789,16 +711,10 @@
       if (inRange("09-25","11-10")) return setTheme("Samhain",    "#fb7185", "#a78bfa");
       return setTheme("Winter Night", "#a78bfa", "#60a5fa");
     }
-
     applySabbatTheme();
-
-    // Optional: re-check daily in case someone leaves page open
     setInterval(() => applySabbatTheme(), 1000 * 60 * 60);
 
-    // -----------------------------
-    // Music toggle (remembered)
-    // Put a file in your repo named: music.mp3
-    // -----------------------------
+    // Music toggle
     const music = document.getElementById('bgMusic');
     const musicToggle = document.getElementById('musicToggle');
     const musicLabel = document.getElementById('musicLabel');
@@ -815,12 +731,10 @@
         localStorage.setItem('hoh_music', 'on');
         setMusicUI(true);
       }catch(e){
-        // Autoplay can be blocked until user taps — UI stays consistent
         localStorage.setItem('hoh_music', 'off');
         setMusicUI(false);
       }
     }
-
     function stopMusic(){
       music.pause();
       music.currentTime = 0;
@@ -828,13 +742,9 @@
       setMusicUI(false);
     }
 
-    // restore
     const savedMusic = localStorage.getItem('hoh_music');
     setMusicUI(savedMusic === 'on');
-    if (savedMusic === 'on') {
-      // try, but browser may block until first interaction
-      playMusic();
-    }
+    if (savedMusic === 'on') playMusic();
 
     musicToggle.addEventListener('click', () => {
       const isOn = localStorage.getItem('hoh_music') === 'on';
@@ -842,17 +752,13 @@
       else playMusic();
     });
 
-    // -----------------------------
     // DOB Gate (FetLife)
-    // - Remembers success for 24 hours
-    // -----------------------------
     const dobModal = document.getElementById('dobModal');
     const dobInput = document.getElementById('dobInput');
     const dobError = document.getElementById('dobError');
     const dobClose = document.getElementById('dobClose');
     const dobCancel = document.getElementById('dobCancel');
     const dobSubmit = document.getElementById('dobSubmit');
-
     let pendingHref = null;
 
     function openDobModal(href){
@@ -920,17 +826,13 @@
     dobClose.addEventListener('click', closeDobModal);
     dobModal.addEventListener('click', (e) => { if (e.target === dobModal) closeDobModal(); });
 
-    // -----------------------------
     // Password Gate (Snapchat) — password: "I Bite"
-    // - Remembers success for 12 hours
-    // -----------------------------
     const passModal = document.getElementById('passModal');
     const passInput = document.getElementById('passInput');
     const passError = document.getElementById('passError');
     const passClose = document.getElementById('passClose');
     const passCancel = document.getElementById('passCancel');
     const passSubmit = document.getElementById('passSubmit');
-
     let pendingPassHref = null;
     const PASSWORD = "I Bite";
 
@@ -990,7 +892,7 @@
     passClose.addEventListener('click', closePassModal);
     passModal.addEventListener('click', (e) => { if (e.target === passModal) closePassModal(); });
 
-    // Keyboard shortcuts for modals
+    // Keyboard shortcuts
     document.addEventListener('keydown', (e) => {
       const dobOpen = dobModal.style.display === 'flex';
       const passOpen = passModal.style.display === 'flex';
