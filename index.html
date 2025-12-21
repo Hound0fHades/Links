@@ -221,7 +221,6 @@
 
     .socials svg{ width:26px; height:26px; display:block; }
 
-    /* Tabs (now only 2) */
     .tabs{
       position:relative;
       z-index:2;
@@ -499,7 +498,6 @@
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-    <!-- ICON ROW -->
     <div class="socials">
       <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
         <i class="bx bxl-instagram"></i>
@@ -513,7 +511,7 @@
         <i class="fa-brands fa-x-twitter"></i>
       </a>
 
-      <!-- FetLife: glossier devil-heart SVG (DOB gated) -->
+      <!-- FetLife: DOB gated -->
       <a href="https://fetlife.com/Hound0fHades"
          target="_blank" rel="noopener"
          aria-label="FetLife (18+)"
@@ -521,57 +519,43 @@
          title="18+">
         <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
           <defs>
-            <!-- glossy background -->
             <linearGradient id="bgG" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stop-color="#14141a"/>
               <stop offset="1" stop-color="#06060a"/>
             </linearGradient>
-
-            <!-- subtle inner glow -->
             <radialGradient id="innerGlow" cx="30%" cy="25%" r="70%">
               <stop offset="0" stop-color="rgba(255,255,255,.18)"/>
               <stop offset="55%" stop-color="rgba(255,255,255,.06)"/>
               <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
             </radialGradient>
-
-            <!-- red heart gradient -->
             <linearGradient id="redG" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0" stop-color="#ff3b3b"/>
               <stop offset="1" stop-color="#a40012"/>
             </linearGradient>
-
-            <!-- glossy highlight -->
             <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0.8">
               <stop offset="0" stop-color="rgba(255,255,255,.35)"/>
               <stop offset="40%" stop-color="rgba(255,255,255,.10)"/>
               <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
             </linearGradient>
-
             <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
               <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,.55)"/>
             </filter>
           </defs>
 
-          <!-- rounded square -->
           <rect x="6" y="6" width="52" height="52" rx="14" fill="url(#bgG)"/>
           <rect x="8" y="8" width="48" height="48" rx="13" fill="url(#innerGlow)" opacity=".9"/>
-
-          <!-- top shine -->
           <path d="M12 18c7-10 33-10 40 0" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="5" stroke-linecap="round"/>
           <path d="M10 16c9-12 35-12 44 0" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6" stroke-linecap="round"/>
 
-          <!-- devil heart -->
           <g filter="url(#softShadow)">
             <path fill="url(#redG)" d="M32 50c-9.5-6.1-16-12.4-16-19.6 0-5.1 3.7-9.4 9.1-9.4 2.8 0 5.2 1.2 6.9 3 1.7-1.8 4.1-3 6.9-3 5.4 0 9.1 4.3 9.1 9.4C48 37.6 41.5 43.9 32 50z"/>
             <path fill="url(#redG)" d="M24.8 24.2c-2.7-2.2-4.1-4.6-4.2-7.3 0-1.2.3-2.2 1-3.1 2.2 1.4 3.7 3.2 4.6 5.3.6 1.5.4 3.4-.4 5.1z"/>
             <path fill="url(#redG)" d="M39.2 24.2c2.7-2.2 4.1-4.6 4.2-7.3 0-1.2-.3-2.2-1-3.1-2.2 1.4-3.7 3.2-4.6 5.3-.6 1.5-.4 3.4.4 5.1z"/>
-            <!-- glossy highlight on heart -->
             <path fill="url(#shine)" opacity=".55"
               d="M18.5 29.5c.7-4.1 3.7-7 7.5-7 2.4 0 4.5 1 6.1 2.7
                  -5 2.2-9.5 5.6-13.6 10.1-.2-2.0-.2-3.9 0-5.8z"/>
           </g>
 
-          <!-- outer rim -->
           <rect x="6.5" y="6.5" width="51" height="51" rx="14" fill="none" stroke="rgba(255,255,255,.10)"/>
         </svg>
       </a>
@@ -586,14 +570,12 @@
       </a>
     </div>
 
-    <!-- Tabs (Links removed) -->
     <div class="tabs" role="tablist" aria-label="Sections">
       <button class="tab active" data-tab="about" type="button">About</button>
       <button class="tab" data-tab="tributes" type="button">Tributes</button>
     </div>
 
-    <!-- ABOUT -->
-    <section class="panel active" id="panel-about" aria-labelledby="About">
+    <section class="panel active" id="panel-about">
       <div class="section-card">
         <div class="section-title"><span>About</span></div>
 
@@ -619,19 +601,17 @@
       </div>
     </section>
 
-    <!-- TRIBUTES -->
-    <section class="panel" id="panel-tributes" aria-labelledby="Tributes">
+    <section class="panel" id="panel-tributes">
       <div class="section-card">
         <div class="section-title">
           <span>Offerings <span aria-hidden="true" style="opacity:.9;">ᛉ</span></span>
         </div>
         <div class="links">
-          <!-- Renamed: no "wishlist" wording -->
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-gift"></i><span>Offerings • Jewelry</span></span>
+            <span class="link-left"><i class="bx bx-gift"></i><span>Offerings</span></span>
           </a>
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-heart"></i><span>Offerings • Desires</span></span>
+            <span class="link-left"><i class="bx bx-heart"></i><span>Offerings</span></span>
           </a>
         </div>
       </div>
@@ -704,13 +684,12 @@
   </div>
 
   <script>
-    // Tabs (2 tabs only)
+    // Tabs
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       about: document.getElementById('panel-about'),
       tributes: document.getElementById('panel-tributes'),
     };
-
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
