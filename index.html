@@ -11,59 +11,41 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
   <style>
-    :root {
-      /* Base palette (dark default) */
-      --bg-overlay: rgba(0,0,0,.55);
+    :root{
+      /* Background */
+      --bg-image: url("./cerberuslinkbackground.png");
+      --bg-overlay: rgba(0,0,0,.58);
+
+      /* Card */
       --card-bg: rgba(0,0,0,.55);
-      --card-blur: 12px;
       --border: rgba(255,255,255,.16);
+
+      /* Text */
       --text: #ffffff;
-      --muted: rgba(255,255,255,.78);
+      --muted: rgba(255,255,255,.80);
       --muted2: rgba(255,255,255,.62);
+
+      /* Accent (will be set by seasonal theme) */
       --accent: #e53935;
       --accent2: #ffb300;
+
+      /* Buttons */
       --btn: rgba(0,0,0,.65);
 
       /* Glow */
-      --glow: rgba(255, 255, 255, .18);
-      --glow-strong: rgba(255, 180, 0, .24);
+      --glow: rgba(255,255,255,.14);
+      --glow-strong: rgba(255,180,0,.22);
 
-      /* Background image (theme can override this) */
-      --bg-image: url("https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png");
-
-      /* Profile */
-      --avatar-border: rgba(255,255,255,.95);
-
-      /* Tabs */
-      --tab-bg: rgba(0,0,0,.30);
-      --tab-active: rgba(255,255,255,.10);
-
-      /* Mythic accents (enabled via .mythic) */
-      --mythic-accent: #d4af37; /* gold */
-      --mythic-accent2: #6dd6a5; /* underworld green */
-      --mythic-card: rgba(8, 6, 12, .62);
-      --mythic-btn: rgba(14, 10, 18, .72);
-
-      /* Light mode overrides via .light */
-      --light-bg-overlay: rgba(255,255,255,.55);
-      --light-card-bg: rgba(255,255,255,.70);
-      --light-border: rgba(0,0,0,.12);
-      --light-text: #101014;
-      --light-muted: rgba(0,0,0,.70);
-      --light-muted2: rgba(0,0,0,.55);
-      --light-btn: rgba(255,255,255,.75);
-      --light-tab-bg: rgba(255,255,255,.52);
-      --light-tab-active: rgba(0,0,0,.06);
-      --light-glow: rgba(0,0,0,.10);
-      --light-glow-strong: rgba(229,57,53,.18);
+      /* Sigil overlay intensity */
+      --sigil-opacity: .16;
     }
 
-    * { box-sizing: border-box; }
-    html, body { height: 100%; }
+    *{ box-sizing: border-box; }
+    html,body{ height:100%; }
 
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
+    body{
+      margin:0;
+      font-family:'Poppins',sans-serif;
       color: var(--text);
       background:
         linear-gradient(var(--bg-overlay), var(--bg-overlay)),
@@ -71,537 +53,427 @@
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
       padding: 40px 15px;
+      overflow-x:hidden;
     }
 
-    /* Light mode */
-    body.light {
-      color: var(--light-text);
-      background:
-        linear-gradient(var(--light-bg-overlay), var(--light-bg-overlay)),
-        var(--bg-image);
+    /* Subtle animated sigils overlay */
+    .sigils{
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      z-index: 0;
+      opacity: var(--sigil-opacity);
+      mix-blend-mode: screen;
+      filter: blur(.2px);
     }
 
-    /* Mythic mode */
-    body.mythic {
-      --accent: var(--mythic-accent);
-      --accent2: var(--mythic-accent2);
-      --card-bg: var(--mythic-card);
-      --btn: var(--mythic-btn);
-      --glow-strong: rgba(212,175,55,.26);
+    .sigils::before,
+    .sigils::after{
+      content:"";
+      position:absolute;
+      inset:-20%;
+      background-repeat: repeat;
+      background-size: 360px 360px;
+      transform-origin: center;
+      opacity: .9;
     }
 
-    /* Mythic + Light still looks clean */
-    body.light.mythic {
-      --card-bg: rgba(255,255,255,.76);
-      --btn: rgba(255,255,255,.85);
-      --glow-strong: rgba(212,175,55,.22);
+    /* Layer 1: rune ring sigils */
+    .sigils::before{
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360' viewBox='0 0 360 360'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.65'%3E%3Ccircle cx='180' cy='180' r='120' stroke-width='2'/%3E%3Ccircle cx='180' cy='180' r='75' stroke-width='1.5'/%3E%3Cpath d='M180 55 L180 75' stroke-width='2'/%3E%3Cpath d='M180 285 L180 305' stroke-width='2'/%3E%3Cpath d='M55 180 L75 180' stroke-width='2'/%3E%3Cpath d='M285 180 L305 180' stroke-width='2'/%3E%3Cpath d='M116 116 L130 130' stroke-width='2'/%3E%3Cpath d='M244 244 L230 230' stroke-width='2'/%3E%3Cpath d='M244 116 L230 130' stroke-width='2'/%3E%3Cpath d='M116 244 L130 230' stroke-width='2'/%3E%3C/g%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.55'%3E%3Cpath d='M180 86 l10 16 -10 16 -10-16z'/%3E%3Cpath d='M180 242 l10 16 -10 16 -10-16z'/%3E%3Cpath d='M86 180 l16-10 16 10 -16 10z'/%3E%3Cpath d='M242 180 l16-10 16 10 -16 10z'/%3E%3C/g%3E%3C/svg%3E");
+      animation: sigilSpin 120s linear infinite;
     }
 
-    .card {
-      width: 100%;
+    /* Layer 2: faint star-lines */
+    .sigils::after{
+      background-size: 520px 520px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520' viewBox='0 0 520 520'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.38'%3E%3Cpath d='M260 70 L310 190 L440 200 L340 285 L375 415 L260 345 L145 415 L180 285 L80 200 L210 190 Z' stroke-width='2'/%3E%3Ccircle cx='260' cy='260' r='165' stroke-width='1.5'/%3E%3C/g%3E%3C/svg%3E");
+      animation: sigilDrift 90s ease-in-out infinite alternate;
+      opacity:.7;
+    }
+
+    @keyframes sigilSpin{
+      from{ transform: rotate(0deg) scale(1); }
+      to{ transform: rotate(360deg) scale(1); }
+    }
+    @keyframes sigilDrift{
+      from{ transform: translate(-2%, -1%) rotate(-4deg) scale(1.02); }
+      to{ transform: translate(2%, 1%) rotate(4deg) scale(1.04); }
+    }
+
+    main.card{
+      width:100%;
       max-width: 560px;
       background: var(--card-bg);
-      backdrop-filter: blur(var(--card-blur));
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px 18px 24px;
-      text-align: center;
+      backdrop-filter: blur(12px);
+      border:1px solid var(--border);
+      border-radius:18px;
+      padding: 18px 18px 22px;
+      text-align:center;
       position: relative;
-      overflow: hidden;
+      z-index: 1;
+      box-shadow: 0 18px 45px rgba(0,0,0,.30);
+      overflow:hidden;
     }
 
-    body.light .card {
-      border-color: var(--light-border);
-      background: var(--light-card-bg);
-    }
-
-    /* Top controls */
-    .topbar {
-      display: flex;
-      align-items: center;
+    /* Topbar controls */
+    .topbar{
+      display:flex;
+      gap:10px;
       justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 14px;
       flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
       padding: 10px 12px;
       border-radius: 999px;
-      border: 1px solid var(--border);
+      border:1px solid var(--border);
       background: rgba(0,0,0,.22);
       color: var(--text);
-      cursor: pointer;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-      user-select: none;
-      font-weight: 600;
-      font-size: .88rem;
-      flex: 1;
-      justify-content: center;
-      min-width: 160px;
+      cursor:pointer;
+      user-select:none;
+      font-weight:800;
+      font-size:.88rem;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
     }
-
-    body.light .pill {
-      border-color: var(--light-border);
-      background: rgba(255,255,255,.55);
-      color: var(--light-text);
-    }
-
-    .pill:hover {
+    .pill:hover{
       transform: translateY(-1px);
       box-shadow: 0 10px 22px rgba(0,0,0,.18);
+      border-color: rgba(255,255,255,.22);
+    }
+    .pill i{ font-size:18px; }
+
+    .theme-pill{
+      flex: 1;
+      min-width: 210px;
+      justify-content: center;
+    }
+    .music-pill{
+      flex: 1;
+      min-width: 210px;
+      justify-content: center;
     }
 
-    .pill i { font-size: 18px; }
+    /* Accent strip */
+    .accent-strip{
+      height: 3px;
+      width: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      margin: 8px 0 14px;
+      opacity: .9;
+    }
 
-    .avatar {
-      width: 118px;
-      height: 118px;
-      border-radius: 50%;
-      border: 3px solid var(--avatar-border);
-      object-fit: cover;
-      margin: 8px auto 12px;
-      display: block;
+    .avatar{
+      width:118px;
+      height:118px;
+      border-radius:50%;
+      border:3px solid rgba(255,255,255,.95);
+      object-fit:cover;
+      margin: 6px auto 12px;
       box-shadow: 0 10px 22px rgba(0,0,0,.25);
+      display:block;
     }
 
-    h1 {
-      font-family: 'Satisfy', cursive;
-      font-size: 2.35rem;
+    h1{
+      font-family:'Satisfy',cursive;
+      font-size:2.35rem;
       margin: 0 0 6px;
-      letter-spacing: .3px;
+      letter-spacing:.2px;
     }
 
-    .tagline {
-      font-size: .92rem;
+    .tagline{
+      font-size:.92rem;
       color: var(--muted2);
       margin: 0 0 14px;
     }
-    body.light .tagline { color: var(--light-muted2); }
 
-    .season-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin: 0 auto 14px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      color: var(--muted);
-      font-weight: 800;
-      font-size: .8rem;
-      max-width: fit-content;
+    .socials{
+      display:flex;
+      justify-content:center;
+      gap:18px;
+      margin-bottom: 16px;
     }
-    body.light .season-badge {
-      border-color: var(--light-border);
-      background: rgba(255,255,255,.55);
-      color: var(--light-muted);
+    .socials a{
+      color: inherit;
+      font-size: 26px;
+      transition: transform .2s ease, opacity .2s ease;
     }
+    .socials a:hover{ transform: translateY(-3px); opacity:.86; }
 
     /* Tabs */
-    .tabs {
-      display: grid;
+    .tabs{
+      display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin: 10px 0 16px;
+      gap:10px;
+      margin-bottom: 16px;
     }
-
-    .tab {
-      padding: 10px 12px;
-      border-radius: 14px;
-      border: 1px solid var(--border);
-      background: var(--tab-bg);
+    .tab{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.30);
       color: var(--text);
-      cursor: pointer;
-      font-weight: 700;
-      font-size: .9rem;
-      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      cursor:pointer;
+      font-weight:800;
+      font-size:.9rem;
+      transition: transform .18s ease, box-shadow .22s ease;
     }
-    body.light .tab {
-      border-color: var(--light-border);
-      background: var(--light-tab-bg);
-      color: var(--light-text);
-    }
-
-    .tab:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
-    .tab.active { background: var(--tab-active); }
-    body.light .tab.active { background: var(--light-tab-active); }
+    .tab:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
+    .tab.active{ background: rgba(255,255,255,.10); }
 
     /* Panels */
-    .panel { display: none; text-align: left; }
-    .panel.active { display: block; }
+    .panel{ display:none; text-align:left; }
+    .panel.active{ display:block; }
 
-    .section-card {
+    .section-card{
       background: rgba(0,0,0,.25);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 14px 14px;
-      margin-bottom: 14px;
-    }
-    body.light .section-card {
-      background: rgba(255,255,255,.55);
-      border-color: var(--light-border);
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      margin-bottom:14px;
     }
 
-    .section-title {
-      display: flex;
-      align-items: center;
+    .links{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .link-btn{
+      position:relative;
+      display:flex;
+      align-items:center;
       justify-content: space-between;
-      gap: 10px;
-      font-weight: 800;
-      margin: 0 0 10px;
-      text-align: left;
-    }
-
-    /* About collapsible */
-    details.about {
-      border-radius: 14px;
-      padding: 12px 12px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
-    }
-    body.light details.about {
-      border-color: var(--light-border);
-      background: rgba(255,255,255,.45);
-    }
-
-    details.about summary {
-      list-style: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 800;
-      user-select: none;
-    }
-    details.about summary::-webkit-details-marker { display: none; }
-
-    .summary-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .chevron {
-      transition: transform .25s ease;
-      animation: bounce 1.6s infinite;
-      font-size: 22px;
-    }
-    details[open] .chevron { transform: rotate(180deg); animation: none; }
-
-    .readmore {
-      font-size: .82rem;
-      color: var(--muted2);
-      font-weight: 700;
-      margin-left: 8px;
-    }
-    body.light .readmore { color: var(--light-muted2); }
-
-    details[open] .readmore::after { content: "Read less"; }
-    details:not([open]) .readmore::after { content: "Read more"; }
-
-    @keyframes bounce {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
-    }
-
-    .about p {
-      margin: 12px 0 0;
-      font-size: .95rem;
-      line-height: 1.58;
-      color: var(--muted);
-    }
-    body.light .about p { color: var(--light-muted); }
-
-    /* Links */
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .link-btn {
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap:12px;
       padding: 14px 16px;
-      border-radius: 999px;
+      border-radius:999px;
       background: var(--btn);
+      border:1px solid var(--border);
       color: inherit;
-      text-decoration: none;
-      font-weight: 800;
-      border: 1px solid var(--border);
+      text-decoration:none;
+      font-weight:900;
+      overflow:hidden;
       transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
-      overflow: hidden;
-    }
-    body.light .link-btn {
-      background: var(--light-btn);
-      border-color: var(--light-border);
     }
 
-    /* Hover glow */
-    .link-btn::before {
-      content: "";
-      position: absolute;
-      inset: -2px;
-      background: radial-gradient(circle at 30% 30%, var(--glow-strong), transparent 45%),
-                  radial-gradient(circle at 70% 70%, var(--glow), transparent 55%);
-      opacity: 0;
+    .link-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.10), transparent 45%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,.08), transparent 55%),
+        radial-gradient(circle at 40% 60%, rgba(255,180,0,.22), transparent 45%);
+      opacity:0;
       transition: opacity .25s ease;
-      pointer-events: none;
+      pointer-events:none;
     }
-
-    body.light .link-btn::before {
-      background: radial-gradient(circle at 30% 30%, var(--light-glow-strong), transparent 45%),
-                  radial-gradient(circle at 70% 70%, var(--light-glow), transparent 55%);
-    }
-
-    .link-btn:hover {
+    .link-btn:hover{
       transform: translateY(-2px);
       box-shadow: 0 14px 30px rgba(0,0,0,.25);
-      border-color: rgba(255,255,255,.25);
+      border-color: rgba(255,255,255,.24);
     }
-    body.light .link-btn:hover { border-color: rgba(0,0,0,.16); }
-    .link-btn:hover::before { opacity: 1; }
+    .link-btn:hover::before{ opacity:1; }
 
-    .link-left {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      z-index: 1;
-    }
-
-    .badge {
-      font-size: .72rem;
-      font-weight: 900;
-      padding: 5px 10px;
-      border-radius: 999px;
+    .badge{
+      font-size:.72rem;
+      font-weight:900;
+      padding:5px 10px;
+      border-radius:999px;
       background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.18);
-      z-index: 1;
+      border:1px solid rgba(255,255,255,.18);
+      z-index:1;
+      white-space:nowrap;
     }
-    body.light .badge {
-      background: rgba(0,0,0,.06);
-      border-color: rgba(0,0,0,.10);
-    }
-
-    .danger {
+    .danger{
       background: rgba(229,57,53,.16);
       border-color: rgba(229,57,53,.35);
     }
 
-    .hint {
-      font-size: .85rem;
-      color: var(--muted2);
-      margin: 8px 0 0;
+    details.about{
+      border-radius:14px;
+      padding: 12px 12px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.22);
     }
-    body.light .hint { color: var(--light-muted2); }
+    details.about summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      font-weight:900;
+      user-select:none;
+    }
+    details.about summary::-webkit-details-marker{ display:none; }
 
-    footer {
+    .about p{
+      margin: 12px 0 0;
+      font-size:.95rem;
+      line-height:1.58;
+      color: var(--muted);
+    }
+
+    .hint{
+      font-size:.84rem;
+      color: var(--muted2);
+      margin: 10px 0 0;
+    }
+
+    footer{
       margin-top: 10px;
-      text-align: center;
-      font-size: .75rem;
+      text-align:center;
+      font-size:.75rem;
       color: rgba(255,255,255,.6);
     }
-    body.light footer { color: rgba(0,0,0,.55); }
 
     /* DOB Gate modal */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
+    .modal-overlay{
+      position:fixed;
+      inset:0;
       background: rgba(0,0,0,.65);
-      display: none;
-      align-items: center;
-      justify-content: center;
+      display:none;
+      align-items:center;
+      justify-content:center;
       padding: 18px;
       z-index: 9999;
     }
-
-    .modal {
-      width: 100%;
-      max-width: 430px;
-      border-radius: 18px;
-      background: rgba(15, 12, 20, .85);
-      border: 1px solid rgba(255,255,255,.18);
+    .modal{
+      width:100%;
+      max-width:430px;
+      border-radius:18px;
+      background: rgba(15,12,20,.86);
+      border:1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(14px);
-      padding: 18px 16px;
+      padding:18px 16px;
       box-shadow: 0 18px 45px rgba(0,0,0,.35);
       animation: popIn .22s ease-out;
-      color: #fff;
+      color:#fff;
     }
-
-    body.light .modal {
-      background: rgba(255,255,255,.88);
-      border-color: rgba(0,0,0,.12);
-      color: #101014;
+    @keyframes popIn{
+      from{ transform: translateY(8px) scale(.98); opacity:0; }
+      to{ transform: translateY(0) scale(1); opacity:1; }
     }
-
-    @keyframes popIn {
-      from { transform: translateY(8px) scale(.98); opacity: 0; }
-      to   { transform: translateY(0) scale(1); opacity: 1; }
-    }
-
-    .modal-header {
-      display: flex;
-      align-items: center;
+    .modal-header{
+      display:flex;
+      align-items:center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 10px;
+      gap:12px;
+      margin-bottom:10px;
     }
+    .modal-title{ font-weight: 900; font-size:1.05rem; }
+    .close-x{
+      background:transparent;
+      border:none;
+      cursor:pointer;
+      font-size:22px;
+      color:inherit;
+      opacity:.8;
+    }
+    .close-x:hover{ opacity:1; transform: rotate(6deg); }
 
-    .modal-title {
-      font-weight: 900;
-      font-size: 1.05rem;
-    }
+    .modal p{ margin:8px 0 12px; line-height:1.45; color: rgba(255,255,255,.82); }
 
-    .close-x {
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      font-size: 22px;
-      color: inherit;
-      opacity: .8;
-      transition: transform .15s ease, opacity .15s ease;
-    }
-    .close-x:hover { transform: rotate(6deg); opacity: 1; }
-
-    .modal p {
-      margin: 8px 0 12px;
-      line-height: 1.45;
-      color: rgba(255,255,255,.82);
-    }
-    body.light .modal p { color: rgba(0,0,0,.70); }
-
-    .dob-row {
-      display: grid;
-      gap: 10px;
-      margin: 12px 0 10px;
-    }
-
-    .dob-row label {
-      font-size: .85rem;
-      font-weight: 800;
-      opacity: .9;
-    }
+    .dob-row{ display:grid; gap:10px; margin: 12px 0 10px; }
+    .dob-row label{ font-size:.85rem; font-weight:900; opacity:.9; }
 
     input[type="date"]{
-      width: 100%;
-      padding: 12px 12px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.22);
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
-      color: inherit;
-      font-family: inherit;
-      font-weight: 600;
-    }
-    body.light input[type="date"]{
-      border-color: rgba(0,0,0,.16);
-      background: rgba(0,0,0,.04);
+      color:inherit;
+      font-family:inherit;
+      font-weight:700;
     }
 
-    .modal-actions {
-      display: flex;
-      gap: 10px;
-      margin-top: 10px;
-    }
-
-    .btn {
-      flex: 1;
-      border: none;
-      cursor: pointer;
-      border-radius: 12px;
-      padding: 12px 12px;
+    .modal-actions{ display:flex; gap:10px; margin-top:10px; }
+    .btn{
+      flex:1;
+      border:none;
+      cursor:pointer;
+      border-radius:12px;
+      padding:12px;
       font-weight: 900;
       transition: transform .15s ease, box-shadow .2s ease;
     }
-
-    .btn.primary {
+    .btn.primary{
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #0b0b0f;
     }
-
-    .btn.ghost {
+    .btn.ghost{
       background: rgba(255,255,255,.10);
       color: inherit;
-      border: 1px solid rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.18);
     }
-    body.light .btn.ghost {
-      background: rgba(0,0,0,.04);
-      border-color: rgba(0,0,0,.12);
-    }
+    .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
 
-    .btn:hover { transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
-
-    .error {
-      display: none;
-      margin-top: 10px;
-      font-weight: 900;
-      font-size: .9rem;
-      color: #ff6b6b;
+    .error{
+      display:none;
+      margin-top:10px;
+      font-weight:900;
+      font-size:.9rem;
+      color:#ff6b6b;
       animation: shake .25s ease;
     }
-    body.light .error { color: #d61f1f; }
-
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      50% { transform: translateX(6px); }
-      75% { transform: translateX(-4px); }
+    @keyframes shake{
+      0%,100%{ transform: translateX(0); }
+      25%{ transform: translateX(-6px); }
+      50%{ transform: translateX(6px); }
+      75%{ transform: translateX(-4px); }
     }
 
-    @media (max-width: 480px) {
-      body { padding: 26px 12px; }
-      h1 { font-size: 2.05rem; }
-      .tabs { grid-template-columns: 1fr; }
-      .pill { width: 100%; min-width: 0; }
+    /* Mobile tweaks */
+    @media (max-width: 480px){
+      body{ padding: 26px 12px; }
+      h1{ font-size: 2.05rem; }
+      .tabs{ grid-template-columns: 1fr; }
+      .pill{ width: 100%; justify-content:center; }
+      .theme-pill, .music-pill{ min-width: unset; }
     }
   </style>
 </head>
 
 <body>
+  <!-- Sigil overlay -->
+  <div class="sigils" aria-hidden="true"></div>
+
   <main class="card">
-
-    <!-- Controls -->
+    <!-- Top controls: Seasonal Theme + Music -->
     <div class="topbar">
-      <button class="pill" id="toggle-mode" type="button">
-        <i class="bx bx-moon"></i>
-        <span>Dark / Light</span>
+      <button class="pill theme-pill" id="themeToggle" type="button" aria-label="Toggle Seasonal Theme Mode">
+        <i class="bx bxs-leaf"></i>
+        <span id="themeLabel">Season: Auto</span>
       </button>
 
-      <button class="pill" id="toggle-mythic" type="button">
-        <i class="bx bxs-crown"></i>
-        <span>Mythic Theme</span>
-      </button>
-
-      <button class="pill" id="toggle-seasonal" type="button" title="Auto-switches the whole page to the current sabbat">
-        <i class="bx bx-calendar-star"></i>
-        <span>Seasonal (Auto)</span>
+      <button class="pill music-pill" id="musicToggle" type="button" aria-label="Toggle Music">
+        <i class="bx bx-play"></i>
+        <span id="musicLabel">Music: Off</span>
       </button>
     </div>
 
-    <img
-      class="avatar"
-      src="https://cdn.discordapp.com/attachments/1260649586364518440/1440548501565079573/Messenger_creation_2863993610432510.jpg"
-      alt="Hound Of Hades"
-    />
+    <div class="accent-strip" aria-hidden="true"></div>
 
+    <!-- Profile -->
+    <img class="avatar" src="./houndsprofile.jpg" alt="Hound Of Hades" />
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-    <div class="season-badge" id="seasonBadge" style="display:none;">
-      <i class="bx bx-leaf"></i>
-      <span id="seasonText">Season</span>
+    <!-- Socials -->
+    <div class="socials">
+      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener"><i class="bx bxl-instagram"></i></a>
+      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener"><i class="bx bxl-tiktok"></i></a>
+      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener"><i class="fa-brands fa-x-twitter"></i></a>
     </div>
 
     <!-- Tabs -->
@@ -611,89 +483,62 @@
       <button class="tab" data-tab="support" type="button">Support</button>
     </div>
 
-    <!-- PANELS -->
-    <section class="panel active" id="panel-links" aria-labelledby="Links">
+    <!-- Links -->
+    <section class="panel active" id="panel-links">
       <div class="section-card">
-        <div class="section-title">
-          <span>Featured</span>
-          <span class="hint">Tap a link — glow is intentional ✨</span>
-        </div>
-
         <div class="links">
-          <!-- FetLife (DOB gated) -->
-          <a class="link-btn" href="https://fetlife.com/Hound0fHades"
-             target="_blank" rel="noopener"
-             data-dob-gated="true">
-            <span class="link-left">
-              <i class="bx bx-lock-alt"></i>
-              <span>FetLife</span>
-            </span>
+          <a class="link-btn" href="https://fetlife.com/Hound0fHades" target="_blank" rel="noopener" data-dob-gated="true">
+            <span>FetLife</span>
             <span class="badge danger">18+</span>
           </a>
+
+          <a class="link-btn" href="https://www.snapchat.com/add/hound0fhades" target="_blank" rel="noopener">
+            <span>Snapchat</span>
+          </a>
         </div>
+
+        <p class="hint">Glow is intentional ✨ Seasonal colors shift automatically by date.</p>
       </div>
     </section>
 
-    <section class="panel" id="panel-about" aria-labelledby="About">
+    <!-- About -->
+    <section class="panel" id="panel-about">
       <div class="section-card">
-        <div class="section-title">
-          <span>About</span>
-          <span class="hint">Short + sweet, expandable</span>
-        </div>
-
-        <!-- Collapsed by default -->
         <details class="about">
           <summary>
-            <span class="summary-left">
-              <i class="bx bx-book-heart"></i>
-              <span>About Me</span>
-              <span class="readmore"></span>
-            </span>
-            <i class="bx bx-chevron-down chevron"></i>
+            <span>About Me</span>
+            <i class="bx bx-chevron-down"></i>
           </summary>
-
-          <p>
-            As a true bibliophile, I find immense joy in fantasy worlds—whether through reading or audiobooks.
-            My passions extend far beyond the literary realm: I’m an avid crafter, curious explorer, and enthusiastic
-            seeker of new culinary experiences.
-            <br><br>
-            Travel fuels my spirit, both near and far, with Ireland, Scotland, and Greece at the top of my dream list—
-            inspired especially by a deep fascination with Greek mythology. Over the past year, I’ve also stepped into
-            the world of cosplay, creating outfits that have been an absolute delight.
-            <br><br>
-            Beyond all creative pursuits, spending meaningful time with my partner, loved ones, and friends brings
-            me the greatest joy and fulfillment.
-          </p>
+          <div class="about">
+            <p>
+              As a true bibliophile, I find immense joy in fantasy worlds—whether through reading or audiobooks.
+              I’m an avid crafter, curious explorer, and enthusiastic culinary adventurer.
+              <br><br>
+              Travel fuels my spirit, especially Ireland, Scotland, and Greece, inspired by my love of mythology.
+              I also enjoy cosplay and creative expression.
+              <br><br>
+              Above all, time spent with my loved ones, partner, and friends means the most to me.
+            </p>
+          </div>
         </details>
-      </div>
-
-      <div class="section-card">
-        <div class="section-title">
-          <span>Vibe</span>
-          <span class="hint">Choose your mood up top</span>
-        </div>
-        <p class="hint" style="margin:0;">
-          Use <strong>Dark/Light</strong> for readability, <strong>Mythic Theme</strong> for underworld-gold,
-          and <strong>Seasonal</strong> for Wheel-of-the-Year visuals.
-        </p>
       </div>
     </section>
 
-    <section class="panel" id="panel-support" aria-labelledby="Support">
+    <!-- Support (kept simple since you removed tips + Amazons) -->
+    <section class="panel" id="panel-support">
       <div class="section-card">
-        <div class="section-title">
-          <span>Support</span>
-          <span class="hint">Section intentionally empty for now</span>
-        </div>
-
-        <p class="hint" style="margin:0;">
-          If you want later, we can add a single “Support” link, a commission form, or a clean contact button here.
-        </p>
+        <p class="hint" style="margin:0;">Support links intentionally removed.</p>
       </div>
     </section>
 
     <footer>© Hound Of Hades</footer>
   </main>
+
+  <!-- Music (Put your file in the repo as: music.mp3) -->
+  <audio id="bgMusic" loop preload="none">
+    <!-- ✅ Put a file named music.mp3 in the SAME folder as index.html -->
+    <source src="./music.mp3" type="audio/mpeg">
+  </audio>
 
   <!-- DOB Gate Modal -->
   <div class="modal-overlay" id="dobModal" aria-hidden="true">
@@ -703,9 +548,7 @@
         <button class="close-x" id="dobClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
       </div>
 
-      <p>
-        This link is for adults only. Please confirm you are <strong>18+</strong> by entering your date of birth.
-      </p>
+      <p>This link is for adults only. Please confirm you are <strong>18+</strong> by entering your date of birth.</p>
 
       <div class="dob-row">
         <label for="dobInput">Date of birth</label>
@@ -723,80 +566,6 @@
 
   <script>
     // -----------------------------
-    // Persistent toggles (Light/Dark + Mythic + Seasonal)
-    // -----------------------------
-    const body = document.body;
-    const toggleModeBtn = document.getElementById('toggle-mode');
-    const toggleMythicBtn = document.getElementById('toggle-mythic');
-    const toggleSeasonalBtn = document.getElementById('toggle-seasonal');
-
-    const seasonBadge = document.getElementById('seasonBadge');
-    const seasonText = document.getElementById('seasonText');
-
-    function applySavedPreferences() {
-      const savedMode = localStorage.getItem('hoh_mode');     // "light" or "dark"
-      const savedMythic = localStorage.getItem('hoh_mythic'); // "on" or "off"
-      const savedSeasonal = localStorage.getItem('hoh_seasonal'); // "on" or "off"
-
-      if (savedMode === 'light') body.classList.add('light');
-      else body.classList.remove('light');
-
-      if (savedMythic === 'on') body.classList.add('mythic');
-      else body.classList.remove('mythic');
-
-      if (savedSeasonal === 'off') {
-        localStorage.setItem('hoh_seasonal', 'off');
-      } else if (!savedSeasonal) {
-        localStorage.setItem('hoh_seasonal', 'on');
-      }
-
-      updateToggleIcons();
-    }
-
-    function updateToggleIcons() {
-      const modeIcon = toggleModeBtn.querySelector('i');
-      modeIcon.className = body.classList.contains('light') ? 'bx bx-sun' : 'bx bx-moon';
-
-      const mythIcon = toggleMythicBtn.querySelector('i');
-      mythIcon.className = body.classList.contains('mythic') ? 'bx bxs-crown' : 'bx bx-crown';
-
-      const seasonalIcon = toggleSeasonalBtn.querySelector('i');
-      const on = (localStorage.getItem('hoh_seasonal') !== 'off');
-      seasonalIcon.className = on ? 'bx bx-calendar-star' : 'bx bx-calendar';
-      toggleSeasonalBtn.style.opacity = on ? '1' : '.78';
-    }
-
-    toggleModeBtn.addEventListener('click', () => {
-      body.classList.toggle('light');
-      localStorage.setItem('hoh_mode', body.classList.contains('light') ? 'light' : 'dark');
-      updateToggleIcons();
-      if (localStorage.getItem('hoh_seasonal') !== 'off') applyHolidayTheme(getAutoHolidayKey());
-    });
-
-    toggleMythicBtn.addEventListener('click', () => {
-      body.classList.toggle('mythic');
-      localStorage.setItem('hoh_mythic', body.classList.contains('mythic') ? 'on' : 'off');
-      updateToggleIcons();
-      if (localStorage.getItem('hoh_seasonal') !== 'off') applyHolidayTheme(getAutoHolidayKey());
-    });
-
-    toggleSeasonalBtn.addEventListener('click', () => {
-      const now = localStorage.getItem('hoh_seasonal');
-      const next = (now === 'off') ? 'on' : 'off';
-      localStorage.setItem('hoh_seasonal', next);
-      updateToggleIcons();
-
-      if (next === 'on') {
-        applyHolidayTheme(getAutoHolidayKey());
-        seasonBadge.style.display = 'inline-flex';
-      } else {
-        seasonBadge.style.display = 'none';
-      }
-    });
-
-    applySavedPreferences();
-
-    // -----------------------------
     // Tabs
     // -----------------------------
     const tabs = document.querySelectorAll('.tab');
@@ -809,17 +578,177 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
-
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
         Object.values(panels).forEach(p => p.classList.remove('active'));
         panels[target].classList.add('active');
       });
     });
 
     // -----------------------------
-    // DOB Gate
+    // Seasonal Pagan Theme (8 Sabbats)
+    // - Auto mode picks by date (approx. fixed dates)
+    // - Manual mode cycles through themes
+    // -----------------------------
+    const themeToggle = document.getElementById('themeToggle');
+    const themeLabel = document.getElementById('themeLabel');
+
+    // Approximate Sabbat anchor dates (Northern Hemisphere, fixed-date style)
+    // We'll choose the theme whose anchor is the most recent <= today.
+    const THEMES = [
+      { key:"Yule",        month:12, day:21, accent:"#7dd3fc", accent2:"#a7f3d0", overlay:0.62 },
+      { key:"Imbolc",      month: 2, day: 1, accent:"#fcd34d", accent2:"#fda4af", overlay:0.56 },
+      { key:"Ostara",      month: 3, day:20, accent:"#86efac", accent2:"#f9a8d4", overlay:0.54 },
+      { key:"Beltane",     month: 5, day: 1, accent:"#fb7185", accent2:"#fbbf24", overlay:0.50 },
+      { key:"Litha",       month: 6, day:21, accent:"#fbbf24", accent2:"#fde68a", overlay:0.48 },
+      { key:"Lughnasadh",  month: 8, day: 1, accent:"#f97316", accent2:"#facc15", overlay:0.52 },
+      { key:"Mabon",       month: 9, day:22, accent:"#fb923c", accent2:"#a78bfa", overlay:0.56 },
+      { key:"Samhain",     month:10, day:31, accent:"#a78bfa", accent2:"#fb7185", overlay:0.60 },
+    ];
+
+    function asDateForYear(theme, year){
+      // month is 1-based; JS Date month is 0-based
+      return new Date(year, theme.month - 1, theme.day, 0, 0, 0, 0);
+    }
+
+    function pickAutoTheme(today = new Date()){
+      const y = today.getFullYear();
+      // Build candidate anchor dates across year boundaries
+      const candidates = THEMES.map(t => ({...t, dt: asDateForYear(t, y)}));
+
+      // For early January, Yule anchor is in previous year, include that too
+      const yule = THEMES.find(t => t.key === "Yule");
+      candidates.push({...yule, dt: asDateForYear(yule, y - 1)});
+
+      // Find most recent anchor <= today
+      let chosen = candidates[0];
+      for (const c of candidates){
+        if (c.dt <= today && c.dt >= chosen.dt) chosen = c;
+      }
+      return THEMES.find(t => t.key === chosen.key) || THEMES[0];
+    }
+
+    function applyTheme(theme){
+      document.documentElement.style.setProperty('--accent', theme.accent);
+      document.documentElement.style.setProperty('--accent2', theme.accent2);
+
+      // Slight overlay tuning per season (subtle only)
+      const overlay = `rgba(0,0,0,${theme.overlay})`;
+      document.documentElement.style.setProperty('--bg-overlay', overlay);
+    }
+
+    function getThemeMode(){
+      // "auto" or "manual"
+      return localStorage.getItem('hoh_theme_mode') || "auto";
+    }
+    function setThemeMode(mode){
+      localStorage.setItem('hoh_theme_mode', mode);
+    }
+    function getManualThemeKey(){
+      return localStorage.getItem('hoh_manual_theme') || "Samhain";
+    }
+    function setManualThemeKey(key){
+      localStorage.setItem('hoh_manual_theme', key);
+    }
+
+    function refreshTheme(){
+      const mode = getThemeMode();
+      if (mode === "auto"){
+        const t = pickAutoTheme();
+        applyTheme(t);
+        themeLabel.textContent = `Season: Auto (${t.key})`;
+      } else {
+        const key = getManualThemeKey();
+        const t = THEMES.find(x => x.key === key) || THEMES[0];
+        applyTheme(t);
+        themeLabel.textContent = `Season: ${t.key}`;
+      }
+    }
+
+    // Cycle: Auto -> Manual (current) -> next theme -> next -> ... (stays manual)
+    themeToggle.addEventListener('click', () => {
+      const mode = getThemeMode();
+      if (mode === "auto"){
+        // Switch to manual using current auto theme as starting point
+        const auto = pickAutoTheme();
+        setThemeMode("manual");
+        setManualThemeKey(auto.key);
+        refreshTheme();
+        return;
+      }
+
+      // Manual: cycle to next theme
+      const currentKey = getManualThemeKey();
+      const idx = Math.max(0, THEMES.findIndex(t => t.key === currentKey));
+      const next = THEMES[(idx + 1) % THEMES.length];
+      setManualThemeKey(next.key);
+      refreshTheme();
+    });
+
+    // Long press / right click to reset to Auto (nice little hidden trick)
+    themeToggle.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      setThemeMode("auto");
+      refreshTheme();
+    });
+
+    refreshTheme();
+
+    // -----------------------------
+    // Music Toggle
+    // - Mobile browsers require a user gesture to start audio (button click = ok)
+    // - Remembers setting
+    // -----------------------------
+    const musicToggle = document.getElementById('musicToggle');
+    const musicLabel = document.getElementById('musicLabel');
+    const musicIcon = musicToggle.querySelector('i');
+    const bgMusic = document.getElementById('bgMusic');
+
+    function setMusicUI(isOn){
+      musicLabel.textContent = isOn ? "Music: On" : "Music: Off";
+      musicIcon.className = isOn ? "bx bx-pause" : "bx bx-play";
+    }
+
+    async function musicOn(){
+      try{
+        await bgMusic.play();
+        localStorage.setItem('hoh_music', 'on');
+        setMusicUI(true);
+      }catch(err){
+        // Autoplay blocked or file missing — keep UI off
+        localStorage.setItem('hoh_music', 'off');
+        setMusicUI(false);
+      }
+    }
+
+    function musicOff(){
+      bgMusic.pause();
+      localStorage.setItem('hoh_music', 'off');
+      setMusicUI(false);
+    }
+
+    musicToggle.addEventListener('click', () => {
+      const isOn = localStorage.getItem('hoh_music') === 'on';
+      if (isOn) musicOff();
+      else musicOn();
+    });
+
+    // Respect saved preference, but only start music after first interaction
+    // We'll set the UI immediately, and attempt play on first click anywhere if "on"
+    const savedMusic = localStorage.getItem('hoh_music') === 'on';
+    setMusicUI(savedMusic);
+
+    if (savedMusic){
+      const tryStartOnce = async () => {
+        document.removeEventListener('click', tryStartOnce);
+        await musicOn();
+      };
+      document.addEventListener('click', tryStartOnce, { once: true });
+    }
+
+    // -----------------------------
+    // DOB Gate for 18+ links (FetLife)
+    // - Remembers success for 24 hours
     // -----------------------------
     const dobModal = document.getElementById('dobModal');
     const dobInput = document.getElementById('dobInput');
@@ -830,22 +759,22 @@
 
     let pendingHref = null;
 
-    function openDobModal(href) {
+    function openDobModal(href){
       pendingHref = href;
       dobError.style.display = 'none';
       dobInput.value = '';
       dobModal.style.display = 'flex';
-      dobModal.setAttribute('aria-hidden', 'false');
-      setTimeout(() => dobInput.focus(), 50);
+      dobModal.setAttribute('aria-hidden','false');
+      setTimeout(()=>dobInput.focus(), 50);
     }
 
-    function closeDobModal() {
+    function closeDobModal(){
       dobModal.style.display = 'none';
-      dobModal.setAttribute('aria-hidden', 'true');
+      dobModal.setAttribute('aria-hidden','true');
       pendingHref = null;
     }
 
-    function calculateAge(dob) {
+    function calculateAge(dob){
       const today = new Date();
       let age = today.getFullYear() - dob.getFullYear();
       const m = today.getMonth() - dob.getMonth();
@@ -853,36 +782,33 @@
       return age;
     }
 
-    function hasRecentDobApproval() {
+    function hasRecentDobApproval(){
       const stamp = localStorage.getItem('hoh_dob_ok_until');
-      if (!stamp) return false;
-      return Date.now() < Number(stamp);
+      return stamp && Date.now() < Number(stamp);
     }
 
-    function setDobApproval24h() {
-      const until = Date.now() + (24 * 60 * 60 * 1000);
-      localStorage.setItem('hoh_dob_ok_until', String(until));
+    function setDobApproval24h(){
+      localStorage.setItem('hoh_dob_ok_until', String(Date.now() + 24*60*60*1000));
     }
 
-    document.querySelectorAll('a[data-dob-gated="true"]').forEach(a => {
-      a.addEventListener('click', (e) => {
+    document.querySelectorAll('a[data-dob-gated="true"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
         if (hasRecentDobApproval()) return;
         e.preventDefault();
         openDobModal(a.href);
       });
     });
 
-    function handleDobSubmit() {
-      if (!dobInput.value) {
+    function handleDobSubmit(){
+      if (!dobInput.value){
         dobError.textContent = "Please enter your date of birth.";
         dobError.style.display = 'block';
         return;
       }
-
       const dob = new Date(dobInput.value);
       const age = calculateAge(dob);
 
-      if (age >= 18) {
+      if (age >= 18){
         setDobApproval24h();
         closeDobModal();
         if (pendingHref) window.open(pendingHref, "_blank", "noopener");
@@ -899,196 +825,14 @@
     dobCancel.addEventListener('click', closeDobModal);
     dobClose.addEventListener('click', closeDobModal);
 
-    dobModal.addEventListener('click', (e) => {
+    dobModal.addEventListener('click', (e)=>{
       if (e.target === dobModal) closeDobModal();
     });
 
-    document.addEventListener('keydown', (e) => {
+    document.addEventListener('keydown', (e)=>{
       if (dobModal.style.display === 'flex' && e.key === 'Escape') closeDobModal();
       if (dobModal.style.display === 'flex' && e.key === 'Enter') handleDobSubmit();
     });
-
-    // ------------------------------------
-    // Wheel of the Year: Colors + Background
-    // ------------------------------------
-    const DEFAULT_BG = getComputedStyle(document.documentElement).getPropertyValue('--bg-image').trim() ||
-      'url("https://cdn.discordapp.com/attachments/1260649586364518440/1440548500583612517/Messenger_creation_463855829991894_1748008364174.png")';
-
-    const WOTY = {
-      yule: {
-        label: "Yule",
-        bg: "./assets/woty/yule.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.58)",
-          "--accent": "#7dd3fc",
-          "--accent2":"#a78bfa",
-          "--glow-strong":"rgba(125,211,252,.22)",
-          "--glow":"rgba(167,139,250,.16)"
-        }
-      },
-      imbolc: {
-        label: "Imbolc",
-        bg: "./assets/woty/imbolc.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.34)",
-          "--accent":"#f59e0b",
-          "--accent2":"#fb7185",
-          "--glow-strong":"rgba(245,158,11,.20)",
-          "--glow":"rgba(251,113,133,.16)"
-        }
-      },
-      ostara: {
-        label: "Ostara",
-        bg: "./assets/woty/ostara.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.32)",
-          "--accent":"#22c55e",
-          "--accent2":"#a3e635",
-          "--glow-strong":"rgba(34,197,94,.18)",
-          "--glow":"rgba(163,230,53,.14)"
-        }
-      },
-      beltane: {
-        label: "Beltane",
-        bg: "./assets/woty/beltane.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.52)",
-          "--accent":"#fb7185",
-          "--accent2":"#f43f5e",
-          "--glow-strong":"rgba(251,113,133,.20)",
-          "--glow":"rgba(244,63,94,.14)"
-        }
-      },
-      litha: {
-        label: "Litha",
-        bg: "./assets/woty/litha.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.44)",
-          "--accent":"#f97316",
-          "--accent2":"#fbbf24",
-          "--glow-strong":"rgba(249,115,22,.20)",
-          "--glow":"rgba(251,191,36,.14)"
-        }
-      },
-      lughnasadh: {
-        label: "Lughnasadh",
-        bg: "./assets/woty/lughnasadh.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.50)",
-          "--accent":"#f59e0b",
-          "--accent2":"#f97316",
-          "--glow-strong":"rgba(245,158,11,.20)",
-          "--glow":"rgba(249,115,22,.14)"
-        }
-      },
-      mabon: {
-        label: "Mabon",
-        bg: "./assets/woty/mabon.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.54)",
-          "--accent":"#b45309",
-          "--accent2":"#f59e0b",
-          "--glow-strong":"rgba(180,83,9,.20)",
-          "--glow":"rgba(245,158,11,.14)"
-        }
-      },
-      samhain: {
-        label: "Samhain",
-        bg: "./assets/woty/samhain.jpg",
-        vars: {
-          "--bg-overlay": "rgba(0,0,0,.62)",
-          "--accent":"#a78bfa",
-          "--accent2":"#fb7185",
-          "--glow-strong":"rgba(167,139,250,.20)",
-          "--glow":"rgba(251,113,133,.16)"
-        }
-      }
-    };
-
-    function getAutoHolidayKey(){
-      const now = new Date();
-      const m = now.getMonth() + 1;
-      const d = now.getDate();
-
-      if ((m === 12 && d >= 20) || (m === 1)) return "yule";
-      if (m === 2 || (m === 3 && d <= 19)) return "imbolc";
-      if (m === 3 && d >= 20 || m === 4) return "ostara";
-      if (m === 5 || (m === 6 && d <= 19)) return "beltane";
-      if (m === 6 && d >= 20 || m === 7) return "litha";
-      if (m === 8 || (m === 9 && d <= 21)) return "lughnasadh";
-      if (m === 9 && d >= 22 || m === 10) return "mabon";
-      if (m === 11 || (m === 12 && d <= 19)) return "samhain";
-      return "yule";
-    }
-
-    function setVars(vars){
-      const root = document.documentElement;
-      Object.entries(vars).forEach(([k,v]) => root.style.setProperty(k, v));
-    }
-
-    function setBgImage(urlOrCss){
-      const root = document.documentElement;
-      if (!urlOrCss) {
-        root.style.setProperty('--bg-image', DEFAULT_BG);
-        return;
-      }
-      const v = (urlOrCss.startsWith('url(')) ? urlOrCss : `url("${urlOrCss}")`;
-      root.style.setProperty('--bg-image', v);
-    }
-
-    function preloadImage(src){
-      return new Promise((resolve) => {
-        if (!src) return resolve();
-        const img = new Image();
-        img.onload = resolve;
-        img.onerror = resolve;
-        img.src = src;
-      });
-    }
-
-    async function applyHolidayTheme(key){
-      const theme = WOTY[key] || WOTY.yule;
-      seasonText.textContent = theme.label;
-      seasonBadge.style.display = 'inline-flex';
-
-      if (theme.bg) {
-        await preloadImage(theme.bg);
-        setBgImage(theme.bg);
-      } else {
-        setBgImage(DEFAULT_BG);
-      }
-
-      if (theme.vars) setVars(theme.vars);
-      localStorage.setItem("hoh_currentHoliday", key);
-    }
-
-    function applySeasonIfEnabled(){
-      if (localStorage.getItem('hoh_seasonal') === 'off') {
-        seasonBadge.style.display = 'none';
-        return;
-      }
-      applyHolidayTheme(getAutoHolidayKey());
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      applySeasonIfEnabled();
-    });
-
-    (function scheduleMidnightFlip(){
-      const now = new Date();
-      const midnight = new Date(now);
-      midnight.setHours(24,0,0,0);
-      const ms = midnight - now;
-
-      setTimeout(() => {
-        applySeasonIfEnabled();
-        setInterval(applySeasonIfEnabled, 6 * 60 * 60 * 1000);
-      }, ms);
-    })();
-
-    if (localStorage.getItem('hoh_seasonal') !== 'off') {
-      seasonBadge.style.display = 'inline-flex';
-    }
   </script>
 </body>
 </html>
