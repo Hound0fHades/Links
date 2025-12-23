@@ -3,267 +3,274 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hound Of Hades</title>
+  <title>Hound Of Hades | Links</title>
 
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
 
   <style>
     :root{
-      /* Background image (GitHub Pages: keep these files in the SAME repo folder as this HTML) */
-      --bg-image: url("cerberuslinkbackground.png");
-
-      /* Dynamic holiday colors (JS updates these) */
-      --accent: #e53935;
-      --accent2: #ffb300;
-
-      /* Glass */
-      --bg-overlay: rgba(0,0,0,.56);
+      /* Core */
+      --bg-overlay: rgba(0,0,0,.60);
       --card-bg: rgba(0,0,0,.56);
       --card-blur: 12px;
       --border: rgba(255,255,255,.16);
-
       --text: #ffffff;
-      --muted: rgba(255,255,255,.80);
-      --muted2: rgba(255,255,255,.64);
+      --muted: rgba(255,255,255,.82);
+      --muted2: rgba(255,255,255,.62);
 
-      --btn: rgba(0,0,0,.65);
+      /* Seasonal (JS will override) */
+      --accent: #e53935;
+      --accent2: #ffb300;
+      --season-name: "Season";
+      --season-rune: "ᛟ";
 
-      /* Glow */
-      --glow: rgba(255, 255, 255, .16);
-      --glow-strong: rgba(255, 180, 0, .22);
+      /* Background image (LOCAL FILE in repo) */
+      --bg-image: url("./cerberuslinkbackground.png");
 
+      /* Profile (LOCAL FILE in repo) */
       --avatar-border: rgba(255,255,255,.92);
 
-      --tab-bg: rgba(0,0,0,.30);
+      /* Tabs */
+      --tab-bg: rgba(0,0,0,.28);
       --tab-active: rgba(255,255,255,.10);
+
+      /* Glow */
+      --glow: rgba(255,255,255,.14);
+      --glow-strong: rgba(255,180,0,.22);
+
+      /* Buttons */
+      --btn: rgba(0,0,0,.65);
     }
 
-    *{ box-sizing: border-box; }
-    html, body{ height:100%; }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
 
     body{
-      margin:0;
-      font-family:'Poppins', sans-serif;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 20% 15%, rgba(255,255,255,.08), transparent 40%),
-        radial-gradient(circle at 75% 85%, rgba(255,255,255,.06), transparent 45%),
+        radial-gradient(1200px 900px at 20% 10%, rgba(255,255,255,.05), transparent 55%),
+        radial-gradient(900px 700px at 80% 20%, rgba(255,255,255,.04), transparent 60%),
         linear-gradient(var(--bg-overlay), var(--bg-overlay)),
         var(--bg-image);
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      min-height:100vh;
-      display:flex;
-      justify-content:center;
-      align-items:flex-start;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
       padding: 40px 15px;
     }
 
-    /* subtle animated sigils */
-    .sigils{
-      position:absolute;
-      inset:-40px;
-      pointer-events:none;
-      opacity:.55;
-      mix-blend-mode: screen;
-      filter: blur(.2px);
-      overflow:hidden;
-    }
-    .sigils::before,
-    .sigils::after{
-      content:"";
-      position:absolute;
-      width:520px;
-      height:520px;
-      border-radius:50%;
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,.06) inset,
-        0 0 18px rgba(255,255,255,.06);
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.06), transparent 55%),
-        radial-gradient(circle at 70% 70%, rgba(255,255,255,.05), transparent 60%);
-      animation: sigilFloat 10.5s ease-in-out infinite;
-    }
-    .sigils::before{ top: -110px; left: -90px; transform: rotate(8deg); }
-    .sigils::after{
-      right: -130px; bottom:-150px;
-      width:600px; height:600px;
-      animation-duration: 13.2s;
-      transform: rotate(-10deg);
-    }
-    @keyframes sigilFloat{
-      0%,100%{ transform: translateY(0) rotate(var(--r, 0deg)); opacity:.55; }
-      50%{ transform: translateY(14px) rotate(calc(var(--r, 0deg) + 6deg)); opacity:.72; }
-    }
-
+    /* Main card */
     .card{
-      width:100%;
-      max-width: 560px;
-      background: var(--card-bg);
+      width: 100%;
+      max-width: 580px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), transparent 35%), var(--card-bg);
       backdrop-filter: blur(var(--card-blur));
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px 18px 24px;
-      text-align:center;
-      position:relative;
-      overflow:hidden;
-      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      border-radius: 20px;
+      padding: 22px 18px 18px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow:
+        0 30px 60px rgba(0,0,0,.45),
+        0 0 0 1px rgba(255,255,255,.04) inset;
     }
 
-    /* holiday “frame” tint */
+    /* Seasonal glow ring */
     .card::before{
       content:"";
       position:absolute;
       inset:-2px;
-      background:
-        radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--accent) 24%, transparent), transparent 50%),
-        radial-gradient(circle at 75% 85%, color-mix(in srgb, var(--accent2) 22%, transparent), transparent 55%);
-      opacity:.7;
+      border-radius: 22px;
       pointer-events:none;
+      background:
+        radial-gradient(circle at 20% 15%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 42%),
+        radial-gradient(circle at 85% 70%, color-mix(in srgb, var(--accent2) 30%, transparent), transparent 48%);
+      opacity: .85;
+      filter: blur(18px);
     }
 
+    /* Subtle animated sigils overlay */
+    .card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      opacity: .22;
+      background:
+        radial-gradient(circle at 25% 30%, rgba(255,255,255,.12), transparent 42%),
+        radial-gradient(circle at 70% 65%, rgba(255,255,255,.09), transparent 52%);
+      mix-blend-mode: screen;
+      animation: sigilFloat 9s ease-in-out infinite;
+    }
+
+    @keyframes sigilFloat{
+      0%,100% { transform: translateY(0) translateX(0); opacity: .18; }
+      50% { transform: translateY(-8px) translateX(6px); opacity: .26; }
+    }
+
+    /* Rune strip (very subtle) */
+    .rune-strip{
+      position: absolute;
+      top: 10px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      opacity: .45;
+      pointer-events: none;
+      font-weight: 900;
+      letter-spacing: .22em;
+      color: rgba(255,255,255,.42);
+      text-transform: uppercase;
+      font-size: .72rem;
+    }
+    .rune-strip span strong{
+      color: rgba(255,255,255,.62);
+      letter-spacing: .08em;
+    }
+
+    /* Avatar + header */
     .avatar{
-      width:118px;
-      height:118px;
-      border-radius:50%;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
       border: 3px solid var(--avatar-border);
       object-fit: cover;
-      margin: 6px auto 12px;
-      display:block;
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
-      position:relative;
-      z-index:1;
+      margin: 22px auto 12px;
+      display: block;
+      box-shadow: 0 14px 26px rgba(0,0,0,.35);
     }
 
     h1{
-      font-family:'Satisfy', cursive;
-      font-size: 2.35rem;
+      font-family: 'Satisfy', cursive;
+      font-size: 2.45rem;
       margin: 0 0 6px;
       letter-spacing: .3px;
-      position:relative;
-      z-index:1;
+      position: relative;
+      z-index: 1;
     }
 
     .tagline{
-      font-size:.92rem;
+      font-size: .95rem;
       color: var(--muted2);
       margin: 0 0 14px;
-      position:relative;
-      z-index:1;
+      position: relative;
+      z-index: 1;
     }
 
+    /* Social icons row */
     .socials{
       display:flex;
       justify-content:center;
-      gap: 18px;
-      margin-bottom: 16px;
-      position:relative;
-      z-index:1;
-    }
-    .socials a{
-      color: inherit;
-      font-size: 26px;
-      transition: transform .2s ease, opacity .2s ease, filter .2s ease;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-    }
-    .socials a:hover{
-      transform: translateY(-2px);
-      opacity:.92;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.22));
-      border-color: rgba(255,255,255,.24);
+      gap: 14px;
+      margin: 12px 0 16px;
+      position: relative;
+      z-index: 1;
+      flex-wrap: wrap;
     }
 
-    /* Custom FetLife glossy icon (no external SVG needed) */
-    .fetlife-icon{
-      width: 22px;
-      height: 22px;
-      border-radius: 6px;
-      background:
-        linear-gradient(145deg, rgba(255,255,255,.28), rgba(255,255,255,0) 55%),
-        linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,0)),
-        linear-gradient(135deg, #ffffff, #cfcfcf);
-      box-shadow:
-        0 8px 18px rgba(0,0,0,.18),
-        0 0 0 1px rgba(0,0,0,.12) inset;
-      position: relative;
-      display:inline-block;
-    }
-    .fetlife-icon::after{
-      content:"f";
-      position:absolute;
-      inset:0;
-      display:flex;
+    .icon-btn{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+      display: inline-flex;
       align-items:center;
       justify-content:center;
-      font-family: 'Poppins', sans-serif;
-      font-weight: 900;
-      font-size: 16px;
-      color: #111;
-      text-shadow: 0 1px 0 rgba(255,255,255,.35);
+      color: #fff;
+      text-decoration:none;
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .icon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 25% 25%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 48%),
+        radial-gradient(circle at 75% 75%, color-mix(in srgb, var(--accent2) 18%, transparent), transparent 55%);
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+
+    .icon-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(0,0,0,.28);
+      border-color: rgba(255,255,255,.28);
+    }
+    .icon-btn:hover::before{ opacity: 1; }
+
+    .icon-btn i{ font-size: 22px; position: relative; z-index:1; }
+    .icon-btn svg{ width: 22px; height: 22px; position: relative; z-index:1; }
+
+    /* Custom FetLife icon (glossier) */
+    .fetlife svg .bg{
+      fill: url(#fetBg);
+    }
+    .fetlife svg .gloss{
+      fill: url(#fetGloss);
+      opacity: .9;
+    }
+    .fetlife svg .heart{
+      fill: #b10f15;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,.35));
     }
 
     /* Tabs */
     .tabs{
       display:grid;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 10px;
-      margin: 10px 0 16px;
-      position:relative;
-      z-index:1;
+      margin: 10px 0 14px;
+      position: relative;
+      z-index: 1;
     }
+
     .tab{
-      padding: 10px 12px;
+      padding: 11px 12px;
       border-radius: 14px;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,.16);
       background: var(--tab-bg);
-      color: var(--text);
-      cursor:pointer;
-      font-weight: 800;
-      font-size: .92rem;
-      transition: transform .18s ease, box-shadow .22s ease, background .2s ease, border-color .2s ease;
+      color: #fff;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: .95rem;
+      transition: transform .18s ease, box-shadow .25s ease, background .2s ease;
     }
+
     .tab:hover{
       transform: translateY(-1px);
       box-shadow: 0 12px 24px rgba(0,0,0,.18);
-      border-color: rgba(255,255,255,.22);
     }
+
     .tab.active{ background: var(--tab-active); }
 
     /* Panels */
-    .panel{ display:none; text-align:left; position:relative; z-index:1; }
+    .panel{ display:none; text-align:left; position: relative; z-index:1; }
     .panel.active{ display:block; }
 
     .section-card{
-      background: rgba(0,0,0,.25);
-      border: 1px solid var(--border);
+      background: rgba(0,0,0,.24);
+      border: 1px solid rgba(255,255,255,.14);
       border-radius: 16px;
       padding: 14px 14px;
       margin-bottom: 14px;
-      position:relative;
-      overflow:hidden;
     }
-    .section-card::after{
-      content:"";
-      position:absolute;
-      inset:-1px;
-      background: radial-gradient(circle at 20% 20%, color-mix(in srgb, var(--accent) 18%, transparent), transparent 55%),
-                  radial-gradient(circle at 80% 80%, color-mix(in srgb, var(--accent2) 16%, transparent), transparent 60%);
-      opacity:.55;
-      pointer-events:none;
-    }
-    .section-card > *{ position:relative; z-index:1; }
 
     .section-title{
       display:flex;
@@ -279,9 +286,10 @@
     details.about{
       border-radius: 14px;
       padding: 12px 12px;
-      border: 1px solid var(--border);
-      background: rgba(0,0,0,.22);
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.20);
     }
+
     details.about summary{
       list-style:none;
       cursor:pointer;
@@ -290,40 +298,55 @@
       justify-content:space-between;
       font-weight: 900;
       user-select:none;
+      gap: 10px;
     }
-    details.about summary::-webkit-details-marker{ display:none; }
-    .summary-left{ display:flex; align-items:center; gap: 8px; }
-    .chevron{ transition: transform .25s ease; font-size: 22px; opacity:.9; }
+    details.about summary::-webkit-details-marker { display:none; }
+
+    .summary-left{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      font-weight: 900;
+    }
+
+    .chevron{
+      transition: transform .25s ease;
+      font-size: 22px;
+      opacity: .9;
+    }
     details[open] .chevron{ transform: rotate(180deg); }
 
     .about p{
       margin: 12px 0 0;
       font-size: .95rem;
-      line-height: 1.58;
+      line-height: 1.62;
       color: var(--muted);
     }
 
     /* Link buttons */
-    .links{ display:flex; flex-direction:column; gap: 12px; }
+    .links{
+      display:flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
     .link-btn{
-      position:relative;
+      position: relative;
       display:flex;
       align-items:center;
-      justify-content:space-between;
+      justify-content: space-between;
       gap: 12px;
       padding: 14px 16px;
       border-radius: 999px;
       background: var(--btn);
-      color: inherit;
+      color: #fff;
       text-decoration:none;
       font-weight: 900;
-      border: 1px solid var(--border);
+      border: 1px solid rgba(255,255,255,.16);
       transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
       overflow:hidden;
     }
 
-    /* hover glow */
     .link-btn::before{
       content:"";
       position:absolute;
@@ -331,14 +354,15 @@
       background:
         radial-gradient(circle at 30% 30%, var(--glow-strong), transparent 45%),
         radial-gradient(circle at 70% 70%, var(--glow), transparent 55%);
-      opacity:0;
+      opacity: 0;
       transition: opacity .25s ease;
       pointer-events:none;
     }
+
     .link-btn:hover{
       transform: translateY(-2px);
       box-shadow: 0 14px 30px rgba(0,0,0,.25);
-      border-color: rgba(255,255,255,.24);
+      border-color: rgba(255,255,255,.26);
     }
     .link-btn:hover::before{ opacity:1; }
 
@@ -348,123 +372,101 @@
       gap: 10px;
       z-index:1;
     }
+    .link-left i{ font-size: 22px; }
 
-    /* Music list (Option A) */
-    .songlist{
-      margin: 0;
-      padding: 0;
-      list-style:none;
-      display:flex;
-      flex-direction:column;
-      gap: 10px;
+    .link-right{
+      z-index:1;
+      font-weight: 900;
+      opacity: .85;
     }
-    .song{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap: 10px;
-      padding: 12px 14px;
-      border-radius: 14px;
+
+    /* Music embed */
+    .music-wrap{
+      margin-top: 12px;
       border: 1px solid rgba(255,255,255,.14);
+      border-radius: 16px;
       background: rgba(0,0,0,.18);
-    }
-    .song .left{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      min-width: 0;
-    }
-    .dot{
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 10px 18px rgba(0,0,0,.25);
-      flex: 0 0 auto;
-    }
-    .song .meta{
-      display:flex;
-      flex-direction:column;
-      min-width: 0;
-    }
-    .song .title{
-      font-weight: 900;
-      font-size: .95rem;
-      line-height: 1.2;
-      white-space: nowrap;
+      padding: 10px;
       overflow: hidden;
-      text-overflow: ellipsis;
     }
-    .song .artist{
-      font-size: .84rem;
-      color: var(--muted2);
-      white-space: nowrap;
+    .music-wrap iframe{
+      width: 100%;
+      max-width: 100%;
+      border: 0;
+      border-radius: 14px;
       overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .song a{
-      flex: 0 0 auto;
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      font-weight: 900;
-      font-size: .85rem;
-      color: inherit;
-      text-decoration:none;
-      padding: 10px 12px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.20);
-      transition: transform .16s ease, border-color .2s ease;
-    }
-    .song a:hover{
-      transform: translateY(-1px);
-      border-color: rgba(255,255,255,.24);
+      display:block;
     }
 
-    .tiny-note{
-      margin-top: 10px;
-      color: var(--muted2);
-      font-size: .85rem;
-      line-height: 1.45;
+    @media (max-width: 480px){
+      body{ padding: 26px 12px; }
+      h1{ font-size: 2.10rem; }
+      .tabs{ grid-template-columns: 1fr; }
+      .music-wrap iframe{ height: 145px; } /* tighter on phone */
+    }
+
+    @media (min-width: 900px){
+      .music-wrap iframe{ height: 210px; } /* bigger on desktop */
+    }
+
+    @media (min-width: 481px) and (max-width: 899px){
+      .music-wrap iframe{ height: 175px; }
     }
 
     footer{
-      margin-top: 10px;
+      margin-top: 8px;
       text-align:center;
-      font-size: .75rem;
-      color: rgba(255,255,255,.60);
-      position:relative;
-      z-index:1;
+      font-size: .78rem;
+      color: rgba(255,255,255,.58);
+      position: relative;
+      z-index: 1;
+      padding-bottom: 4px;
+    }
+    footer .season{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.18);
+    }
+    footer .dot{
+      width: 10px; height: 10px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 2px rgba(255,255,255,.08);
     }
 
-    /* Password Gate modal */
+    /* Password Gate Modal */
     .modal-overlay{
-      position:fixed;
-      inset:0;
-      background: rgba(0,0,0,.70);
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.68);
       display:none;
       align-items:center;
       justify-content:center;
       padding: 18px;
-      z-index:9999;
+      z-index: 9999;
     }
+
     .modal{
       width:100%;
-      max-width: 430px;
+      max-width: 440px;
       border-radius: 18px;
       background: rgba(15, 12, 20, .88);
       border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(14px);
       padding: 18px 16px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      box-shadow: 0 18px 45px rgba(0,0,0,.40);
       animation: popIn .22s ease-out;
-      color:#fff;
+      color: #fff;
     }
+
     @keyframes popIn{
-      from{ transform: translateY(8px) scale(.98); opacity:0; }
-      to{ transform: translateY(0) scale(1); opacity:1; }
+      from { transform: translateY(8px) scale(.98); opacity: 0; }
+      to   { transform: translateY(0) scale(1); opacity: 1; }
     }
+
     .modal-header{
       display:flex;
       align-items:center;
@@ -472,6 +474,7 @@
       gap: 12px;
       margin-bottom: 10px;
     }
+
     .modal-title{
       font-weight: 900;
       font-size: 1.05rem;
@@ -479,47 +482,68 @@
       align-items:center;
       gap: 10px;
     }
+
+    .modal-title .lock{
+      width: 30px; height: 30px;
+      border-radius: 12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.06);
+    }
+
     .close-x{
       background: transparent;
       border:none;
       cursor:pointer;
       font-size: 22px;
       color: inherit;
-      opacity:.82;
+      opacity: .85;
       transition: transform .15s ease, opacity .15s ease;
     }
-    .close-x:hover{ transform: rotate(6deg); opacity:1; }
+    .close-x:hover{ transform: rotate(6deg); opacity: 1; }
+
     .modal p{
       margin: 8px 0 12px;
-      line-height: 1.45;
-      color: rgba(255,255,255,.82);
+      line-height: 1.48;
+      color: rgba(255,255,255,.84);
     }
+
     .pw-row{
       display:grid;
-      gap: 10px;
+      gap: 8px;
       margin: 12px 0 10px;
     }
+
     .pw-row label{
       font-size: .85rem;
       font-weight: 900;
-      opacity:.9;
+      opacity: .92;
     }
+
     input[type="password"]{
-      width:100%;
+      width: 100%;
       padding: 12px 12px;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
-      color: inherit;
+      color: #fff;
       font-family: inherit;
       font-weight: 700;
-      outline:none;
+      outline: none;
     }
+    input[type="password"]:focus{
+      border-color: color-mix(in srgb, var(--accent) 60%, rgba(255,255,255,.22));
+      box-shadow: 0 0 0 4px rgba(0,0,0,.25);
+    }
+
     .modal-actions{
       display:flex;
       gap: 10px;
       margin-top: 10px;
     }
+
     .btn{
       flex:1;
       border:none;
@@ -529,87 +553,138 @@
       font-weight: 900;
       transition: transform .15s ease, box-shadow .2s ease;
     }
+
     .btn.primary{
       background: linear-gradient(135deg, var(--accent), var(--accent2));
       color: #0b0b0f;
     }
+
     .btn.ghost{
       background: rgba(255,255,255,.10);
-      color: inherit;
+      color: #fff;
       border: 1px solid rgba(255,255,255,.18);
     }
+
     .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
 
     .error{
       display:none;
       margin-top: 10px;
       font-weight: 900;
-      font-size: .9rem;
+      font-size: .92rem;
       color: #ff6b6b;
       animation: shake .25s ease;
     }
-    @keyframes shake{
-      0%,100%{ transform: translateX(0); }
-      25%{ transform: translateX(-6px); }
-      50%{ transform: translateX(6px); }
-      75%{ transform: translateX(-4px); }
-    }
 
-    @media (max-width: 480px){
-      body{ padding: 26px 12px; }
-      h1{ font-size: 2.05rem; }
-      .tabs{ grid-template-columns: 1fr; }
-      .song a{ padding: 9px 10px; }
+    @keyframes shake{
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      50% { transform: translateX(6px); }
+      75% { transform: translateX(-4px); }
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <div class="sigils" aria-hidden="true"></div>
+    <div class="rune-strip" aria-hidden="true">
+      <span><strong>ᚱ</strong> <span id="runeA">ᛟ</span> <strong>ᚨ</strong></span>
+      <span><span id="seasonNameTop">Season</span></span>
+      <span><strong>ᛉ</strong> <span id="runeB">ᛟ</span> <strong>ᚷ</strong></span>
+    </div>
 
-    <img class="avatar" src="houndsprofile.jpg" alt="Hound Of Hades" />
+    <!-- Make sure these two files exist in your GitHub Pages folder with EXACT names: -->
+    <!-- houndsprofile.jpg -->
+    <!-- cerberuslinkbackground.png -->
+    <img class="avatar" src="./houndsprofile.jpg" alt="Hound Of Hades profile" />
 
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-    <!-- Social icons (includes Snapchat + FetLife as icons) -->
+    <!-- Social Icons (FetLife + Snapchat are password gated) -->
     <div class="socials" aria-label="Social links">
-      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
+      <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
         <i class="bx bxl-instagram"></i>
       </a>
-      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
+
+      <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
         <i class="bx bxl-tiktok"></i>
       </a>
-      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
+
+      <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
         <i class="fa-brands fa-x-twitter"></i>
       </a>
 
-      <!-- Snapchat (PASSWORD GATED: "I Bite") -->
-      <a href="https://www.snapchat.com/add/hound0fhades"
+      <!-- Snapchat (Password Gate: "I Bite") -->
+      <a class="icon-btn"
+         href="https://www.snapchat.com/add/hound0fhades"
          target="_blank" rel="noopener"
-         data-password-gated="true"
+         data-gate="password"
+         data-gate-key="snap"
          aria-label="Snapchat (password gated)">
         <i class="bx bxl-snapchat"></i>
       </a>
 
-      <!-- FetLife as glossy icon -->
-      <a href="https://fetlife.com/Hound0fHades" target="_blank" rel="noopener" aria-label="FetLife">
-        <span class="fetlife-icon" aria-hidden="true"></span>
+      <!-- FetLife (Password Gate: "I Bite") -->
+      <a class="icon-btn fetlife"
+         href="https://fetlife.com/Hound0fHades"
+         target="_blank" rel="noopener"
+         data-gate="password"
+         data-gate-key="fet"
+         aria-label="FetLife (password gated)">
+        <!-- Glossy custom icon approximation -->
+        <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
+          <defs>
+            <radialGradient id="fetBg" cx="30%" cy="25%" r="80%">
+              <stop offset="0%" stop-color="#2a2a2a"/>
+              <stop offset="55%" stop-color="#101010"/>
+              <stop offset="100%" stop-color="#070707"/>
+            </radialGradient>
+            <linearGradient id="fetGloss" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="rgba(255,255,255,.55)"/>
+              <stop offset="45%" stop-color="rgba(255,255,255,.12)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- rounded square bg -->
+          <rect class="bg" x="6" y="6" width="52" height="52" rx="16"></rect>
+
+          <!-- top gloss -->
+          <path class="gloss" d="M14,14 h36 a16,16 0 0 1 8,8 v10 c-10,-10 -30,-12 -52,-4 v-6 a16,16 0 0 1 8,-8z"></path>
+
+          <!-- horned heart -->
+          <path class="heart" d="M32 48
+            C27 44,18 38,18 30
+            C18 24,22 20,27 20
+            C29 20,31 21,32 23
+            C33 21,35 20,37 20
+            C42 20,46 24,46 30
+            C46 38,37 44,32 48 Z
+            M24 22
+            C22 18,24 14,28 14
+            C29 14,30 14,31 15
+            C28 16,26 18,24 22 Z
+            M40 22
+            C42 18,40 14,36 14
+            C35 14,34 14,33 15
+            C36 16,38 18,40 22 Z"></path>
+        </svg>
       </a>
     </div>
 
-    <!-- Tabs (Links tab removed; now About + Tributes) -->
+    <!-- Tabs (Links tab removed) -->
     <div class="tabs" role="tablist" aria-label="Sections">
       <button class="tab active" data-tab="about" type="button">About</button>
       <button class="tab" data-tab="tributes" type="button">Tributes</button>
     </div>
 
     <!-- ABOUT -->
-    <section class="panel active" id="panel-about">
+    <section class="panel active" id="panel-about" aria-label="About panel">
       <div class="section-card">
         <div class="section-title">
           <span>About</span>
+          <span style="font-weight:800; color:var(--muted2);">Expandable</span>
         </div>
 
         <details class="about">
@@ -622,82 +697,46 @@
           </summary>
 
           <p>
-            As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks.
-            But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a
-            passionate seeker of new culinary adventures. The thrill of travel, both domestically and internationally, fuels my
-            spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination
-            with Greek mythology.This past year, I've delved into the captivating world of cosplay, creating outfits that have been
-            an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience
-            unto itself. I can't wait to be immersed in more of these creative pursuits that fill me with such excitement and passion.
-            Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the
-            greatest joy and fulfillment. The opportunity to be immersed in these enriching experiences would be a dream come true!
+            As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks. But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures. The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself. I can't wait to be immersed in more of these creative pursuits that fill me with such excitement and passion.Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment. The opportunity to be immersed in these enriching experiences would be a dream come true!
           </p>
         </details>
-      </div>
 
-      <div class="section-card">
-        <div class="section-title">
-          <span>Offerings <span style="opacity:.9;">ᛉ</span></span>
-        </div>
-
-        <!-- OPTION A: Song–Artist only (YOU control this list) -->
-        <ul class="songlist" id="songList">
-          <!-- Edit these items anytime -->
-          <li class="song">
-            <div class="left">
-              <span class="dot" aria-hidden="true"></span>
-              <div class="meta">
-                <div class="title">Add Song Title Here</div>
-                <div class="artist">Add Artist Here</div>
-              </div>
-            </div>
-            <a href="https://music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls" target="_blank" rel="noopener" aria-label="Open playlist in Apple Music">
-              <i class="fa-brands fa-apple"></i> Playlist
-            </a>
-          </li>
-
-          <li class="song">
-            <div class="left">
-              <span class="dot" aria-hidden="true"></span>
-              <div class="meta">
-                <div class="title">Add Song Title Here</div>
-                <div class="artist">Add Artist Here</div>
-              </div>
-            </div>
-            <a href="https://music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls" target="_blank" rel="noopener">
-              <i class="fa-brands fa-apple"></i> Playlist
-            </a>
-          </li>
-        </ul>
-
-        <div class="tiny-note">
-          This is the most “locked down” option: your page only shows the songs you type here.
-          (Apple embeds can add extra navigation; this list won’t.)
+        <!-- Apple Music embed (small on phone, bigger on desktop) -->
+        <div class="music-wrap">
+          <iframe
+            title="Apple Music Playlist"
+            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
+            src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls=1"
+            height="175">
+          </iframe>
         </div>
       </div>
     </section>
 
-    <!-- TRIBUTES -->
-    <section class="panel" id="panel-tributes">
+    <!-- TRIBUTES (ONE section: 2 Offerings + CashApp + Venmo) -->
+    <section class="panel" id="panel-tributes" aria-label="Tributes panel">
       <div class="section-card">
         <div class="section-title">
           <span>Tributes</span>
+          <span style="font-weight:800; color:var(--muted2);">Offerings • CashApp • Venmo</span>
         </div>
 
-        <!-- One section showing: 2 Offerings + CashApp + Venmo -->
         <div class="links">
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
             <span class="link-left">
-              <i class="bx bx-rune"></i>
+              <i class="bx bx-radar"></i>
               <span>Offerings</span>
             </span>
+            <span class="link-right" aria-hidden="true">ᛟ</span>
           </a>
 
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
             <span class="link-left">
-              <i class="bx bx-rune"></i>
+              <i class="bx bx-radar"></i>
               <span>Offerings</span>
             </span>
+            <span class="link-right" aria-hidden="true">ᛟ</span>
           </a>
 
           <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
@@ -705,6 +744,7 @@
               <i class="bx bxs-wallet"></i>
               <span>CashApp</span>
             </span>
+            <span class="link-right" aria-hidden="true">✦</span>
           </a>
 
           <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
@@ -712,31 +752,37 @@
               <i class="bx bx-dollar-circle"></i>
               <span>Venmo</span>
             </span>
+            <span class="link-right" aria-hidden="true">✦</span>
           </a>
         </div>
       </div>
     </section>
 
-    <footer>© Hound Of Hades</footer>
+    <footer>
+      <span class="season">
+        <span class="dot" aria-hidden="true"></span>
+        <span id="seasonLabel">Season</span>
+      </span>
+      <div style="margin-top:8px;">© Hound Of Hades</div>
+    </footer>
   </main>
 
-  <!-- Password Gate Modal (Snapchat) -->
+  <!-- Password Gate Modal -->
   <div class="modal-overlay" id="pwModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
       <div class="modal-header">
         <div class="modal-title" id="pwTitle">
-          <i class="bx bx-lock-alt"></i> Password Required
+          <span class="lock"><i class="bx bx-lock-alt"></i></span>
+          <span>Enter Password</span>
         </div>
         <button class="close-x" id="pwClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
       </div>
 
-      <p>
-        Enter the password to continue.
-      </p>
+      <p>This link is locked. Enter the password to continue.</p>
 
       <div class="pw-row">
         <label for="pwInput">Password</label>
-        <input id="pwInput" type="password" placeholder="Password" autocomplete="off" />
+        <input id="pwInput" type="password" autocomplete="off" />
       </div>
 
       <div class="modal-actions">
@@ -744,14 +790,14 @@
         <button class="btn primary" id="pwSubmit" type="button">Continue</button>
       </div>
 
-      <div class="error" id="pwError">Nope — try again.</div>
+      <div class="error" id="pwError">Nope — wrong password.</div>
     </div>
   </div>
 
   <script>
-    // -----------------------------
+    // ---------------------------------------
     // Tabs
-    // -----------------------------
+    // ---------------------------------------
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       about: document.getElementById('panel-about'),
@@ -761,71 +807,64 @@
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
-
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
         Object.values(panels).forEach(p => p.classList.remove('active'));
         panels[target].classList.add('active');
       });
     });
 
-    // -----------------------------
-    // Seasonal Pagan color shifts (8 sabbats)
-    // - This updates accent colors + gently tints the card/sections automatically.
-    // -----------------------------
-    const sabbats = [
-      { name: "Yule",        month: 11, day: 21, accent: "#7aa9ff", accent2: "#e8f0ff" },
-      { name: "Imbolc",      month: 1,  day: 1,  accent: "#ffd6e7", accent2: "#fff1c2" },
-      { name: "Ostara",      month: 2,  day: 20, accent: "#6fe7a5", accent2: "#ffd27d" },
-      { name: "Beltane",     month: 4,  day: 1,  accent: "#ff4d6d", accent2: "#ffb703" },
-      { name: "Litha",       month: 5,  day: 20, accent: "#ffb703", accent2: "#ffd60a" },
-      { name: "Lughnasadh",  month: 7,  day: 1,  accent: "#ff8c42", accent2: "#ffd29d" },
-      { name: "Mabon",       month: 8,  day: 21, accent: "#b86bff", accent2: "#ffb86b" },
-      { name: "Samhain",     month: 9,  day: 31, accent: "#c1121f", accent2: "#fca311" },
+    // ---------------------------------------
+    // Seasonal Pagan Color Shifts (Wheel of the Year)
+    // Simple date windows (you can tweak anytime)
+    // ---------------------------------------
+    function md(month, day){ return month * 100 + day; }
+
+    const SEASONS = [
+      { name: "Yule",        rune:"ᛟ", accent:"#2a7fff", accent2:"#c8f2ff", start: md(12,20), end: md(12,31) },
+      { name: "Yule",        rune:"ᛟ", accent:"#2a7fff", accent2:"#c8f2ff", start: md(1,1),  end: md(1,5)  },
+
+      { name: "Imbolc",      rune:"ᛇ", accent:"#ffffff", accent2:"#ffd6e8", start: md(1,25), end: md(2,5)  },
+      { name: "Ostara",      rune:"ᛉ", accent:"#3ddc84", accent2:"#b9ffcf", start: md(3,15), end: md(3,25) },
+      { name: "Beltane",     rune:"ᛏ", accent:"#ff4d6d", accent2:"#ffd166", start: md(4,25), end: md(5,5)  },
+      { name: "Litha",       rune:"ᛋ", accent:"#ffb703", accent2:"#ffe29a", start: md(6,15), end: md(6,25) },
+      { name: "Lughnasadh",  rune:"ᚷ", accent:"#ff7a18", accent2:"#ffd2a6", start: md(7,25), end: md(8,5)  },
+      { name: "Mabon",       rune:"ᚠ", accent:"#c76b2a", accent2:"#ffd0a1", start: md(9,17), end: md(9,27) },
+      { name: "Samhain",     rune:"ᛞ", accent:"#8a2be2", accent2:"#ff4d00", start: md(10,24),end: md(11,3)  }
     ];
 
-    function startOfSabbat(year, s) {
-      return new Date(year, s.month, s.day, 0, 0, 0, 0);
+    function pickSeason(){
+      const now = new Date();
+      const key = md(now.getMonth() + 1, now.getDate());
+      return SEASONS.find(s => s.start <= key && key <= s.end) || { name:"Deep Night", rune:"ᛟ", accent:"#e53935", accent2:"#ffb300" };
     }
 
-    function getCurrentSabbat(now = new Date()) {
-      const y = now.getFullYear();
+    function applySeasonTheme(){
+      const s = pickSeason();
+      const r = document.documentElement;
+      r.style.setProperty('--accent', s.accent);
+      r.style.setProperty('--accent2', s.accent2);
+      r.style.setProperty('--glow-strong', `color-mix(in srgb, ${s.accent2} 40%, transparent)`);
+      r.style.setProperty('--season-name', `"${s.name}"`);
+      r.style.setProperty('--season-rune', `"${s.rune}"`);
 
-      // build boundaries for this year, sorted
-      const points = sabbats.map(s => ({...s, date: startOfSabbat(y, s)}))
-                            .sort((a,b) => a.date - b.date);
-
-      // handle wrap-around: if before first point, use last from previous year
-      if (now < points[0].date) {
-        const last = {...sabbats[sabbats.length - 1]};
-        last.date = startOfSabbat(y - 1, last);
-        return last;
-      }
-
-      // find last point <= now
-      let current = points[0];
-      for (const p of points) {
-        if (p.date <= now) current = p;
-      }
-      return current;
+      document.getElementById('seasonLabel').textContent = s.name;
+      document.getElementById('seasonNameTop').textContent = s.name;
+      document.getElementById('runeA').textContent = s.rune;
+      document.getElementById('runeB').textContent = s.rune;
     }
 
-    function applySabbatColors() {
-      const s = getCurrentSabbat();
-      document.documentElement.style.setProperty('--accent', s.accent);
-      document.documentElement.style.setProperty('--accent2', s.accent2);
-    }
+    applySeasonTheme();
 
-    applySabbatColors();
-    // refresh once an hour in case the date rolls over
-    setInterval(applySabbatColors, 60 * 60 * 1000);
+    // Refresh theme once a day (in case someone leaves the page open)
+    setInterval(applySeasonTheme, 6 * 60 * 60 * 1000);
 
-    // -----------------------------
-    // Password Gate (Snapchat) - password: "I Bite"
-    // - Case-insensitive, ignores extra spaces
-    // - Remembers success for 12 hours (so it’s not annoying)
-    // -----------------------------
+    // ---------------------------------------
+    // Password Gate (for Snapchat + FetLife icons)
+    // Password: "I Bite"
+    //
+    // NOTE: This is a "soft gate" (deterrent), not real security.
+    // ---------------------------------------
     const pwModal = document.getElementById('pwModal');
     const pwInput = document.getElementById('pwInput');
     const pwError = document.getElementById('pwError');
@@ -834,66 +873,71 @@
     const pwSubmit = document.getElementById('pwSubmit');
 
     let pendingHref = null;
+    let pendingKey = null;
 
-    function normalizePw(s){
-      return (s || '').toLowerCase().replace(/\s+/g,'').trim();
+    const PASSWORD = "I Bite"; // exactly as requested
+
+    function storageKeyFor(serviceKey){
+      return `hoh_pw_ok_until_${serviceKey}`;
     }
 
-    function hasRecentPwApproval(){
-      const stamp = localStorage.getItem('hoh_pw_ok_until');
+    function hasRecentApproval(serviceKey){
+      const stamp = localStorage.getItem(storageKeyFor(serviceKey));
       if (!stamp) return false;
       return Date.now() < Number(stamp);
     }
 
-    function setPwApproval(hours=12){
-      const until = Date.now() + (hours * 60 * 60 * 1000);
-      localStorage.setItem('hoh_pw_ok_until', String(until));
+    function setApproval24h(serviceKey){
+      const until = Date.now() + (24 * 60 * 60 * 1000);
+      localStorage.setItem(storageKeyFor(serviceKey), String(until));
     }
 
-    function openPwModal(href){
+    function openPwModal(href, serviceKey){
       pendingHref = href;
+      pendingKey = serviceKey;
       pwError.style.display = 'none';
       pwInput.value = '';
       pwModal.style.display = 'flex';
-      pwModal.setAttribute('aria-hidden','false');
+      pwModal.setAttribute('aria-hidden', 'false');
       setTimeout(() => pwInput.focus(), 50);
     }
 
     function closePwModal(){
       pwModal.style.display = 'none';
-      pwModal.setAttribute('aria-hidden','true');
+      pwModal.setAttribute('aria-hidden', 'true');
       pendingHref = null;
+      pendingKey = null;
     }
 
     function handlePwSubmit(){
-      const attempt = normalizePw(pwInput.value);
-      const correct = normalizePw("I Bite");
-
-      if (!attempt){
-        pwError.textContent = "Enter the password.";
+      const val = (pwInput.value || "").trim();
+      if (!val){
+        pwError.textContent = "Please enter the password.";
         pwError.style.display = 'block';
         return;
       }
 
-      if (attempt === correct){
-        setPwApproval(12);
+      if (val === PASSWORD){
+        if (pendingKey) setApproval24h(pendingKey);
+        const href = pendingHref;
         closePwModal();
-        if (pendingHref) window.open(pendingHref, "_blank", "noopener");
+        if (href) window.open(href, "_blank", "noopener");
       } else {
-        pwError.textContent = "Nope — try again.";
+        pwError.textContent = "Nope — wrong password.";
         pwError.style.display = 'block';
         pwError.style.animation = 'none';
-        void pwError.offsetWidth; // re-trigger shake
+        void pwError.offsetWidth;
         pwError.style.animation = '';
       }
     }
 
-    // intercept gated links
-    document.querySelectorAll('a[data-password-gated="true"]').forEach(a => {
+    // Intercept gated links
+    document.querySelectorAll('a[data-gate="password"]').forEach(a => {
       a.addEventListener('click', (e) => {
-        if (hasRecentPwApproval()) return; // allow
+        const key = a.getAttribute('data-gate-key') || 'generic';
+        if (hasRecentApproval(key)) return; // allow
         e.preventDefault();
-        openPwModal(a.href);
+        openPwModal(a.href, key);
       });
     });
 
@@ -909,6 +953,14 @@
       if (pwModal.style.display === 'flex' && e.key === 'Escape') closePwModal();
       if (pwModal.style.display === 'flex' && e.key === 'Enter') handlePwSubmit();
     });
+
+    // ---------------------------------------
+    // GitHub Pages sanity note (non-blocking)
+    // ---------------------------------------
+    // Put this file in your repo as: index.html
+    // Put images in the SAME folder:
+    // - houndsprofile.jpg
+    // - cerberuslinkbackground.png
   </script>
 </body>
 </html>
