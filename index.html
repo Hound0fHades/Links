@@ -12,261 +12,241 @@
 
   <style>
     :root{
-      --bg-image: url("./cerberuslinkbackground.png");
+      /* Core */
+      --bg-overlay: rgba(0,0,0,.58);
+      --card-bg: rgba(0,0,0,.56);
+      --card-blur: 14px;
+      --border: rgba(255,255,255,.16);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,.82);
 
+      /* Holiday-driven accents (auto) */
       --accent: #e53935;
       --accent2: #ffb300;
 
-      --bg-overlay: rgba(0,0,0,.58);
-      --card-bg: rgba(0,0,0,.56);
-      --card-blur: 12px;
-      --border: rgba(255,255,255,.16);
-      --text: #ffffff;
-      --muted: rgba(255,255,255,.78);
-      --muted2: rgba(255,255,255,.62);
-      --btn: rgba(0,0,0,.65);
+      /* Button surface */
+      --btn: rgba(0,0,0,.62);
 
+      /* Link glow */
       --glow: rgba(255, 255, 255, .16);
       --glow-strong: rgba(255, 180, 0, .22);
 
-      --avatar-border: rgba(255,255,255,.95);
+      /* Assets (GitHub Pages local filenames) */
+      --bg-image: url("cerberuslinkbackground.png");
+      --avatar-border: rgba(255,255,255,.92);
 
+      /* Tabs */
       --tab-bg: rgba(0,0,0,.28);
       --tab-active: rgba(255,255,255,.10);
 
-      --ring: rgba(255,255,255,.18);
-      --ring2: rgba(255,255,255,.10);
+      /* Sigils */
+      --sigil: rgba(255,255,255,.06);
+      --sigil-strong: rgba(255,255,255,.10);
 
-      --sigil-opacity: .14;
-      --sigil-speed: 26s;
+      /* Card tint shifts with holidays (auto) */
+      --card-tint: rgba(255,255,255,.02);
     }
 
     *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    html, body{ height:100%; }
+
     body{
       margin:0;
-      font-family:'Poppins',sans-serif;
-      color:var(--text);
+      font-family:'Poppins', sans-serif;
+      color: var(--text);
       background:
         linear-gradient(var(--bg-overlay), var(--bg-overlay)),
         var(--bg-image);
-      background-size:cover;
-      background-position:center;
-      background-attachment:fixed;
-      min-height:100vh;
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
       display:flex;
       justify-content:center;
       align-items:flex-start;
-      padding:40px 15px;
+      padding: 40px 15px;
       overflow-x:hidden;
     }
 
-    body::before{
+    /* Subtle animated sigils in the backdrop */
+    body::before,
+    body::after{
       content:"";
-      position:fixed;
-      inset:-40%;
+      position: fixed;
+      inset: -40vh -40vw;
       pointer-events:none;
-      opacity:var(--sigil-opacity);
+      z-index:0;
+      opacity: .75;
       background:
-        radial-gradient(circle at 20% 30%, rgba(255,255,255,.12), transparent 45%),
-        radial-gradient(circle at 70% 60%, rgba(255,255,255,.10), transparent 55%),
-        conic-gradient(from 90deg, rgba(255,255,255,.10), transparent 20%, rgba(255,255,255,.08), transparent 55%, rgba(255,255,255,.10));
-      animation: sigilDrift var(--sigil-speed) linear infinite;
+        radial-gradient(circle at 25% 30%, var(--sigil-strong), transparent 42%),
+        radial-gradient(circle at 75% 70%, var(--sigil), transparent 48%),
+        radial-gradient(circle at 60% 25%, var(--sigil), transparent 44%),
+        radial-gradient(circle at 35% 75%, var(--sigil-strong), transparent 46%);
+      filter: blur(0px);
+      animation: sigilFloat 18s ease-in-out infinite;
+    }
+    body::after{
+      opacity: .45;
+      transform: rotate(18deg);
+      animation-duration: 26s;
       mix-blend-mode: screen;
     }
-    @keyframes sigilDrift{
-      0%   { transform: translate3d(-2%, -1%, 0) rotate(0deg) scale(1); }
-      50%  { transform: translate3d( 2%,  1%, 0) rotate(180deg) scale(1.02); }
-      100% { transform: translate3d(-2%, -1%, 0) rotate(360deg) scale(1); }
+    @keyframes sigilFloat{
+      0%   { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
+      50%  { transform: translate3d(2.5vw, -2vw, 0) scale(1.02) rotate(3deg); }
+      100% { transform: translate3d(0,0,0) scale(1) rotate(0deg); }
     }
 
     .card{
-      width:100%;
-      max-width:560px;
-      background:var(--card-bg);
-      backdrop-filter: blur(var(--card-blur));
-      border-radius:18px;
-      padding:22px 18px 24px;
       position:relative;
+      z-index:1;
+      width:100%;
+      max-width: 560px;
+      background: linear-gradient(180deg, var(--card-tint), transparent 40%), var(--card-bg);
+      backdrop-filter: blur(var(--card-blur));
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 22px 18px 24px;
+      text-align:center;
       overflow:hidden;
-      border: 1px solid rgba(255,255,255,.14);
-      box-shadow:
-        0 18px 40px rgba(0,0,0,.55),
-        0 0 0 1px var(--ring) inset,
-        0 0 0 10px rgba(0,0,0,.08) inset;
+      box-shadow: 0 18px 55px rgba(0,0,0,.35);
     }
 
+    /* holiday sheen */
     .card::before{
       content:"";
       position:absolute;
       inset:-2px;
-      pointer-events:none;
+      border-radius: 18px;
       background:
-        radial-gradient(circle at 25% 20%, color-mix(in srgb, var(--accent) 35%, transparent), transparent 55%),
-        radial-gradient(circle at 75% 75%, color-mix(in srgb, var(--accent2) 25%, transparent), transparent 60%),
-        linear-gradient(135deg, var(--ring2), transparent 45%, var(--ring2));
-      opacity:.85;
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,.10), transparent 38%),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,.06), transparent 40%),
+        linear-gradient(135deg, rgba(255,255,255,.05), transparent 40%, rgba(255,255,255,.04));
+      pointer-events:none;
+      opacity:.8;
     }
-
-    .headrow{
-      position:relative;
-      z-index:2;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:12px;
-    }
-
-    .season-pill{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      font-weight:900;
-      font-size:.88rem;
-      line-height:1;
-      white-space:nowrap;
-    }
-    .season-dot{
-      width:10px; height:10px;
-      border-radius:999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 0 4px rgba(255,255,255,.08);
-    }
-
-    .music-btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:999px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,.22);
-      color:inherit;
-      cursor:pointer;
-      transition: transform .18s ease, box-shadow .22s ease;
-      font-weight:900;
-      font-size:.88rem;
-      user-select:none;
-    }
-    .music-btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.22); }
-    .music-btn i{ font-size:18px; }
 
     .avatar{
-      position:relative;
-      z-index:2;
-      width:118px;
-      height:118px;
-      border-radius:50%;
-      border:3px solid var(--avatar-border);
-      object-fit:cover;
-      margin: 10px auto 12px;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--avatar-border);
+      object-fit: cover;
+      margin: 8px auto 12px;
       display:block;
-      box-shadow: 0 10px 22px rgba(0,0,0,.25);
+      box-shadow: 0 12px 26px rgba(0,0,0,.28);
     }
 
     h1{
-      position:relative;
-      z-index:2;
-      font-family:'Satisfy',cursive;
-      font-size:2.35rem;
-      margin:0 0 6px;
-      letter-spacing:.3px;
-      text-align:center;
+      font-family:'Satisfy', cursive;
+      font-size: 2.35rem;
+      margin: 0 0 6px;
+      letter-spacing: .3px;
     }
 
     .tagline{
-      position:relative;
-      z-index:2;
-      font-size:.92rem;
-      color:var(--muted2);
-      margin:0 0 14px;
-      text-align:center;
+      font-size: .92rem;
+      color: var(--muted);
+      margin: 0 0 14px;
     }
 
+    /* Social icons row */
     .socials{
-      position:relative;
-      z-index:2;
       display:flex;
       justify-content:center;
-      gap:18px;
-      margin-bottom:16px;
+      gap: 14px;
+      margin-bottom: 14px;
       flex-wrap: wrap;
     }
 
-    .socials a{
-      color:inherit;
-      font-size:26px;
-      transition: transform .2s ease, opacity .2s ease, filter .2s ease;
+    .icon-btn{
+      position:relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      width:44px;
-      height:44px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(0,0,0,.18);
+      color: inherit;
       text-decoration:none;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.28);
+      transition: transform .18s ease, box-shadow .22s ease, border-color .22s ease;
+      overflow:hidden;
     }
-    .socials a:hover{
-      transform: translateY(-3px);
-      opacity:.92;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,.25));
+
+    .icon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-strong), transparent 46%),
+        radial-gradient(circle at 70% 70%, var(--glow), transparent 56%);
+      opacity:0;
+      transition: opacity .25s ease;
+      pointer-events:none;
+    }
+
+    .icon-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px rgba(0,0,0,.25);
       border-color: rgba(255,255,255,.25);
     }
-    .socials svg{ width:26px; height:26px; display:block; }
+    .icon-btn:hover::before{ opacity:1; }
 
+    .icon-btn i{ font-size: 22px; }
+
+    /* FetLife (glossier, official FA brand icon) */
+    .icon-btn.fetlife::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 25%, rgba(255,255,255,.30), transparent 40%);
+      opacity: .95;
+      pointer-events:none;
+    }
+
+    /* Tabs */
     .tabs{
-      position:relative;
-      z-index:2;
       display:grid;
       grid-template-columns: repeat(2, 1fr);
-      gap:10px;
-      margin: 10px 0 16px;
+      gap: 10px;
+      margin: 12px 0 16px;
     }
+
     .tab{
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background:var(--tab-bg);
-      color:var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--tab-bg);
+      color: var(--text);
       cursor:pointer;
-      font-weight:900;
-      font-size:.9rem;
-      transition: transform .18s ease, box-shadow .2s ease, background .2s ease;
+      font-weight: 800;
+      font-size: .92rem;
+      transition: transform .18s ease, box-shadow .22s ease, background .22s ease;
     }
     .tab:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.14); }
-    .tab.active{ background:var(--tab-active); }
+    .tab.active{ background: var(--tab-active); }
 
-    .panel{ display:none; text-align:left; position:relative; z-index:2; }
+    /* Panels */
+    .panel{ display:none; text-align:left; }
     .panel.active{ display:block; }
 
     .section-card{
-      background: rgba(0,0,0,.25);
-      border:1px solid var(--border);
-      border-radius:16px;
-      padding:14px 14px;
-      margin-bottom:14px;
-    }
-
-    .section-title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      font-weight:900;
-      margin:0 0 10px;
-    }
-
-    details.about{
-      border-radius:14px;
-      padding:12px 12px;
-      border:1px solid var(--border);
       background: rgba(0,0,0,.22);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 14px;
+      margin-bottom: 14px;
+    }
+
+    /* About collapsible */
+    details.about{
+      border-radius: 14px;
+      padding: 12px 12px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.20);
     }
     details.about summary{
       list-style:none;
@@ -274,45 +254,60 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      font-weight:900;
+      font-weight: 900;
       user-select:none;
+      gap: 10px;
     }
     details.about summary::-webkit-details-marker{ display:none; }
 
-    .summary-left{ display:flex; align-items:center; gap:8px; }
+    .summary-left{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      min-width: 0;
+    }
+    .summary-left i{ font-size: 20px; }
+
     .chevron{
       transition: transform .25s ease;
+      font-size: 22px;
+      opacity: .9;
       animation: bounce 1.6s infinite;
-      font-size:22px;
     }
     details[open] .chevron{ transform: rotate(180deg); animation:none; }
+
     @keyframes bounce{
       0%,100%{ transform: translateY(0); }
       50%{ transform: translateY(-3px); }
     }
 
     .about p{
-      margin:12px 0 0;
-      font-size:.95rem;
-      line-height:1.6;
-      color:var(--muted);
+      margin: 12px 0 0;
+      font-size: .95rem;
+      line-height: 1.62;
+      color: var(--muted);
     }
 
-    .links{ display:flex; flex-direction:column; gap:12px; }
+    /* Links */
+    .links{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
 
     .link-btn{
       position:relative;
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      padding:14px 16px;
-      border-radius:999px;
-      background:var(--btn);
-      color:inherit;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 999px;
+      background: var(--btn);
+      color: inherit;
       text-decoration:none;
-      font-weight:900;
-      border:1px solid var(--border);
+      font-weight: 900;
+      border: 1px solid var(--border);
       transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease;
       overflow:hidden;
     }
@@ -328,6 +323,7 @@
       transition: opacity .25s ease;
       pointer-events:none;
     }
+
     .link-btn:hover{
       transform: translateY(-2px);
       box-shadow: 0 14px 30px rgba(0,0,0,.25);
@@ -338,20 +334,64 @@
     .link-left{
       display:inline-flex;
       align-items:center;
-      gap:10px;
+      gap: 10px;
       z-index:1;
+      min-width: 0;
+    }
+
+    .link-left i{ font-size: 20px; opacity: .95; }
+    .link-left span{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+    /* Music toggle */
+    .music-wrap{
+      display:flex;
+      gap: 10px;
+      justify-content:center;
+      margin-top: 8px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.22);
+      color: var(--text);
+      cursor:pointer;
+      transition: transform .18s ease, box-shadow .22s ease;
+      user-select:none;
+      font-weight: 900;
+      font-size: .88rem;
+    }
+    .pill:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0,0,0,.18); }
+
+    .player{
+      display:none;
+      margin-top: 12px;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.22);
+    }
+    .player.show{ display:block; }
+
+    .player iframe{
+      width: 100%;
+      height: 175px;
+      border: 0;
+      display:block;
     }
 
     footer{
-      position:relative;
-      z-index:2;
-      margin-top:10px;
+      margin-top: 10px;
       text-align:center;
-      font-size:.75rem;
-      color: rgba(255,255,255,.6);
+      font-size: .75rem;
+      color: rgba(255,255,255,.62);
     }
 
-    /* Modals */
+    /* Password Gate modal */
     .modal-overlay{
       position:fixed;
       inset:0;
@@ -359,107 +399,120 @@
       display:none;
       align-items:center;
       justify-content:center;
-      padding:18px;
-      z-index:9999;
+      padding: 18px;
+      z-index: 9999;
     }
+
     .modal{
       width:100%;
-      max-width:430px;
-      border-radius:18px;
-      background: rgba(15, 12, 20, .85);
-      border:1px solid rgba(255,255,255,.18);
+      max-width: 430px;
+      border-radius: 18px;
+      background: rgba(15, 12, 20, .88);
+      border: 1px solid rgba(255,255,255,.18);
       backdrop-filter: blur(14px);
-      padding:18px 16px;
+      padding: 18px 16px;
       box-shadow: 0 18px 45px rgba(0,0,0,.35);
       animation: popIn .22s ease-out;
       color:#fff;
     }
+
     @keyframes popIn{
       from{ transform: translateY(8px) scale(.98); opacity:0; }
       to{ transform: translateY(0) scale(1); opacity:1; }
     }
+
     .modal-header{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      margin-bottom:10px;
+      gap: 12px;
+      margin-bottom: 10px;
     }
+
     .modal-title{
-      font-weight:900;
-      font-size:1.05rem;
+      font-weight: 900;
+      font-size: 1.05rem;
     }
+
     .close-x{
-      background:transparent;
+      background: transparent;
       border:none;
       cursor:pointer;
-      font-size:22px;
-      color:inherit;
-      opacity:.8;
+      font-size: 22px;
+      color: inherit;
+      opacity:.85;
       transition: transform .15s ease, opacity .15s ease;
     }
     .close-x:hover{ transform: rotate(6deg); opacity:1; }
 
     .modal p{
-      margin:8px 0 12px;
-      line-height:1.45;
-      color: rgba(255,255,255,.82);
+      margin: 8px 0 12px;
+      line-height: 1.45;
+      color: rgba(255,255,255,.86);
     }
 
-    .dob-row{
+    .pw-row{
       display:grid;
-      gap:10px;
-      margin:12px 0 10px;
+      gap: 10px;
+      margin: 12px 0 10px;
     }
-    .dob-row label{
-      font-size:.85rem;
-      font-weight:900;
-      opacity:.9;
+
+    .pw-row label{
+      font-size: .85rem;
+      font-weight: 900;
+      opacity: .92;
     }
-    input[type="date"], input[type="password"]{
+
+    input[type="password"]{
       width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,.22);
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
-      color:inherit;
-      font-family:inherit;
-      font-weight:700;
+      color: inherit;
+      font-family: inherit;
+      font-weight: 700;
+      outline:none;
     }
 
     .modal-actions{
       display:flex;
-      gap:10px;
-      margin-top:10px;
+      gap: 10px;
+      margin-top: 10px;
     }
+
     .btn{
-      flex:1;
+      flex: 1;
       border:none;
       cursor:pointer;
-      border-radius:12px;
-      padding:12px 12px;
-      font-weight:900;
+      border-radius: 12px;
+      padding: 12px 12px;
+      font-weight: 900;
       transition: transform .15s ease, box-shadow .2s ease;
     }
+
     .btn.primary{
       background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color:#0b0b0f;
+      color: #0b0b0f;
     }
+
     .btn.ghost{
       background: rgba(255,255,255,.10);
-      color:inherit;
-      border:1px solid rgba(255,255,255,.18);
+      color: inherit;
+      border: 1px solid rgba(255,255,255,.18);
     }
+
     .btn:hover{ transform: translateY(-1px); box-shadow: 0 14px 30px rgba(0,0,0,.20); }
 
     .error{
       display:none;
-      margin-top:10px;
-      font-weight:900;
-      font-size:.9rem;
-      color:#ff6b6b;
+      margin-top: 10px;
+      font-weight: 900;
+      font-size: .9rem;
+      color: #ff6b6b;
       animation: shake .25s ease;
     }
+
     @keyframes shake{
       0%,100%{ transform: translateX(0); }
       25%{ transform: translateX(-6px); }
@@ -467,168 +520,134 @@
       75%{ transform: translateX(-4px); }
     }
 
+    /* Mobile */
     @media (max-width: 480px){
       body{ padding: 26px 12px; }
       h1{ font-size: 2.05rem; }
       .tabs{ grid-template-columns: 1fr; }
-      .headrow{ flex-wrap: wrap; justify-content:center; }
-      .season-pill, .music-btn{ width:100%; justify-content:center; }
-
-      /* ✅ Mobile-only readability boost */
-      .about p{
-        font-size: 1.02rem;
-        line-height: 1.68;
-      }
+      .music-wrap{ flex-direction: column; }
+      .pill{ width:100%; justify-content:center; }
+      .icon-btn{ width: 42px; height: 42px; }
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <div class="headrow">
-      <div class="season-pill" id="seasonPill" aria-live="polite">
-        <span class="season-dot" aria-hidden="true"></span>
-        <span id="seasonName">Season</span>
-      </div>
-
-      <button class="music-btn" id="musicToggle" type="button" aria-pressed="false">
-        <i class="bx bx-music"></i>
-        <span id="musicLabel">Music</span>
-      </button>
-    </div>
-
-    <img class="avatar" src="./houndsprofile.jpg" alt="Hound Of Hades" />
+    <img class="avatar" src="houndsprofile.jpg" alt="Hound Of Hades" />
 
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
+    <!-- Social Icons (includes FetLife + Snapchat as icons) -->
     <div class="socials">
-      <a href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
+      <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
         <i class="bx bxl-instagram"></i>
       </a>
 
-      <a href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
+      <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
         <i class="bx bxl-tiktok"></i>
       </a>
 
-      <a href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
+      <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
         <i class="fa-brands fa-x-twitter"></i>
       </a>
 
-      <!-- FetLife (DOB gated) -->
-      <a href="https://fetlife.com/Hound0fHades"
-         target="_blank" rel="noopener"
-         aria-label="FetLife (18+)"
-         data-dob-gated="true"
-         title="18+">
-        <svg viewBox="0 0 64 64" aria-hidden="true" focusable="false">
-          <defs>
-            <linearGradient id="bgG" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#14141a"/>
-              <stop offset="1" stop-color="#06060a"/>
-            </linearGradient>
-            <radialGradient id="innerGlow" cx="30%" cy="25%" r="70%">
-              <stop offset="0" stop-color="rgba(255,255,255,.18)"/>
-              <stop offset="55%" stop-color="rgba(255,255,255,.06)"/>
-              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-            </radialGradient>
-            <linearGradient id="redG" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#ff3b3b"/>
-              <stop offset="1" stop-color="#a40012"/>
-            </linearGradient>
-            <linearGradient id="shine" x1="0" y1="0" x2="1" y2="0.8">
-              <stop offset="0" stop-color="rgba(255,255,255,.35)"/>
-              <stop offset="40%" stop-color="rgba(255,255,255,.10)"/>
-              <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
-            </linearGradient>
-            <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
-              <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="rgba(0,0,0,.55)"/>
-            </filter>
-          </defs>
-
-          <rect x="6" y="6" width="52" height="52" rx="14" fill="url(#bgG)"/>
-          <rect x="8" y="8" width="48" height="48" rx="13" fill="url(#innerGlow)" opacity=".9"/>
-          <path d="M12 18c7-10 33-10 40 0" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="5" stroke-linecap="round"/>
-          <path d="M10 16c9-12 35-12 44 0" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="6" stroke-linecap="round"/>
-
-          <g filter="url(#softShadow)">
-            <path fill="url(#redG)" d="M32 50c-9.5-6.1-16-12.4-16-19.6 0-5.1 3.7-9.4 9.1-9.4 2.8 0 5.2 1.2 6.9 3 1.7-1.8 4.1-3 6.9-3 5.4 0 9.1 4.3 9.1 9.4C48 37.6 41.5 43.9 32 50z"/>
-            <path fill="url(#redG)" d="M24.8 24.2c-2.7-2.2-4.1-4.6-4.2-7.3 0-1.2.3-2.2 1-3.1 2.2 1.4 3.7 3.2 4.6 5.3.6 1.5.4 3.4-.4 5.1z"/>
-            <path fill="url(#redG)" d="M39.2 24.2c2.7-2.2 4.1-4.6 4.2-7.3 0-1.2-.3-2.2 1-3.1 2.2 1.4 3.7 3.2 4.6 5.3.6 1.5.4 3.4-.4 5.1z"/>
-            <path fill="url(#shine)" opacity=".55"
-              d="M18.5 29.5c.7-4.1 3.7-7 7.5-7 2.4 0 4.5 1 6.1 2.7
-                 -5 2.2-9.5 5.6-13.6 10.1-.2-2.0-.2-3.9 0-5.8z"/>
-          </g>
-
-          <rect x="6.5" y="6.5" width="51" height="51" rx="14" fill="none" stroke="rgba(255,255,255,.10)"/>
-        </svg>
+      <!-- FetLife (fixed icon) -->
+      <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades" target="_blank" rel="noopener" aria-label="FetLife">
+        <i class="fa-brands fa-fetlife"></i>
       </a>
 
-      <!-- Snapchat (password gated) -->
-      <a href="https://www.snapchat.com/add/hound0fhades"
-         target="_blank" rel="noopener"
-         aria-label="Snapchat (password)"
-         data-pass-gated="true"
-         title="Password">
+      <!-- Snapchat (password gate) -->
+      <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades"
+         target="_blank" rel="noopener" aria-label="Snapchat"
+         data-pass-gated="true">
         <i class="bx bxl-snapchat"></i>
       </a>
     </div>
 
+    <!-- Tabs (Links tab removed) -->
     <div class="tabs" role="tablist" aria-label="Sections">
       <button class="tab active" data-tab="about" type="button">About</button>
       <button class="tab" data-tab="tributes" type="button">Tributes</button>
     </div>
 
-    <section class="panel active" id="panel-about">
+    <!-- ABOUT -->
+    <section class="panel active" id="panel-about" aria-labelledby="About">
       <div class="section-card">
-        <div class="section-title"><span>About</span></div>
-
         <details class="about">
           <summary>
-            <span class="summary-left"><i class="bx bx-book-heart"></i><span>About Me</span></span>
+            <span class="summary-left">
+              <i class="bx bx-book-heart"></i>
+              <span>About Me</span>
+            </span>
             <i class="bx bx-chevron-down chevron"></i>
           </summary>
 
           <p>
             As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks.
-            <br><br>
             But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures.
-            <br><br>
-            The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.
-            <br><br>
-            This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight.
-            <br><br>
-            The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself. I can't wait to be immersed in more of these creative pursuits that fill me with such excitement and passion.
-            <br><br>
-            Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment.
-            <br><br>
+            The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list,
+            the latter driven by a deep fascination with Greek mythology.This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight.
+            The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself. I can't wait to be immersed in more of these creative pursuits
+            that fill me with such excitement and passion.Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment.
             The opportunity to be immersed in these enriching experiences would be a dream come true!
           </p>
         </details>
+
+        <div class="music-wrap">
+          <button class="pill" id="toggle-music" type="button">
+            <i class="bx bx-music"></i>
+            <span>Music</span>
+          </button>
+        </div>
+
+        <div class="player" id="musicPlayer" aria-hidden="true">
+          <!-- Apple Music embed (note: browsers usually block autoplay until user interacts) -->
+          <iframe
+            title="Apple Music Playlist"
+            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation"
+            src="https://embed.music.apple.com/us/station/heather-lynchs-station/ra.u-43c00163bce2ca631abb70ff757aa95f?ls">
+          </iframe>
+        </div>
       </div>
     </section>
 
-    <section class="panel" id="panel-tributes">
+    <!-- TRIBUTES (one section: Offerings + CashApp + Venmo) -->
+    <section class="panel" id="panel-tributes" aria-labelledby="Tributes">
       <div class="section-card">
-        <div class="section-title">
-          <span>Tributes & Offerings <span aria-hidden="true" style="opacity:.9;">ᛉ</span></span>
-        </div>
-
         <div class="links">
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-gift"></i><span>Offerings</span></span>
+            <span class="link-left">
+              <i class="bx bx-radar"></i>
+              <span>Offerings</span>
+            </span>
+            <span aria-hidden="true">ᚱ</span>
           </a>
 
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-heart"></i><span>Offerings</span></span>
+            <span class="link-left">
+              <i class="bx bx-radar"></i>
+              <span>Offerings</span>
+            </span>
+            <span aria-hidden="true">ᚱ</span>
           </a>
 
           <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
+            <span class="link-left">
+              <i class="bx bxs-wallet"></i>
+              <span>CashApp</span>
+            </span>
+            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
           </a>
 
           <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
+            <span class="link-left">
+              <i class="bx bx-dollar-circle"></i>
+              <span>Venmo</span>
+            </span>
+            <i class="bx bx-right-arrow-alt" aria-hidden="true"></i>
           </a>
         </div>
       </div>
@@ -637,46 +656,19 @@
     <footer>© Hound Of Hades</footer>
   </main>
 
-  <!-- Put a file named music.mp3 in the same folder as index.html -->
-  <audio id="bgMusic" src="./music.mp3" loop preload="none"></audio>
-
-  <!-- DOB Gate Modal -->
-  <div class="modal-overlay" id="dobModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="dobTitle">
-      <div class="modal-header">
-        <div class="modal-title" id="dobTitle">Age Check (18+)</div>
-        <button class="close-x" id="dobClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
-      </div>
-
-      <p>This link is for adults only. Please confirm you are <strong>18+</strong> by entering your date of birth.</p>
-
-      <div class="dob-row">
-        <label for="dobInput">Date of birth</label>
-        <input id="dobInput" type="date" />
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn ghost" id="dobCancel" type="button">Cancel</button>
-        <button class="btn primary" id="dobSubmit" type="button">Continue</button>
-      </div>
-
-      <div class="error" id="dobError">Sorry — you must be 18 or older.</div>
-    </div>
-  </div>
-
   <!-- Password Gate Modal (Snapchat) -->
   <div class="modal-overlay" id="passModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="passTitle">
       <div class="modal-header">
-        <div class="modal-title" id="passTitle">Password Required</div>
+        <div class="modal-title" id="passTitle">Enter Password</div>
         <button class="close-x" id="passClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
       </div>
 
-      <p>Enter the password to continue.</p>
+      <p>This link is protected. Please enter the password to continue.</p>
 
-      <div class="dob-row">
+      <div class="pw-row">
         <label for="passInput">Password</label>
-        <input id="passInput" type="password" autocomplete="off" placeholder="••••••••" />
+        <input id="passInput" type="password" autocomplete="off" />
       </div>
 
       <div class="modal-actions">
@@ -684,217 +676,172 @@
         <button class="btn primary" id="passSubmit" type="button">Continue</button>
       </div>
 
-      <div class="error" id="passError">Incorrect password.</div>
+      <div class="error" id="passError">Nope — try again.</div>
     </div>
   </div>
 
   <script>
+    // -----------------------------
     // Tabs
+    // -----------------------------
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       about: document.getElementById('panel-about'),
       tributes: document.getElementById('panel-tributes'),
     };
+
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
         const target = tab.dataset.tab;
+
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
+
         Object.values(panels).forEach(p => p.classList.remove('active'));
         panels[target].classList.add('active');
       });
     });
 
-    // Seasonal color shifts
-    const seasonNameEl = document.getElementById('seasonName');
-    function mmdd(d){
-      const m = String(d.getMonth()+1).padStart(2,'0');
-      const day = String(d.getDate()).padStart(2,'0');
-      return `${m}-${day}`;
-    }
-    function setTheme(name, accent, accent2){
-      document.documentElement.style.setProperty('--accent', accent);
-      document.documentElement.style.setProperty('--accent2', accent2);
-      document.documentElement.style.setProperty('--glow-strong', `${accent}33`);
-      document.documentElement.style.setProperty('--ring', `${accent}22`);
-      document.documentElement.style.setProperty('--ring2', `${accent2}18`);
-      seasonNameEl.textContent = name;
-    }
-    function applySabbatTheme(date = new Date()){
-      const key = mmdd(date);
-      const inRange = (start, end) => (start <= end) ? (key >= start && key <= end) : (key >= start || key <= end);
+    // -----------------------------
+    // Music toggle (Apple Music embed show/hide)
+    // -----------------------------
+    const toggleMusicBtn = document.getElementById('toggle-music');
+    const musicPlayer = document.getElementById('musicPlayer');
 
-      if (inRange("12-15","01-10")) return setTheme("Yule",       "#7dd3fc", "#a78bfa");
-      if (inRange("01-11","02-10")) return setTheme("Imbolc",     "#fef3c7", "#93c5fd");
-      if (inRange("02-11","03-25")) return setTheme("Ostara",     "#86efac", "#fda4af");
-      if (inRange("03-26","04-30")) return setTheme("Beltane",    "#fb7185", "#fbbf24");
-      if (inRange("05-01","06-24")) return setTheme("Litha",      "#fbbf24", "#60a5fa");
-      if (inRange("06-25","08-05")) return setTheme("Lughnasadh", "#f59e0b", "#34d399");
-      if (inRange("08-06","09-24")) return setTheme("Mabon",      "#fb923c", "#a3e635");
-      if (inRange("09-25","11-10")) return setTheme("Samhain",    "#fb7185", "#a78bfa");
-      return setTheme("Winter Night", "#a78bfa", "#60a5fa");
-    }
-    applySabbatTheme();
-    setInterval(() => applySabbatTheme(), 1000 * 60 * 60);
-
-    // Music toggle
-    const music = document.getElementById('bgMusic');
-    const musicToggle = document.getElementById('musicToggle');
-    const musicLabel = document.getElementById('musicLabel');
-
-    function setMusicUI(on){
-      musicToggle.setAttribute('aria-pressed', on ? 'true' : 'false');
-      musicLabel.textContent = on ? 'Music On' : 'Music Off';
-      musicToggle.querySelector('i').className = on ? 'bx bx-music' : 'bx bx-music-off';
-    }
-
-    async function playMusic(){
-      try{
-        await music.play();
-        localStorage.setItem('hoh_music', 'on');
-        setMusicUI(true);
-      }catch(e){
-        localStorage.setItem('hoh_music', 'off');
-        setMusicUI(false);
-      }
-    }
-    function stopMusic(){
-      music.pause();
-      music.currentTime = 0;
-      localStorage.setItem('hoh_music', 'off');
-      setMusicUI(false);
-    }
-
-    const savedMusic = localStorage.getItem('hoh_music');
-    setMusicUI(savedMusic === 'on');
-    if (savedMusic === 'on') playMusic();
-
-    musicToggle.addEventListener('click', () => {
-      const isOn = localStorage.getItem('hoh_music') === 'on';
-      if (isOn) stopMusic();
-      else playMusic();
+    toggleMusicBtn.addEventListener('click', () => {
+      musicPlayer.classList.toggle('show');
+      musicPlayer.setAttribute('aria-hidden', musicPlayer.classList.contains('show') ? 'false' : 'true');
     });
 
-    // DOB Gate (FetLife)
-    const dobModal = document.getElementById('dobModal');
-    const dobInput = document.getElementById('dobInput');
-    const dobError = document.getElementById('dobError');
-    const dobClose = document.getElementById('dobClose');
-    const dobCancel = document.getElementById('dobCancel');
-    const dobSubmit = document.getElementById('dobSubmit');
-    let pendingHref = null;
+    // -----------------------------
+    // Seasonal Pagan color shifts (auto)
+    // - Applies a palette + gentle tint to the main card
+    // -----------------------------
+    function setHolidayPalette(key){
+      const root = document.documentElement;
 
-    function openDobModal(href){
-      pendingHref = href;
-      dobError.style.display = 'none';
-      dobInput.value = '';
-      dobModal.style.display = 'flex';
-      dobModal.setAttribute('aria-hidden','false');
-      setTimeout(() => dobInput.focus(), 50);
-    }
-    function closeDobModal(){
-      dobModal.style.display = 'none';
-      dobModal.setAttribute('aria-hidden','true');
-      pendingHref = null;
-    }
-    function calculateAge(dob){
-      const today = new Date();
-      let age = today.getFullYear() - dob.getFullYear();
-      const m = today.getMonth() - dob.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
-      return age;
-    }
-    function hasRecentDobApproval(){
-      const stamp = localStorage.getItem('hoh_dob_ok_until');
-      if (!stamp) return false;
-      return Date.now() < Number(stamp);
-    }
-    function setDobApproval24h(){
-      const until = Date.now() + (24 * 60 * 60 * 1000);
-      localStorage.setItem('hoh_dob_ok_until', String(until));
+      const palettes = {
+        yule:      { a:"#f5c97a", b:"#b11226", glow:"#f5c97a", sigil:"rgba(245,201,122,.10)", tint:"rgba(245,201,122,.035)" },
+        imbolc:    { a:"#ffffff", b:"#f0b7d2", glow:"#ffffff", sigil:"rgba(255,255,255,.10)", tint:"rgba(255,255,255,.03)" },
+        ostara:    { a:"#6dd6a5", b:"#f5c97a", glow:"#6dd6a5", sigil:"rgba(109,214,165,.10)", tint:"rgba(109,214,165,.03)" },
+        beltane:   { a:"#ff4d6d", b:"#ffd166", glow:"#ff4d6d", sigil:"rgba(255,77,109,.10)", tint:"rgba(255,77,109,.03)" },
+        litha:     { a:"#ffb300", b:"#ff6b6b", glow:"#ffb300", sigil:"rgba(255,179,0,.10)", tint:"rgba(255,179,0,.03)" },
+        lughnasadh:{ a:"#ff8c42", b:"#ffd166", glow:"#ff8c42", sigil:"rgba(255,140,66,.10)", tint:"rgba(255,140,66,.03)" },
+        mabon:     { a:"#c57b57", b:"#6dd6a5", glow:"#c57b57", sigil:"rgba(197,123,87,.10)", tint:"rgba(197,123,87,.03)" },
+        samhain:   { a:"#7e0f1d", b:"#ca3400", glow:"#ca3400", sigil:"rgba(202,52,0,.10)", tint:"rgba(202,52,0,.03)" },
+        default:   { a:"#e53935", b:"#ffb300", glow:"#ffb300", sigil:"rgba(255,255,255,.08)", tint:"rgba(255,255,255,.02)" },
+      };
+
+      const p = palettes[key] || palettes.default;
+
+      root.style.setProperty('--accent', p.a);
+      root.style.setProperty('--accent2', p.b);
+      root.style.setProperty('--glow-strong', hexToRgba(p.glow, 0.24));
+      root.style.setProperty('--sigil-strong', p.sigil);
+      root.style.setProperty('--card-tint', p.tint);
+
+      // a tiny extra: shift border slightly with the palette
+      root.style.setProperty('--border', 'rgba(255,255,255,.16)');
     }
 
-    document.querySelectorAll('a[data-dob-gated="true"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        if (hasRecentDobApproval()) return;
-        e.preventDefault();
-        openDobModal(a.href);
-      });
-    });
-
-    function handleDobSubmit(){
-      if (!dobInput.value){
-        dobError.textContent = "Please enter your date of birth.";
-        dobError.style.display = 'block';
-        return;
-      }
-      const dob = new Date(dobInput.value);
-      const age = calculateAge(dob);
-
-      if (age >= 18){
-        setDobApproval24h();
-        closeDobModal();
-        if (pendingHref) window.open(pendingHref, "_blank", "noopener");
-      } else {
-        dobError.textContent = "Sorry — you must be 18 or older.";
-        dobError.style.display = 'block';
-        dobError.style.animation = 'none';
-        void dobError.offsetWidth;
-        dobError.style.animation = '';
-      }
+    function hexToRgba(hex, alpha){
+      // hex like "#ffb300"
+      const h = hex.replace('#','');
+      const r = parseInt(h.substring(0,2),16);
+      const g = parseInt(h.substring(2,4),16);
+      const b = parseInt(h.substring(4,6),16);
+      return `rgba(${r},${g},${b},${alpha})`;
     }
 
-    dobSubmit.addEventListener('click', handleDobSubmit);
-    dobCancel.addEventListener('click', closeDobModal);
-    dobClose.addEventListener('click', closeDobModal);
-    dobModal.addEventListener('click', (e) => { if (e.target === dobModal) closeDobModal(); });
+    function getHolidayKeyByDate(d){
+      const m = d.getMonth() + 1; // 1-12
+      const day = d.getDate();
 
+      // Approximate Wheel of the Year windows (feel free to tweak exact dates)
+      // Yule: Dec 20 - Jan 6
+      if ((m === 12 && day >= 20) || (m === 1 && day <= 6)) return "yule";
+      // Imbolc: Jan 25 - Feb 7
+      if ((m === 1 && day >= 25) || (m === 2 && day <= 7)) return "imbolc";
+      // Ostara: Mar 16 - Mar 31
+      if (m === 3 && day >= 16) return "ostara";
+      // Beltane: Apr 25 - May 7
+      if ((m === 4 && day >= 25) || (m === 5 && day <= 7)) return "beltane";
+      // Litha: Jun 15 - Jun 30
+      if (m === 6 && day >= 15) return "litha";
+      // Lughnasadh: Jul 25 - Aug 7
+      if ((m === 7 && day >= 25) || (m === 8 && day <= 7)) return "lughnasadh";
+      // Mabon: Sep 15 - Sep 30
+      if (m === 9 && day >= 15) return "mabon";
+      // Samhain: Oct 20 - Nov 7
+      if ((m === 10 && day >= 20) || (m === 11 && day <= 7)) return "samhain";
+
+      return "default";
+    }
+
+    // Apply now + refresh daily
+    function applySeasonalTheme(){
+      const now = new Date();
+      setHolidayPalette(getHolidayKeyByDate(now));
+    }
+    applySeasonalTheme();
+    setInterval(applySeasonalTheme, 1000 * 60 * 60 * 12);
+
+    // -----------------------------
     // Password Gate (Snapchat) — password: "I Bite"
+    // - Remembers success for 12 hours
+    // -----------------------------
     const passModal = document.getElementById('passModal');
     const passInput = document.getElementById('passInput');
     const passError = document.getElementById('passError');
     const passClose = document.getElementById('passClose');
     const passCancel = document.getElementById('passCancel');
     const passSubmit = document.getElementById('passSubmit');
-    let pendingPassHref = null;
-    const PASSWORD = "I Bite";
+
+    let pendingHref = null;
+
+    function openPassModal(href){
+      pendingHref = href;
+      passError.style.display = 'none';
+      passInput.value = '';
+      passModal.style.display = 'flex';
+      passModal.setAttribute('aria-hidden', 'false');
+      setTimeout(() => passInput.focus(), 50);
+    }
+
+    function closePassModal(){
+      passModal.style.display = 'none';
+      passModal.setAttribute('aria-hidden', 'true');
+      pendingHref = null;
+    }
 
     function hasRecentPassApproval(){
       const stamp = localStorage.getItem('hoh_pass_ok_until');
       if (!stamp) return false;
       return Date.now() < Number(stamp);
     }
+
     function setPassApproval12h(){
       const until = Date.now() + (12 * 60 * 60 * 1000);
       localStorage.setItem('hoh_pass_ok_until', String(until));
     }
 
-    function openPassModal(href){
-      pendingPassHref = href;
-      passError.style.display = 'none';
-      passInput.value = '';
-      passModal.style.display = 'flex';
-      passModal.setAttribute('aria-hidden','false');
-      setTimeout(() => passInput.focus(), 50);
-    }
-    function closePassModal(){
-      passModal.style.display = 'none';
-      passModal.setAttribute('aria-hidden','true');
-      pendingPassHref = null;
-    }
+    // Intercept gated links (Snapchat icon)
+    document.querySelectorAll('a[data-pass-gated="true"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        if (hasRecentPassApproval()) return; // allow
+        e.preventDefault();
+        openPassModal(a.href);
+      });
+    });
+
     function handlePassSubmit(){
-      const entered = (passInput.value || "").trim();
-      if (!entered){
-        passError.textContent = "Please enter the password.";
-        passError.style.display = 'block';
-        return;
-      }
-      if (entered.toLowerCase() === PASSWORD.toLowerCase()){
+      const val = (passInput.value || "").trim();
+      // password is exactly: I Bite (case-insensitive)
+      if (val.toLowerCase() === "i bite".toLowerCase()){
         setPassApproval12h();
         closePassModal();
-        if (pendingPassHref) window.open(pendingPassHref, "_blank", "noopener");
+        if (pendingHref) window.open(pendingHref, "_blank", "noopener");
       } else {
-        passError.textContent = "Incorrect password.";
         passError.style.display = 'block';
         passError.style.animation = 'none';
         void passError.offsetWidth;
@@ -902,30 +849,17 @@
       }
     }
 
-    document.querySelectorAll('a[data-pass-gated="true"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        if (hasRecentPassApproval()) return;
-        e.preventDefault();
-        openPassModal(a.href);
-      });
-    });
-
     passSubmit.addEventListener('click', handlePassSubmit);
     passCancel.addEventListener('click', closePassModal);
     passClose.addEventListener('click', closePassModal);
-    passModal.addEventListener('click', (e) => { if (e.target === passModal) closePassModal(); });
 
-    // Keyboard shortcuts
+    passModal.addEventListener('click', (e) => {
+      if (e.target === passModal) closePassModal();
+    });
+
     document.addEventListener('keydown', (e) => {
-      const dobOpen = dobModal.style.display === 'flex';
-      const passOpen = passModal.style.display === 'flex';
-
-      if ((dobOpen || passOpen) && e.key === 'Escape'){
-        if (dobOpen) closeDobModal();
-        if (passOpen) closePassModal();
-      }
-      if (dobOpen && e.key === 'Enter') handleDobSubmit();
-      if (passOpen && e.key === 'Enter') handlePassSubmit();
+      if (passModal.style.display === 'flex' && e.key === 'Escape') closePassModal();
+      if (passModal.style.display === 'flex' && e.key === 'Enter') handlePassSubmit();
     });
   </script>
 </body>
