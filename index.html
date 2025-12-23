@@ -1,313 +1,785 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hound Of Hades</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hound Of Hades</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
 
-<style>
-:root{
-  --bg-image:url("cerberuslinkbackground.png");
-  --accent:#e53935;
-  --accent2:#ffb300;
-  --overlay:rgba(0,0,0,.65);
-  --card:rgba(12,12,16,.65);
-  --border:rgba(255,255,255,.18);
-  --text:#fff;
-  --muted:rgba(255,255,255,.7);
-}
+  <style>
+    :root{
+      /* Images (local in repo) */
+      --bg-image: url("cerberuslinkbackground.png");
 
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  color:var(--text);
-  background:
-    linear-gradient(var(--overlay),var(--overlay)),
-    var(--bg-image);
-  background-size:cover;
-  background-position:center;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  padding:36px 14px;
-}
+      /* Season colors (set by JS) */
+      --accent: #e53935;
+      --accent2:#ffb300;
 
-.card{
-  width:100%;
-  max-width:560px;
-  background:var(--card);
-  backdrop-filter:blur(14px);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:22px;
-  box-shadow:0 20px 50px rgba(0,0,0,.45);
-}
+      /* Base UI */
+      --overlay: rgba(0,0,0,.62);
+      --card: rgba(10, 10, 14, .62);
+      --card2: rgba(0,0,0,.28);
+      --border: rgba(255,255,255,.18);
+      --text: #ffffff;
+      --muted: rgba(255,255,255,.72);
 
-.avatar{
-  width:120px;height:120px;
-  border-radius:50%;
-  border:3px solid #fff;
-  object-fit:cover;
-  margin:0 auto 10px;
-  display:block;
-}
+      /* Glow (used subtly) */
+      --glowA: rgba(255,255,255,.16);
+      --glowB: rgba(255,200,120,.22);
+    }
 
-h1{
-  font-family:Satisfy,cursive;
-  text-align:center;
-  font-size:2.4rem;
-  margin:4px 0;
-}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
 
-.tagline{
-  text-align:center;
-  font-size:.9rem;
-  color:var(--muted);
-  margin-bottom:16px;
-}
+    body{
+      margin:0;
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      display:flex;
+      justify-content:center;
+      align-items:flex-start;
+      padding: 36px 14px;
 
-.socials{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  margin-bottom:20px;
-}
+      background:
+        linear-gradient(var(--overlay), var(--overlay)),
+        var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
 
-.icon-btn{
-  width:46px;height:46px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:rgba(0,0,0,.35);
-  border:1px solid var(--border);
-  color:white;
-  text-decoration:none;
-  transition:.2s;
-  position:relative;
-}
+    /* subtle animated sigils overlay */
+    body::before{
+      content:"";
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      opacity: .22;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.08), transparent 55%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.06), transparent 60%);
+      mix-blend-mode: screen;
+      z-index: 0;
+    }
 
-.icon-btn:hover{
-  transform:translateY(-3px);
-  box-shadow:0 12px 28px rgba(0,0,0,.35);
-}
+    .sigils{
+      position: fixed;
+      inset: 0;
+      pointer-events:none;
+      z-index: 0;
+      opacity: .18;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,.55));
+    }
 
-.icon-btn i{font-size:24px}
+    .sigil{
+      position:absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.18);
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.10), transparent 60%),
+        conic-gradient(from 30deg, rgba(255,255,255,.08), transparent 25%, rgba(255,255,255,.08), transparent 65%, rgba(255,255,255,.08));
+      animation: floaty 12s ease-in-out infinite;
+    }
 
-.icon-btn.fetlife svg{
-  width:26px;height:26px;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));
-}
+    .sigil::after{
+      content:"";
+      position:absolute;
+      inset: 18px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,255,255,.20);
+      animation: spin 26s linear infinite;
+    }
 
-.tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-bottom:16px;
-}
+    .sigil.a{ left: -60px; top: 10%; transform: rotate(8deg); }
+    .sigil.b{ right: -80px; top: 55%; transform: rotate(-12deg); width: 320px; height: 320px; opacity:.14; }
 
-.tab{
-  padding:10px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,.3);
-  color:white;
-  font-weight:800;
-  cursor:pointer;
-}
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes floaty {
+      0%,100%{ transform: translateY(0) rotate(0deg); }
+      50%{ transform: translateY(-14px) rotate(4deg); }
+    }
 
-.tab.active{background:rgba(255,255,255,.12)}
+    .card{
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 580px;
+      border-radius: 22px;
+      border: 1px solid var(--border);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 45%),
+        radial-gradient(circle at 80% 70%, rgba(255,255,255,.06), transparent 55%),
+        linear-gradient(135deg, rgba(255,255,255,.02), rgba(255,255,255,.00)),
+        var(--card);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 22px 60px rgba(0,0,0,.50);
+      padding: 22px 18px 18px;
+      overflow:hidden;
+    }
 
-.panel{display:none}
-.panel.active{display:block}
+    /* Accent tint that changes with holidays */
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 25% 25%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 52%),
+        radial-gradient(circle at 75% 70%, color-mix(in srgb, var(--accent2) 22%, transparent), transparent 55%);
+      opacity:.55;
+      pointer-events:none;
+      z-index:0;
+    }
 
-.section{
-  background:rgba(0,0,0,.28);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:14px;
-}
+    .inner{
+      position:relative;
+      z-index:1;
+    }
 
-details summary{
-  cursor:pointer;
-  font-weight:800;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+    .top{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap: 10px;
+      padding-top: 6px;
+    }
 
-details p{
-  margin-top:12px;
-  line-height:1.6;
-  font-size:.95rem;
-}
+    .avatar{
+      width: 122px;
+      height: 122px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,.92);
+      object-fit: cover;
+      box-shadow: 0 14px 30px rgba(0,0,0,.35);
+    }
 
-.links{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+    h1{
+      font-family:'Satisfy', cursive;
+      font-size: 2.45rem;
+      margin: 0;
+      letter-spacing: .2px;
+      text-shadow: 0 12px 26px rgba(0,0,0,.35);
+    }
 
-.link-btn{
-  padding:14px 16px;
-  border-radius:999px;
-  background:rgba(0,0,0,.55);
-  border:1px solid var(--border);
-  color:white;
-  text-decoration:none;
-  font-weight:800;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
+    .tagline{
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: .92rem;
+    }
 
-.music iframe{
-  width:100%;
-  height:420px;
-  border:none;
-  border-radius:14px;
-}
+    .icon-row{
+      display:flex;
+      justify-content:center;
+      gap: 12px;
+      margin: 6px 0 16px;
+      flex-wrap: wrap;
+    }
 
-footer{
-  text-align:center;
-  font-size:.75rem;
-  color:rgba(255,255,255,.6);
-  margin-top:8px;
-}
+    .icon-btn{
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      display:grid;
+      place-items:center;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.32);
+      color: var(--text);
+      text-decoration:none;
+      transition: transform .18s ease, box-shadow .22s ease;
+      position:relative;
+      overflow:hidden;
+    }
 
-/* Password Modal */
-.modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.75);
-  z-index:9999;
-}
-.modal-box{
-  background:#0c0c12;
-  border-radius:18px;
-  padding:18px;
-  width:100%;
-  max-width:420px;
-  border:1px solid var(--border);
-}
-.modal input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  margin-top:8px;
-}
-.modal-actions{
-  display:flex;
-  gap:10px;
-  margin-top:12px;
-}
-.modal-actions button{
-  flex:1;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  font-weight:800;
-}
-</style>
+    .icon-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glowB), transparent 52%),
+        radial-gradient(circle at 70% 70%, var(--glowA), transparent 58%);
+      opacity:0;
+      transition: opacity .22s ease;
+      pointer-events:none;
+    }
+
+    .icon-btn:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 16px 34px rgba(0,0,0,.40);
+    }
+    .icon-btn:hover::before{ opacity:1; }
+
+    .icon-btn i{ font-size: 24px; z-index:1; }
+
+    /* Glossy FetLife icon (app-style) */
+    .fetlife-svg{
+      width: 24px;
+      height: 24px;
+      z-index:1;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.45));
+    }
+
+    .tabs{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 12px 0 14px;
+    }
+
+    .tab{
+      padding: 11px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.28);
+      color: var(--text);
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .tab:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,.25);
+    }
+    .tab.active{
+      background: rgba(255,255,255,.12);
+    }
+
+    .panel{ display:none; }
+    .panel.active{ display:block; }
+
+    .section{
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--card2);
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    details.about{
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.22);
+      padding: 12px 12px;
+    }
+
+    details.about summary{
+      list-style:none;
+      cursor:pointer;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-weight: 900;
+      user-select:none;
+    }
+    details.about summary::-webkit-details-marker{ display:none; }
+
+    .about p{
+      margin: 12px 0 0;
+      line-height: 1.62;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .links{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+
+    .link-btn{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.50);
+      color: var(--text);
+      text-decoration:none;
+      font-weight: 900;
+      transition: transform .18s ease, box-shadow .22s ease;
+      position:relative;
+      overflow:hidden;
+    }
+
+    .link-btn::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glowB), transparent 52%),
+        radial-gradient(circle at 70% 70%, var(--glowA), transparent 58%);
+      opacity:0;
+      transition: opacity .22s ease;
+      pointer-events:none;
+    }
+
+    .link-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(0,0,0,.35);
+    }
+    .link-btn:hover::before{ opacity:1; }
+
+    .link-btn i{ font-size: 22px; }
+
+    /* Music */
+    .music-wrap{
+      margin-top: 12px;
+      border-radius: 16px;
+      overflow:hidden;
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,.25);
+    }
+
+    .music{
+      display:none;
+      padding: 12px;
+    }
+    .music.on{ display:block; }
+
+    .music iframe{
+      width: 100%;
+      height: 420px;
+      border: none;
+      border-radius: 14px;
+    }
+
+    .music-toggle{
+      width:100%;
+      border:none;
+      cursor:pointer;
+      border-radius: 999px;
+      padding: 12px 14px;
+      font-weight: 900;
+      color: #0b0b0f;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      box-shadow: 0 18px 38px rgba(0,0,0,.35);
+      transition: transform .15s ease;
+    }
+    .music-toggle:hover{ transform: translateY(-1px); }
+
+    footer{
+      text-align:center;
+      font-size: .75rem;
+      color: rgba(255,255,255,.58);
+      margin-top: 6px;
+    }
+
+    /* Password Gate Modal */
+    .modal-overlay{
+      position: fixed;
+      inset: 0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      background: rgba(0,0,0,.74);
+      z-index: 9999;
+    }
+    .modal{
+      width:100%;
+      max-width: 420px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(14, 12, 18, .90);
+      backdrop-filter: blur(14px);
+      padding: 16px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.55);
+    }
+    .modal-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    .modal-title{
+      font-weight: 900;
+      font-size: 1.02rem;
+    }
+    .close-x{
+      background: transparent;
+      border:none;
+      color: var(--text);
+      cursor:pointer;
+      font-size: 22px;
+      opacity:.85;
+    }
+    .modal p{
+      margin: 8px 0 12px;
+      color: var(--muted);
+      line-height: 1.45;
+      font-size: .92rem;
+    }
+    .modal input{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      font: inherit;
+      font-weight: 700;
+      outline: none;
+    }
+    .modal-actions{
+      display:flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .btn{
+      flex:1;
+      border:none;
+      cursor:pointer;
+      border-radius: 12px;
+      padding: 12px 12px;
+      font-weight: 900;
+      transition: transform .15s ease, box-shadow .2s ease;
+    }
+    .btn.primary{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0b0b0f;
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.10);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(0,0,0,.30);
+    }
+    .error{
+      display:none;
+      margin-top: 10px;
+      font-weight: 900;
+      font-size: .9rem;
+      color: #ff6b6b;
+      animation: shake .25s ease;
+    }
+    @keyframes shake {
+      0%,100%{ transform: translateX(0); }
+      25%{ transform: translateX(-6px); }
+      50%{ transform: translateX(6px); }
+      75%{ transform: translateX(-4px); }
+    }
+
+    @media (max-width: 520px){
+      body{ padding: 26px 12px; }
+      h1{ font-size: 2.15rem; }
+      .tabs{ grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 
 <body>
-<main class="card">
-
-<img class="avatar" src="houndsprofile.jpg" alt="Hound Of Hades">
-
-<h1>Hound Of Hades</h1>
-<p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
-
-<div class="socials">
-  <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank"><i class="bx bxl-instagram"></i></a>
-  <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank"><i class="bx bxl-tiktok"></i></a>
-  <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank"><i class="bx bxl-twitter"></i></a>
-
-  <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades" data-gated>
-    <svg viewBox="0 0 64 64"><path fill="#b11212" d="M32 50c-8-6-18-12-18-22a10 10 0 0 1 18-6 10 10 0 0 1 18 6c0 10-10 16-18 22z"/></svg>
-  </a>
-
-  <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades" data-gated>
-    <i class="bx bxl-snapchat"></i>
-  </a>
-</div>
-
-<div class="tabs">
-  <button class="tab active" data-tab="about">About</button>
-  <button class="tab" data-tab="tributes">Tributes</button>
-</div>
-
-<section class="panel active" id="about">
-  <div class="section">
-    <details>
-      <summary>About Me <i class="bx bx-chevron-down"></i></summary>
-      <p>
-        As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks.
-        But my passions extend far beyond the literary realm – I’m an avid crafter, a curious explorer, and a passionate seeker
-        of new culinary adventures. The thrill of travel fuels my spirit, with Ireland, Scotland, and Greece topping my dream list,
-        inspired by a deep fascination with Greek mythology. This past year, I’ve delved into the world of cosplay, creating outfits
-        that have been an absolute delight. Beyond all creativity, spending time with my partner, loved ones, and friends brings
-        me the greatest joy and fulfillment.
-      </p>
-    </details>
+  <!-- subtle animated sigils -->
+  <div class="sigils" aria-hidden="true">
+    <div class="sigil a"></div>
+    <div class="sigil b"></div>
   </div>
 
-  <div class="section music">
-    <iframe src="https://music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls"></iframe>
-  </div>
-</section>
+  <main class="card">
+    <div class="inner">
 
-<section class="panel" id="tributes">
-  <div class="section">
-    <div class="links">
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank">
-        <span>Amazon Offerings I</span><i class="bx bx-gift"></i>
-      </a>
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank">
-        <span>Amazon Offerings II</span><i class="bx bx-gift"></i>
-      </a>
-      <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank">
-        <span>CashApp</span><i class="bx bxs-wallet"></i>
-      </a>
-      <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank">
-        <span>Venmo</span><i class="bx bx-dollar-circle"></i>
-      </a>
+      <div class="top">
+        <img class="avatar" src="houndsprofile.jpg" alt="Hound Of Hades">
+        <h1>Hound Of Hades</h1>
+        <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
+      </div>
+
+      <!-- Icon row (includes gated FetLife + Snapchat) -->
+      <div class="icon-row">
+        <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
+          <i class="bx bxl-instagram"></i>
+        </a>
+        <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
+          <i class="bx bxl-tiktok"></i>
+        </a>
+        <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
+          <i class="bx bxl-twitter"></i>
+        </a>
+
+        <!-- FetLife (password gated) -->
+        <a class="icon-btn" href="https://fetlife.com/Hound0fHades" data-gated="true" aria-label="FetLife">
+          <!-- glossy heart-ish icon -->
+          <svg class="fetlife-svg" viewBox="0 0 64 64" aria-hidden="true">
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ff2a2a"/>
+                <stop offset="1" stop-color="#8b0d0d"/>
+              </linearGradient>
+              <radialGradient id="shine" cx="30%" cy="25%" r="60%">
+                <stop offset="0" stop-color="rgba(255,255,255,.55)"/>
+                <stop offset="0.35" stop-color="rgba(255,255,255,.18)"/>
+                <stop offset="1" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <path fill="url(#g1)" d="M32 52c-10-7-21-13-21-25a12 12 0 0 1 21-7 12 12 0 0 1 21 7c0 12-11 18-21 25z"/>
+            <path fill="url(#shine)" d="M32 52c-10-7-21-13-21-25a12 12 0 0 1 21-7 12 12 0 0 1 21 7c0 12-11 18-21 25z"/>
+          </svg>
+        </a>
+
+        <!-- Snapchat (password gated) -->
+        <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades" data-gated="true" aria-label="Snapchat">
+          <i class="bx bxl-snapchat"></i>
+        </a>
+      </div>
+
+      <!-- Tabs (ONLY About + Tributes) -->
+      <div class="tabs" role="tablist" aria-label="Sections">
+        <button class="tab active" type="button" data-tab="about">About</button>
+        <button class="tab" type="button" data-tab="tributes">Tributes</button>
+      </div>
+
+      <!-- About Panel -->
+      <section class="panel active" id="panel-about">
+        <div class="section">
+          <details class="about">
+            <summary>
+              <span>About Me</span>
+              <i class="bx bx-chevron-down"></i>
+            </summary>
+            <p>
+              As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks. But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures. The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself. I can't wait to be immersed in more of these creative pursuits that fill me with such excitement and passion.Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment. The opportunity to be immersed in these enriching experiences would be a dream come true!
+            </p>
+          </details>
+        </div>
+
+        <div class="section">
+          <button class="music-toggle" id="musicToggle" type="button">
+            <i class="bx bx-music"></i>
+            <span>Music</span>
+          </button>
+
+          <div class="music-wrap">
+            <div class="music" id="musicPanel">
+              <!-- Apple Music embed: updates when you add songs to the same playlist -->
+              <iframe
+                allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls">
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tributes Panel -->
+      <section class="panel" id="panel-tributes">
+        <div class="section">
+          <div class="links">
+            <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
+              <span>Offerings</span>
+              <i class="bx bx-rune"></i>
+            </a>
+            <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
+              <span>Offerings</span>
+              <i class="bx bx-rune"></i>
+            </a>
+            <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
+              <span>CashApp</span>
+              <i class="bx bxs-wallet"></i>
+            </a>
+            <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
+              <span>Venmo</span>
+              <i class="bx bx-dollar-circle"></i>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <footer>© Hound Of Hades</footer>
+    </div>
+  </main>
+
+  <!-- Password Gate Modal -->
+  <div class="modal-overlay" id="gateModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+      <div class="modal-head">
+        <div class="modal-title" id="gateTitle">Enter Password</div>
+        <button class="close-x" id="gateClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
+      </div>
+
+      <p>This link is locked. Enter the password to continue.</p>
+
+      <input id="gateInput" type="password" placeholder="Password" autocomplete="off" />
+
+      <div class="modal-actions">
+        <button class="btn ghost" id="gateCancel" type="button">Cancel</button>
+        <button class="btn primary" id="gateSubmit" type="button">Unlock</button>
+      </div>
+
+      <div class="error" id="gateError">Nope 🖤 Try again.</div>
     </div>
   </div>
-</section>
 
-<footer>© Hound Of Hades</footer>
-</main>
+  <script>
+    // -----------------------------
+    // Tabs
+    // -----------------------------
+    const tabs = document.querySelectorAll('.tab');
+    const panels = {
+      about: document.getElementById('panel-about'),
+      tributes: document.getElementById('panel-tributes'),
+    };
 
-<script>
-const tabs=document.querySelectorAll(".tab");
-const panels={about:about,tributes:tributes};
-tabs.forEach(t=>t.onclick=()=>{
-  tabs.forEach(x=>x.classList.remove("active"));
-  t.classList.add("active");
-  Object.values(panels).forEach(p=>p.classList.remove("active"));
-  panels[t.dataset.tab].classList.add("active");
-});
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const target = tab.dataset.tab;
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
 
-const PASSWORD="I Bite";
-document.querySelectorAll("[data-gated]").forEach(link=>{
-  link.onclick=e=>{
-    if(localStorage.getItem("ok"))return;
-    e.preventDefault();
-    const p=prompt("Password?");
-    if(p===PASSWORD){localStorage.setItem("ok",1);window.open(link.href)}
-  };
-});
-</script>
+        Object.values(panels).forEach(p => p.classList.remove('active'));
+        panels[target].classList.add('active');
+      });
+    });
 
+    // -----------------------------
+    // Music toggle
+    // -----------------------------
+    const musicToggle = document.getElementById('musicToggle');
+    const musicPanel  = document.getElementById('musicPanel');
+
+    musicToggle.addEventListener('click', () => {
+      musicPanel.classList.toggle('on');
+    });
+
+    // -----------------------------
+    // Password gate (FetLife + Snapchat)
+    // Password: "I Bite"
+    // Remembers unlock for 24 hours
+    // -----------------------------
+    const PASSWORD = "I Bite";
+    const OK_KEY = "hoh_gate_ok_until";
+
+    const gateModal  = document.getElementById('gateModal');
+    const gateInput  = document.getElementById('gateInput');
+    const gateError  = document.getElementById('gateError');
+    const gateClose  = document.getElementById('gateClose');
+    const gateCancel = document.getElementById('gateCancel');
+    const gateSubmit = document.getElementById('gateSubmit');
+
+    let pendingHref = null;
+
+    function hasGateApproval(){
+      const stamp = localStorage.getItem(OK_KEY);
+      if(!stamp) return false;
+      return Date.now() < Number(stamp);
+    }
+
+    function setGateApproval24h(){
+      localStorage.setItem(OK_KEY, String(Date.now() + 24*60*60*1000));
+    }
+
+    function openGate(href){
+      pendingHref = href;
+      gateError.style.display = "none";
+      gateInput.value = "";
+      gateModal.style.display = "flex";
+      gateModal.setAttribute("aria-hidden","false");
+      setTimeout(()=> gateInput.focus(), 60);
+    }
+
+    function closeGate(){
+      gateModal.style.display = "none";
+      gateModal.setAttribute("aria-hidden","true");
+      pendingHref = null;
+    }
+
+    function submitGate(){
+      const val = (gateInput.value || "").trim();
+      if(val === PASSWORD){
+        setGateApproval24h();
+        closeGate();
+        if(pendingHref) window.open(pendingHref, "_blank", "noopener");
+      }else{
+        gateError.style.display = "block";
+        gateError.style.animation = "none";
+        void gateError.offsetWidth;
+        gateError.style.animation = "";
+      }
+    }
+
+    document.querySelectorAll('a[data-gated="true"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        if(hasGateApproval()) return; // allow
+        e.preventDefault();
+        openGate(a.href);
+      });
+    });
+
+    gateSubmit.addEventListener('click', submitGate);
+    gateCancel.addEventListener('click', closeGate);
+    gateClose.addEventListener('click', closeGate);
+
+    gateModal.addEventListener('click', (e) => {
+      if(e.target === gateModal) closeGate();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if(gateModal.style.display === "flex" && e.key === "Escape") closeGate();
+      if(gateModal.style.display === "flex" && e.key === "Enter") submitGate();
+    });
+
+    // -----------------------------
+    // Seasonal pagan color shifts (Wheel of the Year)
+    // Auto changes accent + card tint based on date
+    // -----------------------------
+    function setColors(accent, accent2){
+      document.documentElement.style.setProperty('--accent', accent);
+      document.documentElement.style.setProperty('--accent2', accent2);
+    }
+
+    function mmdd(d){ return String(d.getMonth()+1).padStart(2,'0') + "-" + String(d.getDate()).padStart(2,'0'); }
+
+    function applyWheelOfYear(){
+      const now = new Date();
+      const key = mmdd(now);
+
+      // Approx ranges (Northern Hemisphere); adjust anytime
+      // Yule / Winter -> Imbolc -> Ostara -> Beltane -> Litha -> Lughnasadh -> Mabon -> Samhain -> back to Yule
+      if (key >= "12-01" || key <= "01-10") {
+        // Yule (icy gold)
+        setColors("#d6b96f", "#7fb7ff");
+      } else if (key <= "02-10") {
+        // Imbolc (candlelight)
+        setColors("#f7d27a", "#ffffff");
+      } else if (key <= "03-31") {
+        // Ostara (spring green + blossom)
+        setColors("#7ee08a", "#ff8fb1");
+      } else if (key <= "05-20") {
+        // Beltane (lush + flame)
+        setColors("#56d37a", "#ff5a3c");
+      } else if (key <= "06-30") {
+        // Litha (sun gold)
+        setColors("#ffcc4a", "#ff6a00");
+      } else if (key <= "08-10") {
+        // Lughnasadh (harvest wheat)
+        setColors("#f0b04b", "#c56b2f");
+      } else if (key <= "09-30") {
+        // Mabon (autumn ember)
+        setColors("#d96a2b", "#b21f2d");
+      } else if (key <= "11-20") {
+        // Samhain (veil purple + bone)
+        setColors("#8b5cf6", "#f2efe6");
+      } else {
+        // late Nov -> early Dec (deep winter pre-yule)
+        setColors("#5ea8ff", "#d6b96f");
+      }
+    }
+
+    applyWheelOfYear();
+  </script>
 </body>
 </html>
