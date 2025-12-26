@@ -23,8 +23,6 @@
       /* seasonal (JS overrides) */
       --accent: #e53935;
       --accent2: #ffb300;
-      --season-name: "Season";
-      --season-rune: "ᛟ";
 
       /* repo-local assets */
       --bg-image: url("./cerberuslinkbackground.png");
@@ -111,27 +109,6 @@
       50% { transform: translateY(-8px) translateX(6px); opacity: .26; }
     }
 
-    .rune-strip{
-      position: absolute;
-      top: 10px;
-      left: 12px;
-      right: 12px;
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      opacity: .45;
-      pointer-events: none;
-      font-weight: 900;
-      letter-spacing: .22em;
-      color: rgba(255,255,255,.42);
-      text-transform: uppercase;
-      font-size: .72rem;
-    }
-    .rune-strip span strong{
-      color: rgba(255,255,255,.62);
-      letter-spacing: .08em;
-    }
-
     .avatar{
       width: 120px;
       height: 120px;
@@ -141,6 +118,8 @@
       margin: 22px auto 12px;
       display: block;
       box-shadow: 0 14px 26px rgba(0,0,0,.35);
+      position: relative;
+      z-index: 1;
     }
 
     h1{
@@ -295,20 +274,16 @@
     }
     details[open] .chevron{ transform: rotate(180deg); }
 
-    /* ✅ READABILITY SPACING HERE */
+    /* About readability */
     .about p{
       margin: 14px 0 0;
       font-size: .98rem;
-      line-height: 1.75;
+      line-height: 1.78;
       color: var(--muted);
       letter-spacing: .01em;
       word-spacing: .02em;
     }
-    .about p + p{ margin-top: 12px; }
-
-    .about .para{
-      margin: 12px 0 0;
-    }
+    .about .para{ margin-top: 12px; }
 
     .links{
       display:flex;
@@ -366,6 +341,7 @@
       opacity: .85;
     }
 
+    /* Music embed sizing */
     .music-wrap{
       margin-top: 12px;
       border: 1px solid rgba(255,255,255,.14);
@@ -388,7 +364,7 @@
       h1{ font-size: 2.10rem; }
       .tabs{ grid-template-columns: 1fr; }
       .music-wrap iframe{ height: 145px; }
-      .about p{ font-size: .97rem; line-height: 1.78; }
+      .about p{ font-size: .97rem; line-height: 1.80; }
     }
 
     @media (min-width: 900px){
@@ -408,22 +384,8 @@
       z-index: 1;
       padding-bottom: 4px;
     }
-    footer .season{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.18);
-    }
-    footer .dot{
-      width: 10px; height: 10px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      box-shadow: 0 0 0 2px rgba(255,255,255,.08);
-    }
 
-    /* Password Gate Modal */
+    /* -------- Modals -------- */
     .modal-overlay{
       position: fixed;
       inset: 0;
@@ -437,7 +399,7 @@
 
     .modal{
       width:100%;
-      max-width: 440px;
+      max-width: 460px;
       border-radius: 18px;
       background: rgba(15, 12, 20, .88);
       border: 1px solid rgba(255,255,255,.18);
@@ -496,19 +458,19 @@
       color: rgba(255,255,255,.84);
     }
 
-    .pw-row{
+    .row{
       display:grid;
       gap: 8px;
       margin: 12px 0 10px;
     }
 
-    .pw-row label{
+    .row label{
       font-size: .85rem;
       font-weight: 900;
       opacity: .92;
     }
 
-    input[type="password"]{
+    input[type="password"], input[type="date"]{
       width: 100%;
       padding: 12px 12px;
       border-radius: 12px;
@@ -519,7 +481,8 @@
       font-weight: 700;
       outline: none;
     }
-    input[type="password"]:focus{
+
+    input[type="password"]:focus, input[type="date"]:focus{
       border-color: color-mix(in srgb, var(--accent) 60%, rgba(255,255,255,.22));
       box-shadow: 0 0 0 4px rgba(0,0,0,.25);
     }
@@ -573,12 +536,6 @@
 
 <body>
   <main class="card">
-    <div class="rune-strip" aria-hidden="true">
-      <span><strong>ᚱ</strong> <span id="runeA">ᛟ</span> <strong>ᚨ</strong></span>
-      <span><span id="seasonNameTop">Season</span></span>
-      <span><strong>ᛉ</strong> <span id="runeB">ᛟ</span> <strong>ᚷ</strong></span>
-    </div>
-
     <img class="avatar" src="./houndsprofile.png" alt="Hound Of Hades profile" />
 
     <h1>Hound Of Hades</h1>
@@ -597,6 +554,7 @@
         <i class="fa-brands fa-x-twitter"></i>
       </a>
 
+      <!-- Snapchat: password gate only -->
       <a class="icon-btn"
          href="https://www.snapchat.com/add/hound0fhades"
          target="_blank" rel="noopener"
@@ -606,12 +564,13 @@
         <i class="bx bxl-snapchat"></i>
       </a>
 
+      <!-- FetLife: DOB (18+) + password gate -->
       <a class="icon-btn fetlife"
          href="https://fetlife.com/Hound0fHades"
          target="_blank" rel="noopener"
-         data-gate="password"
+         data-gate="dob+password"
          data-gate-key="fet"
-         aria-label="FetLife (password gated)">
+         aria-label="FetLife (18+ & password gated)">
         <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
           <defs>
             <radialGradient id="fetBg" cx="30%" cy="25%" r="80%">
@@ -668,7 +627,6 @@
             <i class="bx bx-chevron-down chevron"></i>
           </summary>
 
-          <!-- ✅ split into paragraphs for readability -->
           <p class="para">
             As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks.
             But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world,
@@ -712,78 +670,69 @@
 
         <div class="links">
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-radar"></i>
-              <span>Offerings</span>
-            </span>
+            <span class="link-left"><i class="bx bx-radar"></i><span>Offerings</span></span>
             <span class="link-right" aria-hidden="true">ᛟ</span>
           </a>
 
           <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-radar"></i>
-              <span>Offerings</span>
-            </span>
+            <span class="link-left"><i class="bx bx-radar"></i><span>Offerings</span></span>
             <span class="link-right" aria-hidden="true">ᛟ</span>
           </a>
 
           <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bxs-wallet"></i>
-              <span>CashApp</span>
-            </span>
+            <span class="link-left"><i class="bx bxs-wallet"></i><span>CashApp</span></span>
             <span class="link-right" aria-hidden="true">✦</span>
           </a>
 
           <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">
-            <span class="link-left">
-              <i class="bx bx-dollar-circle"></i>
-              <span>Venmo</span>
-            </span>
+            <span class="link-left"><i class="bx bx-dollar-circle"></i><span>Venmo</span></span>
             <span class="link-right" aria-hidden="true">✦</span>
           </a>
         </div>
       </div>
     </section>
 
-    <footer>
-      <span class="season">
-        <span class="dot" aria-hidden="true"></span>
-        <span id="seasonLabel">Season</span>
-      </span>
-      <div style="margin-top:8px;">© Hound Of Hades</div>
-    </footer>
+    <footer>© Hound Of Hades</footer>
   </main>
 
-  <!-- Password Gate Modal -->
-  <div class="modal-overlay" id="pwModal" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="pwTitle">
+  <!-- Combined Gate Modal (DOB + Password) -->
+  <div class="modal-overlay" id="gateModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
       <div class="modal-header">
-        <div class="modal-title" id="pwTitle">
+        <div class="modal-title" id="gateTitle">
           <span class="lock"><i class="bx bx-lock-alt"></i></span>
-          <span>Enter Password</span>
+          <span id="gateTitleText">Access Required</span>
         </div>
-        <button class="close-x" id="pwClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
+        <button class="close-x" id="gateClose" type="button" aria-label="Close"><i class="bx bx-x"></i></button>
       </div>
 
-      <p>This link is locked. Enter the password to continue.</p>
+      <p id="gateDesc">Please complete the checks below to continue.</p>
 
-      <div class="pw-row">
+      <!-- DOB (only shown for FetLife) -->
+      <div class="row" id="dobRow" style="display:none;">
+        <label for="dobInput">Date of birth (18+)</label>
+        <input id="dobInput" type="date" />
+      </div>
+
+      <!-- Password -->
+      <div class="row" id="pwRow">
         <label for="pwInput">Password</label>
         <input id="pwInput" type="password" autocomplete="off" />
       </div>
 
       <div class="modal-actions">
-        <button class="btn ghost" id="pwCancel" type="button">Cancel</button>
-        <button class="btn primary" id="pwSubmit" type="button">Continue</button>
+        <button class="btn ghost" id="gateCancel" type="button">Cancel</button>
+        <button class="btn primary" id="gateSubmit" type="button">Continue</button>
       </div>
 
-      <div class="error" id="pwError">Nope — wrong password.</div>
+      <div class="error" id="gateError">Nope — check your info and try again.</div>
     </div>
   </div>
 
   <script>
+    // -----------------------------
     // Tabs
+    // -----------------------------
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       about: document.getElementById('panel-about'),
@@ -800,25 +749,27 @@
       });
     });
 
+    // -----------------------------
     // Seasonal pagan color shifts
+    // -----------------------------
     function md(month, day){ return month * 100 + day; }
 
     const SEASONS = [
-      { name: "Yule",        rune:"ᛟ", accent:"#2a7fff", accent2:"#c8f2ff", start: md(12,20), end: md(12,31) },
-      { name: "Yule",        rune:"ᛟ", accent:"#2a7fff", accent2:"#c8f2ff", start: md(1,1),  end: md(1,5)  },
-      { name: "Imbolc",      rune:"ᛇ", accent:"#ffffff", accent2:"#ffd6e8", start: md(1,25), end: md(2,5)  },
-      { name: "Ostara",      rune:"ᛉ", accent:"#3ddc84", accent2:"#b9ffcf", start: md(3,15), end: md(3,25) },
-      { name: "Beltane",     rune:"ᛏ", accent:"#ff4d6d", accent2:"#ffd166", start: md(4,25), end: md(5,5)  },
-      { name: "Litha",       rune:"ᛋ", accent:"#ffb703", accent2:"#ffe29a", start: md(6,15), end: md(6,25) },
-      { name: "Lughnasadh",  rune:"ᚷ", accent:"#ff7a18", accent2:"#ffd2a6", start: md(7,25), end: md(8,5)  },
-      { name: "Mabon",       rune:"ᚠ", accent:"#c76b2a", accent2:"#ffd0a1", start: md(9,17), end: md(9,27) },
-      { name: "Samhain",     rune:"ᛞ", accent:"#8a2be2", accent2:"#ff4d00", start: md(10,24),end: md(11,3)  }
+      { name: "Yule",        accent:"#2a7fff", accent2:"#c8f2ff", start: md(12,20), end: md(12,31) },
+      { name: "Yule",        accent:"#2a7fff", accent2:"#c8f2ff", start: md(1,1),  end: md(1,5)  },
+      { name: "Imbolc",      accent:"#ffffff", accent2:"#ffd6e8", start: md(1,25), end: md(2,5)  },
+      { name: "Ostara",      accent:"#3ddc84", accent2:"#b9ffcf", start: md(3,15), end: md(3,25) },
+      { name: "Beltane",     accent:"#ff4d6d", accent2:"#ffd166", start: md(4,25), end: md(5,5)  },
+      { name: "Litha",       accent:"#ffb703", accent2:"#ffe29a", start: md(6,15), end: md(6,25) },
+      { name: "Lughnasadh",  accent:"#ff7a18", accent2:"#ffd2a6", start: md(7,25), end: md(8,5)  },
+      { name: "Mabon",       accent:"#c76b2a", accent2:"#ffd0a1", start: md(9,17), end: md(9,27) },
+      { name: "Samhain",     accent:"#8a2be2", accent2:"#ff4d00", start: md(10,24),end: md(11,3)  }
     ];
 
     function pickSeason(){
       const now = new Date();
       const key = md(now.getMonth() + 1, now.getDate());
-      return SEASONS.find(s => s.start <= key && key <= s.end) || { name:"Deep Night", rune:"ᛟ", accent:"#e53935", accent2:"#ffb300" };
+      return SEASONS.find(s => s.start <= key && key <= s.end) || { name:"Deep Night", accent:"#e53935", accent2:"#ffb300" };
     }
 
     function applySeasonTheme(){
@@ -827,105 +778,163 @@
       r.style.setProperty('--accent', s.accent);
       r.style.setProperty('--accent2', s.accent2);
       r.style.setProperty('--glow-strong', `color-mix(in srgb, ${s.accent2} 40%, transparent)`);
-      r.style.setProperty('--season-name', `"${s.name}"`);
-      r.style.setProperty('--season-rune', `"${s.rune}"`);
-
-      document.getElementById('seasonLabel').textContent = s.name;
-      document.getElementById('seasonNameTop').textContent = s.name;
-      document.getElementById('runeA').textContent = s.rune;
-      document.getElementById('runeB').textContent = s.rune;
     }
 
     applySeasonTheme();
     setInterval(applySeasonTheme, 6 * 60 * 60 * 1000);
 
-    // Password Gate (soft gate)
-    const pwModal = document.getElementById('pwModal');
-    const pwInput = document.getElementById('pwInput');
-    const pwError = document.getElementById('pwError');
-    const pwClose = document.getElementById('pwClose');
-    const pwCancel = document.getElementById('pwCancel');
-    const pwSubmit = document.getElementById('pwSubmit');
+    // -----------------------------
+    // Combined Gate: Password only OR DOB + Password
+    // -----------------------------
+    const gateModal  = document.getElementById('gateModal');
+    const gateTitleText = document.getElementById('gateTitleText');
+    const gateDesc   = document.getElementById('gateDesc');
+    const gateError  = document.getElementById('gateError');
+    const gateClose  = document.getElementById('gateClose');
+    const gateCancel = document.getElementById('gateCancel');
+    const gateSubmit = document.getElementById('gateSubmit');
+
+    const dobRow    = document.getElementById('dobRow');
+    const dobInput  = document.getElementById('dobInput');
+    const pwInput   = document.getElementById('pwInput');
 
     let pendingHref = null;
-    let pendingKey = null;
+    let pendingKey  = null;
+    let pendingMode = "password"; // "password" | "dob+password"
 
     const PASSWORD = "I Bite";
 
-    function storageKeyFor(serviceKey){
-      return `hoh_pw_ok_until_${serviceKey}`;
+    function storageKeyFor(serviceKey, kind){
+      return `hoh_gate_ok_until_${serviceKey}_${kind}`;
     }
 
-    function hasRecentApproval(serviceKey){
-      const stamp = localStorage.getItem(storageKeyFor(serviceKey));
+    function hasRecentApproval(serviceKey, kind){
+      const stamp = localStorage.getItem(storageKeyFor(serviceKey, kind));
       if (!stamp) return false;
       return Date.now() < Number(stamp);
     }
 
-    function setApproval24h(serviceKey){
+    function setApproval24h(serviceKey, kind){
       const until = Date.now() + (24 * 60 * 60 * 1000);
-      localStorage.setItem(storageKeyFor(serviceKey), String(until));
+      localStorage.setItem(storageKeyFor(serviceKey, kind), String(until));
     }
 
-    function openPwModal(href, serviceKey){
+    function calculateAge(dob){
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const m = today.getMonth() - dob.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+      return age;
+    }
+
+    function openGateModal(href, serviceKey, mode){
       pendingHref = href;
-      pendingKey = serviceKey;
-      pwError.style.display = 'none';
+      pendingKey  = serviceKey;
+      pendingMode = mode;
+
+      gateError.style.display = 'none';
       pwInput.value = '';
-      pwModal.style.display = 'flex';
-      pwModal.setAttribute('aria-hidden', 'false');
-      setTimeout(() => pwInput.focus(), 50);
+
+      if (mode === "dob+password"){
+        gateTitleText.textContent = "Adults Only (18+) + Password";
+        gateDesc.innerHTML = "This link requires <strong>age verification (18+)</strong> and the password.";
+        dobRow.style.display = "grid";
+        dobInput.value = "";
+        setTimeout(() => dobInput.focus(), 50);
+      } else {
+        gateTitleText.textContent = "Password Required";
+        gateDesc.textContent = "This link is locked. Enter the password to continue.";
+        dobRow.style.display = "none";
+        dobInput.value = "";
+        setTimeout(() => pwInput.focus(), 50);
+      }
+
+      gateModal.style.display = "flex";
+      gateModal.setAttribute("aria-hidden", "false");
     }
 
-    function closePwModal(){
-      pwModal.style.display = 'none';
-      pwModal.setAttribute('aria-hidden', 'true');
+    function closeGateModal(){
+      gateModal.style.display = "none";
+      gateModal.setAttribute("aria-hidden", "true");
       pendingHref = null;
       pendingKey = null;
+      pendingMode = "password";
     }
 
-    function handlePwSubmit(){
-      const val = (pwInput.value || "").trim();
-      if (!val){
-        pwError.textContent = "Please enter the password.";
-        pwError.style.display = 'block';
+    function showGateError(msg){
+      gateError.textContent = msg;
+      gateError.style.display = "block";
+      gateError.style.animation = "none";
+      void gateError.offsetWidth;
+      gateError.style.animation = "";
+    }
+
+    function handleGateSubmit(){
+      const key = pendingKey || "generic";
+
+      // DOB check if needed
+      if (pendingMode === "dob+password"){
+        if (!dobInput.value){
+          showGateError("Please enter your date of birth.");
+          return;
+        }
+        const dob = new Date(dobInput.value);
+        const age = calculateAge(dob);
+        if (!(age >= 18)){
+          showGateError("Sorry — you must be 18 or older.");
+          return;
+        }
+      }
+
+      // Password check
+      const pw = (pwInput.value || "").trim();
+      if (!pw){
+        showGateError("Please enter the password.");
+        return;
+      }
+      if (pw !== PASSWORD){
+        showGateError("Nope — wrong password.");
         return;
       }
 
-      if (val === PASSWORD){
-        if (pendingKey) setApproval24h(pendingKey);
-        const href = pendingHref;
-        closePwModal();
-        if (href) window.open(href, "_blank", "noopener");
-      } else {
-        pwError.textContent = "Nope — wrong password.";
-        pwError.style.display = 'block';
-        pwError.style.animation = 'none';
-        void pwError.offsetWidth;
-        pwError.style.animation = '';
-      }
+      // Approvals
+      if (pendingMode === "dob+password") setApproval24h(key, "dob");
+      setApproval24h(key, "pw");
+
+      const href = pendingHref;
+      closeGateModal();
+      if (href) window.open(href, "_blank", "noopener");
     }
 
-    document.querySelectorAll('a[data-gate="password"]').forEach(a => {
+    // Intercept gated links
+    document.querySelectorAll('a[data-gate]').forEach(a => {
       a.addEventListener('click', (e) => {
-        const key = a.getAttribute('data-gate-key') || 'generic';
-        if (hasRecentApproval(key)) return;
+        const mode = a.getAttribute('data-gate');
+        const key  = a.getAttribute('data-gate-key') || 'generic';
+
+        // Must have BOTH approvals for dob+password
+        if (mode === "dob+password"){
+          if (hasRecentApproval(key, "dob") && hasRecentApproval(key, "pw")) return;
+        } else {
+          if (hasRecentApproval(key, "pw")) return;
+        }
+
         e.preventDefault();
-        openPwModal(a.href, key);
+        openGateModal(a.href, key, mode);
       });
     });
 
-    pwSubmit.addEventListener('click', handlePwSubmit);
-    pwCancel.addEventListener('click', closePwModal);
-    pwClose.addEventListener('click', closePwModal);
+    gateSubmit.addEventListener('click', handleGateSubmit);
+    gateCancel.addEventListener('click', closeGateModal);
+    gateClose.addEventListener('click', closeGateModal);
 
-    pwModal.addEventListener('click', (e) => {
-      if (e.target === pwModal) closePwModal();
+    gateModal.addEventListener('click', (e) => {
+      if (e.target === gateModal) closeGateModal();
     });
 
     document.addEventListener('keydown', (e) => {
-      if (pwModal.style.display === 'flex' && e.key === 'Escape') closePwModal();
-      if (pwModal.style.display === 'flex' && e.key === 'Enter') handlePwSubmit();
+      if (gateModal.style.display === 'flex' && e.key === 'Escape') closeGateModal();
+      if (gateModal.style.display === 'flex' && e.key === 'Enter') handleGateSubmit();
     });
   </script>
 </body>
