@@ -12,7 +12,6 @@
 
   <style>
     :root{
-      /* Core */
       --bg-overlay: rgba(0,0,0,.60);
       --card-bg: rgba(0,0,0,.56);
       --card-blur: 12px;
@@ -21,27 +20,25 @@
       --muted: rgba(255,255,255,.82);
       --muted2: rgba(255,255,255,.62);
 
-      /* Seasonal (JS will override) */
+      /* seasonal (JS overrides) */
       --accent: #e53935;
       --accent2: #ffb300;
       --season-name: "Season";
       --season-rune: "ᛟ";
 
-      /* Background image (LOCAL FILE in repo) */
+      /* repo-local assets */
       --bg-image: url("./cerberuslinkbackground.png");
-
-      /* Profile (LOCAL FILE in repo) */
       --avatar-border: rgba(255,255,255,.92);
 
-      /* Tabs */
+      /* tabs */
       --tab-bg: rgba(0,0,0,.28);
       --tab-active: rgba(255,255,255,.10);
 
-      /* Glow */
+      /* glow */
       --glow: rgba(255,255,255,.14);
       --glow-strong: rgba(255,180,0,.22);
 
-      /* Buttons */
+      /* buttons */
       --btn: rgba(0,0,0,.65);
     }
 
@@ -67,7 +64,6 @@
       padding: 40px 15px;
     }
 
-    /* Main card */
     .card{
       width: 100%;
       max-width: 580px;
@@ -84,7 +80,6 @@
         0 0 0 1px rgba(255,255,255,.04) inset;
     }
 
-    /* Seasonal glow ring */
     .card::before{
       content:"";
       position:absolute;
@@ -98,7 +93,6 @@
       filter: blur(18px);
     }
 
-    /* Subtle animated sigils overlay */
     .card::after{
       content:"";
       position:absolute;
@@ -117,7 +111,6 @@
       50% { transform: translateY(-8px) translateX(6px); opacity: .26; }
     }
 
-    /* Rune strip (very subtle) */
     .rune-strip{
       position: absolute;
       top: 10px;
@@ -139,7 +132,6 @@
       letter-spacing: .08em;
     }
 
-    /* Avatar + header */
     .avatar{
       width: 120px;
       height: 120px;
@@ -168,7 +160,6 @@
       z-index: 1;
     }
 
-    /* Social icons row */
     .socials{
       display:flex;
       justify-content:center;
@@ -218,20 +209,10 @@
     .icon-btn i{ font-size: 22px; position: relative; z-index:1; }
     .icon-btn svg{ width: 22px; height: 22px; position: relative; z-index:1; }
 
-    /* Custom FetLife icon (glossier) */
-    .fetlife svg .bg{
-      fill: url(#fetBg);
-    }
-    .fetlife svg .gloss{
-      fill: url(#fetGloss);
-      opacity: .9;
-    }
-    .fetlife svg .heart{
-      fill: #b10f15;
-      filter: drop-shadow(0 2px 2px rgba(0,0,0,.35));
-    }
+    .fetlife svg .bg{ fill: url(#fetBg); }
+    .fetlife svg .gloss{ fill: url(#fetGloss); opacity: .9; }
+    .fetlife svg .heart{ fill: #b10f15; filter: drop-shadow(0 2px 2px rgba(0,0,0,.35)); }
 
-    /* Tabs */
     .tabs{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -260,7 +241,6 @@
 
     .tab.active{ background: var(--tab-active); }
 
-    /* Panels */
     .panel{ display:none; text-align:left; position: relative; z-index:1; }
     .panel.active{ display:block; }
 
@@ -282,7 +262,6 @@
       text-align:left;
     }
 
-    /* About collapsible */
     details.about{
       border-radius: 14px;
       padding: 12px 12px;
@@ -323,7 +302,6 @@
       color: var(--muted);
     }
 
-    /* Link buttons */
     .links{
       display:flex;
       flex-direction: column;
@@ -380,7 +358,6 @@
       opacity: .85;
     }
 
-    /* Music embed */
     .music-wrap{
       margin-top: 12px;
       border: 1px solid rgba(255,255,255,.14);
@@ -402,11 +379,11 @@
       body{ padding: 26px 12px; }
       h1{ font-size: 2.10rem; }
       .tabs{ grid-template-columns: 1fr; }
-      .music-wrap iframe{ height: 145px; } /* tighter on phone */
+      .music-wrap iframe{ height: 145px; }
     }
 
     @media (min-width: 900px){
-      .music-wrap iframe{ height: 210px; } /* bigger on desktop */
+      .music-wrap iframe{ height: 210px; }
     }
 
     @media (min-width: 481px) and (max-width: 899px){
@@ -593,15 +570,12 @@
       <span><strong>ᛉ</strong> <span id="runeB">ᛟ</span> <strong>ᚷ</strong></span>
     </div>
 
-    <!-- Make sure these two files exist in your GitHub Pages folder with EXACT names: -->
-    <!-- houndsprofile.jpg -->
-    <!-- cerberuslinkbackground.png -->
+    <!-- Repo files (exact names) -->
     <img class="avatar" src="./houndsprofile.jpg" alt="Hound Of Hades profile" />
 
     <h1>Hound Of Hades</h1>
     <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-    <!-- Social Icons (FetLife + Snapchat are password gated) -->
     <div class="socials" aria-label="Social links">
       <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
         <i class="bx bxl-instagram"></i>
@@ -615,7 +589,6 @@
         <i class="fa-brands fa-x-twitter"></i>
       </a>
 
-      <!-- Snapchat (Password Gate: "I Bite") -->
       <a class="icon-btn"
          href="https://www.snapchat.com/add/hound0fhades"
          target="_blank" rel="noopener"
@@ -625,14 +598,12 @@
         <i class="bx bxl-snapchat"></i>
       </a>
 
-      <!-- FetLife (Password Gate: "I Bite") -->
       <a class="icon-btn fetlife"
          href="https://fetlife.com/Hound0fHades"
          target="_blank" rel="noopener"
          data-gate="password"
          data-gate-key="fet"
          aria-label="FetLife (password gated)">
-        <!-- Glossy custom icon approximation -->
         <svg viewBox="0 0 64 64" role="img" aria-hidden="true">
           <defs>
             <radialGradient id="fetBg" cx="30%" cy="25%" r="80%">
@@ -647,13 +618,9 @@
             </linearGradient>
           </defs>
 
-          <!-- rounded square bg -->
           <rect class="bg" x="6" y="6" width="52" height="52" rx="16"></rect>
-
-          <!-- top gloss -->
           <path class="gloss" d="M14,14 h36 a16,16 0 0 1 8,8 v10 c-10,-10 -30,-12 -52,-4 v-6 a16,16 0 0 1 8,-8z"></path>
 
-          <!-- horned heart -->
           <path class="heart" d="M32 48
             C27 44,18 38,18 30
             C18 24,22 20,27 20
@@ -673,18 +640,15 @@
       </a>
     </div>
 
-    <!-- Tabs (Links tab removed) -->
     <div class="tabs" role="tablist" aria-label="Sections">
       <button class="tab active" data-tab="about" type="button">About</button>
       <button class="tab" data-tab="tributes" type="button">Tributes</button>
     </div>
 
-    <!-- ABOUT -->
     <section class="panel active" id="panel-about" aria-label="About panel">
       <div class="section-card">
         <div class="section-title">
           <span>About</span>
-          <span style="font-weight:800; color:var(--muted2);">Expandable</span>
         </div>
 
         <details class="about">
@@ -701,7 +665,6 @@
           </p>
         </details>
 
-        <!-- Apple Music embed (small on phone, bigger on desktop) -->
         <div class="music-wrap">
           <iframe
             title="Apple Music Playlist"
@@ -714,12 +677,10 @@
       </div>
     </section>
 
-    <!-- TRIBUTES (ONE section: 2 Offerings + CashApp + Venmo) -->
     <section class="panel" id="panel-tributes" aria-label="Tributes panel">
       <div class="section-card">
         <div class="section-title">
           <span>Tributes</span>
-          <span style="font-weight:800; color:var(--muted2);">Offerings • CashApp • Venmo</span>
         </div>
 
         <div class="links">
@@ -795,9 +756,7 @@
   </div>
 
   <script>
-    // ---------------------------------------
     // Tabs
-    // ---------------------------------------
     const tabs = document.querySelectorAll('.tab');
     const panels = {
       about: document.getElementById('panel-about'),
@@ -814,16 +773,12 @@
       });
     });
 
-    // ---------------------------------------
-    // Seasonal Pagan Color Shifts (Wheel of the Year)
-    // Simple date windows (you can tweak anytime)
-    // ---------------------------------------
+    // Seasonal pagan color shifts
     function md(month, day){ return month * 100 + day; }
 
     const SEASONS = [
       { name: "Yule",        rune:"ᛟ", accent:"#2a7fff", accent2:"#c8f2ff", start: md(12,20), end: md(12,31) },
       { name: "Yule",        rune:"ᛟ", accent:"#2a7fff", accent2:"#c8f2ff", start: md(1,1),  end: md(1,5)  },
-
       { name: "Imbolc",      rune:"ᛇ", accent:"#ffffff", accent2:"#ffd6e8", start: md(1,25), end: md(2,5)  },
       { name: "Ostara",      rune:"ᛉ", accent:"#3ddc84", accent2:"#b9ffcf", start: md(3,15), end: md(3,25) },
       { name: "Beltane",     rune:"ᛏ", accent:"#ff4d6d", accent2:"#ffd166", start: md(4,25), end: md(5,5)  },
@@ -855,16 +810,9 @@
     }
 
     applySeasonTheme();
-
-    // Refresh theme once a day (in case someone leaves the page open)
     setInterval(applySeasonTheme, 6 * 60 * 60 * 1000);
 
-    // ---------------------------------------
-    // Password Gate (for Snapchat + FetLife icons)
-    // Password: "I Bite"
-    //
-    // NOTE: This is a "soft gate" (deterrent), not real security.
-    // ---------------------------------------
+    // Password Gate (soft gate)
     const pwModal = document.getElementById('pwModal');
     const pwInput = document.getElementById('pwInput');
     const pwError = document.getElementById('pwError');
@@ -875,7 +823,7 @@
     let pendingHref = null;
     let pendingKey = null;
 
-    const PASSWORD = "I Bite"; // exactly as requested
+    const PASSWORD = "I Bite";
 
     function storageKeyFor(serviceKey){
       return `hoh_pw_ok_until_${serviceKey}`;
@@ -931,11 +879,10 @@
       }
     }
 
-    // Intercept gated links
     document.querySelectorAll('a[data-gate="password"]').forEach(a => {
       a.addEventListener('click', (e) => {
         const key = a.getAttribute('data-gate-key') || 'generic';
-        if (hasRecentApproval(key)) return; // allow
+        if (hasRecentApproval(key)) return;
         e.preventDefault();
         openPwModal(a.href, key);
       });
@@ -953,14 +900,6 @@
       if (pwModal.style.display === 'flex' && e.key === 'Escape') closePwModal();
       if (pwModal.style.display === 'flex' && e.key === 'Enter') handlePwSubmit();
     });
-
-    // ---------------------------------------
-    // GitHub Pages sanity note (non-blocking)
-    // ---------------------------------------
-    // Put this file in your repo as: index.html
-    // Put images in the SAME folder:
-    // - houndsprofile.jpg
-    // - cerberuslinkbackground.png
   </script>
 </body>
 </html>
