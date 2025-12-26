@@ -55,8 +55,6 @@ body{
   border:1px solid var(--border);
   border-radius:18px;
   padding:22px;
-  position:relative;
-  overflow:hidden;
 }
 
 .avatar{
@@ -191,14 +189,23 @@ h1{
   justify-content:space-between;
 }
 
+/* ✅ OPTION 2 – compact Apple Music player */
+.music-wrap{
+  padding:8px;
+  border-radius:16px;
+  background:rgba(0,0,0,.22);
+  border:1px solid var(--border);
+}
+
 .music-wrap iframe{
   width:100%;
   border:0;
   border-radius:14px;
-  height:150px;
+  height:130px; /* mobile */
 }
+
 @media(min-width:700px){
-  .music-wrap iframe{height:220px}
+  .music-wrap iframe{height:145px;} /* desktop */
 }
 
 footer{
@@ -290,18 +297,18 @@ document.querySelectorAll('[data-gate]').forEach(link=>{
     if(link.dataset.gate==="password"){
       e.preventDefault();
       const pw=prompt("Password required.");
-      if(pw===PASSWORD) window.open(link.href,"_blank");
+      if(pw==="I Bite") window.open(link.href,"_blank");
     }
     if(link.dataset.gate==="dob"){
       e.preventDefault();
-      const dob=prompt("Age verification required.\nEnter birth date (YYYY-MM-DD):");
-      if(dob && new Date().getFullYear()-dob.split("-")[0]>=18)
+      const dob=prompt("Age verification required.\nEnter birth year (YYYY):");
+      if(dob && new Date().getFullYear()-dob>=18)
         window.open(link.href,"_blank");
     }
   };
 });
 
-/* Wheel of the Year (subtle) */
+/* Subtle Wheel of the Year */
 const themes=[
  {start:[12,1],end:[1,31],a:"#d6b15f",b:"#6fd3ff"},
  {start:[2,1],end:[3,19],a:"#ffd9f0",b:"#ffe58a"},
@@ -314,15 +321,14 @@ const themes=[
 ];
 
 function md(m,d){return m*100+d}
-const today=new Date();
-const tmd=md(today.getMonth()+1,today.getDate());
+const now=new Date();
+const today=md(now.getMonth()+1,now.getDate());
 let theme=themes[0];
 themes.forEach(t=>{
  const s=md(t.start[0],t.start[1]);
  const e=md(t.end[0],t.end[1]);
- if(s>e?(tmd>=s||tmd<=e):(tmd>=s&&tmd<=e)) theme=t;
+ if(s>e?(today>=s||today<=e):(today>=s&&today<=e)) theme=t;
 });
-
 document.documentElement.style.setProperty("--accent",theme.a);
 document.documentElement.style.setProperty("--accent2",theme.b);
 </script>
