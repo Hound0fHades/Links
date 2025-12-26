@@ -15,11 +15,15 @@
   --muted:rgba(255,255,255,.82);
   --border:rgba(255,255,255,.16);
   --bg-overlay:rgba(0,0,0,.55);
-  --card-bg:rgba(0,0,0,.55);
+
+  /* These will be overwritten by the pagan color cycle JS */
+  --accent:#c0171d;
+  --accent2:#ff6b6b;
+  --glow-strong:rgba(255,60,60,.35);
+  --card-tint:rgba(0,0,0,.55);
+
   --btn:rgba(0,0,0,.65);
   --glow:rgba(255,255,255,.18);
-  --glow-strong:rgba(255,60,60,.35);
-  --accent:#c0171d;
 }
 
 *{box-sizing:border-box}
@@ -41,10 +45,32 @@ body{
 .card{
   width:100%;
   max-width:560px;
-  background:var(--card-bg);
+  background:var(--card-tint);
   border:1px solid var(--border);
   border-radius:18px;
   padding:22px;
+  position:relative;
+  overflow:hidden;
+}
+
+/* subtle animated “sigil dust” (very soft, not loud) */
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.09), transparent 35%),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.06), transparent 40%),
+    radial-gradient(circle at 50% 10%, rgba(255,255,255,.05), transparent 45%);
+  filter: blur(18px);
+  opacity:.35;
+  animation: drift 18s ease-in-out infinite;
+  pointer-events:none;
+}
+@keyframes drift{
+  0%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(18px,-12px) scale(1.03)}
+  100%{transform:translate(0,0) scale(1)}
 }
 
 .avatar{
@@ -52,6 +78,8 @@ body{
   border:3px solid #fff;
   display:block;margin:0 auto 12px;
   object-fit:cover;
+  position:relative;
+  z-index:1;
 }
 
 h1{
@@ -59,6 +87,8 @@ h1{
   text-align:center;
   margin:0 0 6px;
   font-size:2.4rem;
+  position:relative;
+  z-index:1;
 }
 
 .tagline{
@@ -66,6 +96,8 @@ h1{
   font-size:.92rem;
   color:var(--muted);
   margin-bottom:14px;
+  position:relative;
+  z-index:1;
 }
 
 .socials{
@@ -73,6 +105,8 @@ h1{
   justify-content:center;
   gap:16px;
   margin-bottom:16px;
+  position:relative;
+  z-index:1;
 }
 
 .icon-btn{
@@ -106,12 +140,17 @@ h1{
   transition:.25s;
 }
 .icon-btn:hover::before{opacity:1}
-
 .icon-btn i{font-size:22px;z-index:1}
 
 /* FetLife SVG sizing */
 .icon-btn.fetlife svg{
-  width:24px;height:24px;z-index:1;
+  width:26px;height:26px;z-index:1;
+  filter: drop-shadow(0 2px 6px rgba(0,0,0,.35));
+}
+
+/* glossy shine pass */
+.icon-btn.fetlife svg .gloss{
+  opacity:.28;
 }
 
 .tabs{
@@ -119,6 +158,8 @@ h1{
   grid-template-columns:1fr 1fr;
   gap:10px;
   margin-bottom:14px;
+  position:relative;
+  z-index:1;
 }
 
 .tab{
@@ -130,9 +171,12 @@ h1{
   font-weight:700;
   cursor:pointer;
 }
-.tab.active{background:rgba(255,255,255,.12)}
+.tab.active{
+  background:rgba(255,255,255,.12);
+  outline:1px solid rgba(255,255,255,.08);
+}
 
-.panel{display:none}
+.panel{display:none; position:relative; z-index:1;}
 .panel.active{display:block}
 
 .section-card{
@@ -145,10 +189,11 @@ h1{
 
 .about-text p{
   margin:0 0 14px;
-  line-height:1.75;
+  line-height:1.78;
   font-size:.97rem;
   color:var(--muted);
 }
+.about-text p:last-child{margin-bottom:0}
 
 .links{
   display:flex;
@@ -167,53 +212,34 @@ h1{
   display:flex;
   align-items:center;
   justify-content:space-between;
+  position:relative;
+  overflow:hidden;
 }
+
+.link-btn::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(circle at 30% 30%,var(--glow-strong),transparent 45%),
+    radial-gradient(circle at 70% 70%,var(--glow),transparent 55%);
+  opacity:0;
+  transition:.25s;
+}
+.link-btn:hover::before{opacity:1}
+.link-btn:hover{transform:translateY(-2px); box-shadow:0 10px 24px rgba(0,0,0,.35)}
 
 .music-wrap iframe{
   width:100%;
   border:0;
   border-radius:14px;
-  height:160px;
+  height:150px; /* tighter on phone */
 }
 @media(min-width:700px){
-  .music-wrap iframe{height:220px}
+  .music-wrap iframe{height:220px} /* a bit bigger on desktop */
 }
 
-/* MODAL */
-.modal-overlay{
-  position:fixed;inset:0;
-  background:rgba(0,0,0,.7);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:9999;
-}
-.modal{
-  background:#120c12;
-  border-radius:18px;
-  padding:18px;
-  max-width:420px;width:100%;
-}
-.modal h3{margin:0 0 8px}
-.modal input{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  margin-bottom:10px;
-}
-.modal button{
-  width:100%;
-  padding:12px;
-  border-radius:12px;
-  border:none;
-  background:linear-gradient(135deg,#c0171d,#ff6b6b);
-  font-weight:800;
-  cursor:pointer;
-}
-.error{color:#ff6b6b;display:none;margin-top:6px}
-
-footer{text-align:center;font-size:.75rem;color:rgba(255,255,255,.6)}
+footer{text-align:center;font-size:.75rem;color:rgba(255,255,255,.6); position:relative; z-index:1;}
 </style>
 </head>
 
@@ -226,52 +252,75 @@ footer{text-align:center;font-size:.75rem;color:rgba(255,255,255,.6)}
 <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
 <div class="socials">
-  <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank"><i class="bx bxl-instagram"></i></a>
-  <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank"><i class="bx bxl-tiktok"></i></a>
-  <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
-
-  <!-- FetLife (18+ only) -->
-  <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades"
-     data-gate="dob" data-key="fet" aria-label="FetLife">
-<svg viewBox="0 0 64 64">
-<path d="M24 20c-6-10 2-12 6-6M40 20c6-10-2-12-6-6" fill="#b10f15"/>
-<path d="M32 46c-6-4-14-10-14-18 0-6 4-10 9-10 2 0 4 1 5 3 1-2 3-3 5-3 5 0 9 4 9 10 0 8-8 14-14 18z" fill="#c0171d"/>
-<path d="M44 38c8 2 6 10-2 8" fill="none" stroke="#c0171d" stroke-width="3"/>
-</svg>
+  <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener" aria-label="Instagram">
+    <i class="bx bxl-instagram"></i>
+  </a>
+  <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener" aria-label="TikTok">
+    <i class="bx bxl-tiktok"></i>
+  </a>
+  <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener" aria-label="X">
+    <i class="fa-brands fa-x-twitter"></i>
   </a>
 
-  <!-- Snapchat (password) -->
+  <!-- FetLife (18+ only gate) -->
+  <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades"
+     data-gate="dob" aria-label="FetLife">
+    <!-- glossy devil-heart with horns + tail (inline SVG) -->
+    <svg viewBox="0 0 64 64" aria-hidden="true">
+      <!-- horns -->
+      <path d="M22 18c-8-10 1-14 6-7" fill="#8f0b10"/>
+      <path d="M42 18c8-10-1-14-6-7" fill="#8f0b10"/>
+
+      <!-- heart -->
+      <path d="M32 50c-8-5-18-12-18-22 0-7 5-12 12-12 3 0 5 1 6 4 1-3 3-4 6-4 7 0 12 5 12 12 0 10-10 17-18 22z"
+            fill="#c0171d"/>
+
+      <!-- tail -->
+      <path d="M44 40c10 1 10 12-2 10" fill="none" stroke="#c0171d" stroke-width="3" stroke-linecap="round"/>
+
+      <!-- glossy highlight -->
+      <path class="gloss" d="M22 28c2-6 9-8 14-4c-7 0-10 3-12 8c-1 2-3 2-2-4z" fill="#ffffff"/>
+    </svg>
+  </a>
+
+  <!-- Snapchat (password gate) -->
   <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades"
-     data-gate="password" data-key="snap">
-     <i class="bx bxl-snapchat"></i>
+     data-gate="password" aria-label="Snapchat">
+    <i class="bx bxl-snapchat"></i>
   </a>
 </div>
 
 <div class="tabs">
-  <button class="tab active" data-tab="about">About</button>
-  <button class="tab" data-tab="tributes">Tributes</button>
+  <button class="tab active" data-tab="about" type="button">About</button>
+  <button class="tab" data-tab="tributes" type="button">Tributes</button>
 </div>
 
 <section class="panel active" id="about">
   <div class="section-card about-text">
     <p>As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks. But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures.</p>
     <p>The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.</p>
-    <p>This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself.</p>
-    <p>Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment.</p>
+    <p>This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself. I can't wait to be immersed in more of these creative pursuits that fill me with such excitement and passion.</p>
+    <p>Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment. The opportunity to be immersed in these enriching experiences would be a dream come true!</p>
   </div>
 
   <div class="section-card music-wrap">
-    <iframe src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls"></iframe>
+    <iframe
+      title="Apple Music Playlist"
+      src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls"
+      loading="lazy"
+      allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+      sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation">
+    </iframe>
   </div>
 </section>
 
 <section class="panel" id="tributes">
   <div class="section-card">
     <div class="links">
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q">Offerings</a>
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY">Offerings</a>
-      <a class="link-btn" href="https://cash.app/$Hound0fHades">CashApp</a>
-      <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766">Venmo</a>
+      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">Offerings</a>
+      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">Offerings</a>
+      <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">CashApp</a>
+      <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">Venmo</a>
     </div>
   </div>
 </section>
@@ -279,32 +328,123 @@ footer{text-align:center;font-size:.75rem;color:rgba(255,255,255,.6)}
 <footer>© Hound Of Hades</footer>
 </main>
 
-<!-- SIMPLE GATE LOGIC -->
 <script>
-const PASSWORD="I Bite";
-document.querySelectorAll('[data-gate]').forEach(link=>{
-  link.onclick=e=>{
-    if(link.dataset.gate==="password"){
-      e.preventDefault();
-      const pw=prompt("Password:");
-      if(pw===PASSWORD) window.open(link.href,"_blank");
-    }
-    if(link.dataset.gate==="dob"){
-      e.preventDefault();
-      const dob=prompt("Enter birth year (YYYY):");
-      if(dob && (new Date().getFullYear()-dob)>=18) window.open(link.href,"_blank");
-    }
-  }
-});
-
+/* -------------------------
+   Tabs
+------------------------- */
 document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick=()=>{
+  t.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     t.classList.add('active');
     document.getElementById(t.dataset.tab).classList.add('active');
-  }
+  });
 });
+
+/* -------------------------
+   Gates
+   - FetLife: age verification required
+   - Snapchat: password required ("I Bite")
+------------------------- */
+const PASSWORD = "I Bite";
+
+function calcAgeFromDOB(dobStr){
+  const dob = new Date(dobStr);
+  const today = new Date();
+  let age = today.getFullYear() - dob.getFullYear();
+  const m = today.getMonth() - dob.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) age--;
+  return age;
+}
+
+document.querySelectorAll('[data-gate]').forEach(link=>{
+  link.addEventListener('click', (e)=>{
+    const gate = link.dataset.gate;
+
+    if(gate === "password"){
+      e.preventDefault();
+      const pw = prompt("Password required.");
+      if(pw === PASSWORD){
+        window.open(link.href, "_blank", "noopener");
+      }
+      return;
+    }
+
+    if(gate === "dob"){
+      e.preventDefault();
+      const dob = prompt("Age verification required.\nEnter your date of birth (YYYY-MM-DD):");
+      if(!dob) return;
+
+      // light validation
+      const okFormat = /^\d{4}-\d{2}-\d{2}$/.test(dob);
+      if(!okFormat) return;
+
+      if(calcAgeFromDOB(dob) >= 18){
+        window.open(link.href, "_blank", "noopener");
+      }
+      return;
+    }
+  });
+});
+
+/* -------------------------
+   Pagan color cycling (Wheel of the Year)
+   Updates: --accent, --accent2, --glow-strong, --card-tint
+------------------------- */
+const themes = [
+  { name:"Yule",      start:[12,  1], end:[ 1, 31], accent:"#d6b15f", accent2:"#6fd3ff", glow:"rgba(214,177,95,.34)", tint:"rgba(10,10,14,.58)" },
+  { name:"Imbolc",    start:[ 2,  1], end:[ 3, 19], accent:"#ffd9f0", accent2:"#ffe58a", glow:"rgba(255,217,240,.28)", tint:"rgba(12,10,14,.56)" },
+  { name:"Ostara",    start:[ 3, 20], end:[ 4, 30], accent:"#78e08f", accent2:"#ffeaa7", glow:"rgba(120,224,143,.26)", tint:"rgba(8,12,10,.55)" },
+  { name:"Beltane",   start:[ 5,  1], end:[ 6, 19], accent:"#ff4d6d", accent2:"#ffb703", glow:"rgba(255,77,109,.30)", tint:"rgba(14,8,10,.56)" },
+  { name:"Litha",     start:[ 6, 20], end:[ 7, 31], accent:"#ffdd57", accent2:"#ff7a00", glow:"rgba(255,221,87,.28)", tint:"rgba(12,10,8,.54)" },
+  { name:"Lughnasadh",start:[ 8,  1], end:[ 9, 21], accent:"#ff9f1c", accent2:"#d00000", glow:"rgba(255,159,28,.30)", tint:"rgba(14,10,8,.56)" },
+  { name:"Mabon",     start:[ 9, 22], end:[10, 31], accent:"#a3cb38", accent2:"#b33939", glow:"rgba(163,203,56,.24)", tint:"rgba(10,10,12,.56)" },
+  { name:"Samhain",   start:[11,  1], end:[11, 30], accent:"#9b5de5", accent2:"#f15bb5", glow:"rgba(155,93,229,.26)", tint:"rgba(10,8,14,.60)" },
+];
+
+function md(month, day){ return month*100 + day; }
+
+function getThemeForToday(){
+  const d = new Date();
+  const m = d.getMonth()+1;
+  const day = d.getDate();
+  const today = md(m, day);
+
+  for(const t of themes){
+    const s = md(t.start[0], t.start[1]);
+    const e = md(t.end[0], t.end[1]);
+
+    // handle year wrap (Yule)
+    if(s > e){
+      if(today >= s || today <= e) return t;
+    }else{
+      if(today >= s && today <= e) return t;
+    }
+  }
+  return themes[0];
+}
+
+function applyTheme(t){
+  const r = document.documentElement;
+  r.style.setProperty("--accent", t.accent);
+  r.style.setProperty("--accent2", t.accent2);
+  r.style.setProperty("--glow-strong", t.glow);
+  r.style.setProperty("--card-tint", t.tint);
+}
+
+applyTheme(getThemeForToday());
+
+// optional: refresh at midnight so it flips automatically
+(function refreshAtMidnight(){
+  const now = new Date();
+  const next = new Date(now);
+  next.setHours(24,0,1,0);
+  const ms = next - now;
+  setTimeout(()=>{
+    applyTheme(getThemeForToday());
+    refreshAtMidnight();
+  }, ms);
+})();
 </script>
 </body>
 </html>
