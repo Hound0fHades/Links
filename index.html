@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Hound Of Hades</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
@@ -12,49 +12,79 @@
 <style>
 :root{
   --text:#ffffff;
-  --muted:rgba(255,255,255,.82);
+  --muted:rgba(255,255,255,.84);
   --border:rgba(255,255,255,.16);
+
   --bg-overlay:rgba(0,0,0,.55);
 
   /* seasonal vars (set by JS) */
   --accent:#c0171d;
   --accent2:#ff6b6b;
   --glow-strong:rgba(255,255,255,.14);
-  --card-tint:rgba(0,0,0,.55);
-  --section-tint:rgba(0,0,0,.22);
+
+  /* glass */
+  --card-tint: rgba(0,0,0,.56);
+  --section-tint: rgba(0,0,0,.22);
 
   --btn:rgba(0,0,0,.65);
   --glow:rgba(255,255,255,.18);
 }
 
 *{box-sizing:border-box}
+html,body{height:100%}
 
 body{
   margin:0;
   font-family:Poppins,sans-serif;
   color:var(--text);
+  min-height:100vh;
+
+  /* ✅ no stretched weirdness */
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+
+  padding:34px 14px;
   background:
     linear-gradient(var(--bg-overlay),var(--bg-overlay)),
     url("cerberuslinkbackground.png");
   background-size:cover;
   background-position:center;
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  padding:40px 14px;
+  background-repeat:no-repeat;
+}
+
+/* ✅ Desktop: center nicely, no long empty card */
+@media (min-width: 900px){
+  body{
+    align-items:center;
+    padding:48px 22px;
+  }
 }
 
 .card{
   width:100%;
   max-width:560px;
-  background:
-    linear-gradient(135deg, rgba(0,0,0,.40), rgba(0,0,0,.52)),
-    radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 58%),
-    radial-gradient(circle at 80% 90%, color-mix(in srgb, var(--accent2) 12%, transparent), transparent 62%),
-    var(--card-tint);
+
+  /* ✅ IMPORTANT: prevents tall empty box */
+  height:auto;
+  min-height:unset;
+
   border:1px solid var(--border);
   border-radius:18px;
   padding:22px;
+
+  background:
+    linear-gradient(135deg, rgba(0,0,0,.35), rgba(0,0,0,.52)),
+    radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 58%),
+    radial-gradient(circle at 80% 90%, color-mix(in srgb, var(--accent2) 12%, transparent), transparent 62%),
+    var(--card-tint);
+
+  backdrop-filter: blur(10px);
+}
+
+/* ✅ Slightly narrower on very large screens (looks cleaner) */
+@media (min-width: 1100px){
+  .card{ max-width: 520px; }
 }
 
 .avatar{
@@ -64,6 +94,7 @@ body{
   display:block;
   margin:0 auto 12px;
   object-fit:cover;
+  box-shadow:0 10px 24px rgba(0,0,0,.35);
 }
 
 h1{
@@ -77,13 +108,13 @@ h1{
   text-align:center;
   font-size:.92rem;
   color:var(--muted);
-  margin-bottom:14px;
+  margin:0 0 14px;
 }
 
 .socials{
   display:flex;
   justify-content:center;
-  gap:16px;
+  gap:14px;
   margin-bottom:16px;
 }
 
@@ -91,7 +122,7 @@ h1{
   width:44px;height:44px;
   border-radius:14px;
   border:1px solid var(--border);
-  background:rgba(0,0,0,.25);
+  background:rgba(0,0,0,.22);
   display:flex;
   align-items:center;
   justify-content:center;
@@ -104,7 +135,7 @@ h1{
 
 .icon-btn:hover{
   transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(0,0,0,.4);
+  box-shadow:0 10px 24px rgba(0,0,0,.38);
 }
 
 .icon-btn::before{
@@ -117,8 +148,7 @@ h1{
   opacity:0;
   transition:.25s;
 }
-.icon-btn:hover::before{opacity:.65}
-
+.icon-btn:hover::before{opacity:.7}
 .icon-btn i{font-size:22px;z-index:1}
 
 /* FetLife SVG */
@@ -131,16 +161,17 @@ h1{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:10px;
-  margin-bottom:14px;
+  margin:0 0 14px;
 }
 
 .tab{
   padding:10px;
   border-radius:14px;
   border:1px solid var(--border);
-  background:rgba(0,0,0,.3);
+  background:rgba(0,0,0,.26);
   font-weight:700;
   cursor:pointer;
+  color:var(--text);
 }
 .tab.active{background:rgba(255,255,255,.12)}
 
@@ -162,10 +193,11 @@ h1{
 
 .about-text p{
   margin:0 0 14px;
-  line-height:1.75;
+  line-height:1.8;
   font-size:.97rem;
   color:var(--muted);
 }
+.about-text p:last-child{ margin-bottom:0; }
 
 .links{
   display:flex;
@@ -187,150 +219,180 @@ h1{
   font-weight:800;
   display:flex;
   justify-content:space-between;
+  transition:.2s;
+}
+.link-btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(0,0,0,.28);
 }
 
-/* ✅ OPTION 2 – compact Apple Music player */
+/* ✅ Apple Music: tight on phone, a bit bigger on desktop */
 .music-wrap{
   padding:8px;
   border-radius:16px;
-  background:rgba(0,0,0,.22);
+  background:rgba(0,0,0,.20);
   border:1px solid var(--border);
 }
-
 .music-wrap iframe{
   width:100%;
   border:0;
   border-radius:14px;
-  height:130px; /* mobile */
+  height:128px; /* phone */
 }
-
-@media(min-width:700px){
-  .music-wrap iframe{height:145px;} /* desktop */
+@media(min-width:900px){
+  .music-wrap iframe{ height:150px; } /* desktop */
 }
 
 footer{
   text-align:center;
   font-size:.75rem;
   color:rgba(255,255,255,.6);
+  margin-top:4px;
 }
-
-/* ---------- GATES ---------- */
-const PASSWORD="I Bite";
 </style>
 </head>
 
 <body>
 <main class="card">
 
-<img class="avatar" src="houndsprofile.png" alt="Hound Of Hades">
+  <img class="avatar" src="houndsprofile.png" alt="Hound Of Hades">
 
-<h1>Hound Of Hades</h1>
-<p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
+  <h1>Hound Of Hades</h1>
+  <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
 
-<div class="socials">
-  <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank"><i class="bx bxl-instagram"></i></a>
-  <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank"><i class="bx bxl-tiktok"></i></a>
-  <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+  <div class="socials">
+    <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener">
+      <i class="bx bxl-instagram"></i>
+    </a>
+    <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener">
+      <i class="bx bxl-tiktok"></i>
+    </a>
+    <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener">
+      <i class="fa-brands fa-x-twitter"></i>
+    </a>
 
-  <!-- FetLife (Age verification only) -->
-  <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades" data-gate="dob">
-    <svg viewBox="0 0 64 64">
-      <path d="M22 18c-8-10 1-14 6-7" fill="#8f0b10"/>
-      <path d="M42 18c8-10-1-14-6-7" fill="#8f0b10"/>
-      <path d="M32 50c-8-5-18-12-18-22 0-7 5-12 12-12 3 0 5 1 6 4 1-3 3-4 6-4 7 0 12 5 12 12 0 10-10 17-18 22z" fill="#c0171d"/>
-      <path d="M44 40c10 1 10 12-2 10" fill="none" stroke="#c0171d" stroke-width="3"/>
-    </svg>
-  </a>
+    <!-- FetLife (Age verification only) -->
+    <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades" data-gate="dob" aria-label="FetLife">
+      <!-- heart + horns + tail -->
+      <svg viewBox="0 0 64 64" aria-hidden="true">
+        <path d="M22 18c-8-10 1-14 6-7" fill="#8f0b10"/>
+        <path d="M42 18c8-10-1-14-6-7" fill="#8f0b10"/>
+        <path d="M32 50c-8-5-18-12-18-22 0-7 5-12 12-12 3 0 5 1 6 4 1-3 3-4 6-4 7 0 12 5 12 12 0 10-10 17-18 22z" fill="#c0171d"/>
+        <path d="M44 41c10 1 10 12-2 10" fill="none" stroke="#c0171d" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="42.5" cy="50" r="1.6" fill="#c0171d"/>
+      </svg>
+    </a>
 
-  <!-- Snapchat (Password gate) -->
-  <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades" data-gate="password">
-    <i class="bx bxl-snapchat"></i>
-  </a>
-</div>
-
-<div class="tabs">
-  <button class="tab active" data-tab="about">About</button>
-  <button class="tab" data-tab="tributes">Tributes</button>
-</div>
-
-<section class="panel active" id="about">
-  <div class="section-card about-text">
-    <p>As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks. But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures.</p>
-    <p>The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.</p>
-    <p>This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself.</p>
-    <p>Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment.</p>
+    <!-- Snapchat (Password gate) -->
+    <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades" data-gate="password" aria-label="Snapchat">
+      <i class="bx bxl-snapchat"></i>
+    </a>
   </div>
 
-  <div class="section-card music-wrap">
-    <iframe src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls"></iframe>
+  <div class="tabs">
+    <button class="tab active" data-tab="about" type="button">About</button>
+    <button class="tab" data-tab="tributes" type="button">Tributes</button>
   </div>
-</section>
 
-<section class="panel" id="tributes">
-  <div class="section-card">
-    <div class="links">
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q">Offerings</a>
-      <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY">Offerings</a>
-      <a class="link-btn" href="https://cash.app/$Hound0fHades">CashApp</a>
-      <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766">Venmo</a>
+  <section class="panel active" id="about">
+    <div class="section-card about-text">
+      <p>As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks. But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures.</p>
+      <p>The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.</p>
+      <p>This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself.</p>
+      <p>Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment. The opportunity to be immersed in these enriching experiences would be a dream come true!</p>
     </div>
-  </div>
-</section>
 
-<footer>© Hound Of Hades</footer>
+    <div class="section-card music-wrap">
+      <iframe
+        src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls"
+        loading="lazy"
+        allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+        title="Apple Music Playlist">
+      </iframe>
+    </div>
+  </section>
+
+  <section class="panel" id="tributes">
+    <div class="section-card">
+      <div class="links">
+        <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">Offerings</a>
+        <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">Offerings</a>
+        <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">CashApp</a>
+        <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">Venmo</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>© Hound Of Hades</footer>
 </main>
 
 <script>
 /* Tabs */
 document.querySelectorAll('.tab').forEach(t=>{
-  t.onclick=()=>{
+  t.addEventListener('click', ()=>{
     document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     t.classList.add('active');
     document.getElementById(t.dataset.tab).classList.add('active');
-  };
+  });
 });
 
 /* Gates */
+const SNAP_PASSWORD = "I Bite";
+
+function verify18(){
+  const year = prompt("Age verification required.\nEnter your birth year (YYYY):");
+  if(!year) return false;
+  const y = parseInt(year, 10);
+  if(Number.isNaN(y)) return false;
+  return (new Date().getFullYear() - y) >= 18;
+}
+
 document.querySelectorAll('[data-gate]').forEach(link=>{
-  link.onclick=e=>{
-    if(link.dataset.gate==="password"){
+  link.addEventListener('click', (e)=>{
+    const type = link.dataset.gate;
+    if(type === "password"){
       e.preventDefault();
-      const pw=prompt("Password required.");
-      if(pw==="I Bite") window.open(link.href,"_blank");
+      const pw = prompt("Password required:");
+      if(pw === SNAP_PASSWORD) window.open(link.href, "_blank", "noopener");
+      return;
     }
-    if(link.dataset.gate==="dob"){
+    if(type === "dob"){
       e.preventDefault();
-      const dob=prompt("Age verification required.\nEnter birth year (YYYY):");
-      if(dob && new Date().getFullYear()-dob>=18)
-        window.open(link.href,"_blank");
+      if(verify18()) window.open(link.href, "_blank", "noopener");
+      return;
     }
-  };
+  });
 });
 
-/* Subtle Wheel of the Year */
+/* Subtle Wheel of the Year (seasonal tint shift) */
 const themes=[
- {start:[12,1],end:[1,31],a:"#d6b15f",b:"#6fd3ff"},
- {start:[2,1],end:[3,19],a:"#ffd9f0",b:"#ffe58a"},
- {start:[3,20],end:[4,30],a:"#78e08f",b:"#ffeaa7"},
- {start:[5,1],end:[6,19],a:"#ff4d6d",b:"#ffb703"},
- {start:[6,20],end:[7,31],a:"#ffdd57",b:"#ff7a00"},
- {start:[8,1],end:[9,21],a:"#ff9f1c",b:"#d00000"},
- {start:[9,22],end:[10,31],a:"#a3cb38",b:"#b33939"},
- {start:[11,1],end:[11,30],a:"#9b5de5",b:"#f15bb5"}
+  {start:[12,1], end:[1,31],  a:"#d6b15f", b:"#6fd3ff"}, // Yule
+  {start:[2,1],  end:[3,19],  a:"#ffd9f0", b:"#ffe58a"}, // Imbolc
+  {start:[3,20], end:[4,30],  a:"#78e08f", b:"#ffeaa7"}, // Ostara
+  {start:[5,1],  end:[6,19],  a:"#ff4d6d", b:"#ffb703"}, // Beltane
+  {start:[6,20], end:[7,31],  a:"#ffdd57", b:"#ff7a00"}, // Litha
+  {start:[8,1],  end:[9,21],  a:"#ff9f1c", b:"#d00000"}, // Lughnasadh
+  {start:[9,22], end:[10,31], a:"#a3cb38", b:"#b33939"}, // Mabon
+  {start:[11,1], end:[11,30], a:"#9b5de5", b:"#f15bb5"}  // Samhain
 ];
 
-function md(m,d){return m*100+d}
-const now=new Date();
-const today=md(now.getMonth()+1,now.getDate());
-let theme=themes[0];
+function md(m,d){ return m*100 + d; }
+const now = new Date();
+const today = md(now.getMonth()+1, now.getDate());
+let theme = themes[0];
+
 themes.forEach(t=>{
- const s=md(t.start[0],t.start[1]);
- const e=md(t.end[0],t.end[1]);
- if(s>e?(today>=s||today<=e):(today>=s&&today<=e)) theme=t;
+  const s = md(t.start[0], t.start[1]);
+  const e = md(t.end[0], t.end[1]);
+  const inRange = (s > e) ? (today >= s || today <= e) : (today >= s && today <= e);
+  if(inRange) theme = t;
 });
-document.documentElement.style.setProperty("--accent",theme.a);
-document.documentElement.style.setProperty("--accent2",theme.b);
+
+document.documentElement.style.setProperty("--accent", theme.a);
+document.documentElement.style.setProperty("--accent2", theme.b);
+document.documentElement.style.setProperty("--glow-strong", `color-mix(in srgb, ${theme.a} 30%, transparent)`);
 </script>
 </body>
 </html>
