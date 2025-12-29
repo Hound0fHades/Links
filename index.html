@@ -1,398 +1,1479 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Hound Of Hades</title>
+  <meta charset="UTF-8" />
+  <title>Cerberus Bites | Sourdough from the Underworld</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Cerberus Bites — Sourdough from the Underworld. House-fermented sourdough melts, charred tomato soup, and secret off-menu heat."
+  />
+  <style>
+    /* =========================================================
+       CERBERUS BITES — SINGLE FILE SITE (Sourdough Menu)
+       Holiday (Sabbat) themes update ALL site colors via CSS vars
+       In-between sabbats: base theme remains (per your rule)
+       ========================================================= */
 
-<link href="https://fonts.googleapis.com/css2?family=Satisfy&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.4/css/boxicons.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    :root {
+      /* -------- Base (in-between sabbats) -------- */
+      --bg: #050308;
+      --bg-alt: #0c050b;
+      --panel: rgba(10, 6, 18, 0.82);
+      --panel-strong: rgba(5, 3, 8, 0.96);
 
-<style>
-:root{
-  --text:#ffffff;
-  --muted:rgba(255,255,255,.84);
-  --border:rgba(255,255,255,.16);
+      --text: #f4f2f6;
+      --muted: #b3a9c0;
 
-  --bg-overlay:rgba(0,0,0,.55);
+      --accent: #ca3400;
+      --accent-soft: #7e0f1d;
+      --gold: #f5c97a;
 
-  /* seasonal vars (set by JS) */
-  --accent:#c0171d;
-  --accent2:#ff6b6b;
-  --glow-strong:rgba(255,255,255,.14);
+      --border: rgba(245, 201, 122, 0.22);
+      --border-strong: rgba(245, 201, 122, 0.35);
 
-  /* glass */
-  --card-tint: rgba(0,0,0,.56);
-  --section-tint: rgba(0,0,0,.22);
+      /* Used everywhere (gradients, glows, banner, loader, etc.) */
+      --bg-top: #1b0710;
+      --bg-mid: #050308;
+      --bg-deep: #020107;
 
-  --btn:rgba(0,0,0,.65);
-  --glow:rgba(255,255,255,.18);
-}
+      --loader-top: #2b0915;
+      --hero-top: rgba(202, 52, 0, 0.82);
 
-*{box-sizing:border-box}
-html,body{height:100%}
+      --banner-a: var(--accent-soft);
+      --banner-b: var(--accent);
 
-body{
-  margin:0;
-  font-family:Poppins,sans-serif;
-  color:var(--text);
-  min-height:100vh;
+      --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.65);
+      --glow-accent: 0 0 18px rgba(202, 52, 0, 0.7);
+      --glow-gold: 0 0 18px rgba(245, 201, 122, 0.35);
 
-  /* ✅ no stretched weirdness */
-  display:flex;
-  justify-content:center;
-  align-items:flex-start;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
 
-  padding:34px 14px;
-  background:
-    linear-gradient(var(--bg-overlay),var(--bg-overlay)),
-    url("cerberuslinkbackground.png");
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-}
+      /* Tiny debug line */
+      --debug: 1;
+    }
 
-/* ✅ Desktop: center nicely, no long empty card */
-@media (min-width: 900px){
-  body{
-    align-items:center;
-    padding:48px 22px;
-  }
-}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, var(--bg-top) 0, var(--bg-mid) 55%, var(--bg-deep) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.45s ease, color 0.35s ease;
+    }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-.card{
-  width:100%;
-  max-width:560px;
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
 
-  /* ✅ IMPORTANT: prevents tall empty box */
-  height:auto;
-  min-height:unset;
+    /* =========================================
+       Loading Overlay (with safety failsafe)
+       ========================================= */
+    .loader-overlay {
+      position: fixed; inset: 0;
+      background: radial-gradient(circle at top, var(--loader-top) 0, var(--bg-mid) 55%, var(--bg-deep) 100%);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .loader-inner {
+      text-align: center;
+      padding: 1.5rem 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--border-strong);
+      background: radial-gradient(circle at top, rgba(0,0,0,0.15), var(--panel-strong));
+      box-shadow: 0 0 30px rgba(0,0,0,0.9);
+      position: relative;
+      overflow: hidden;
+    }
+    .loader-inner::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.06), transparent 55%),
+        radial-gradient(circle at 80% 90%, rgba(255,255,255,0.05), transparent 60%),
+        radial-gradient(circle at 50% 0%, rgba(245,201,122,0.12), transparent 65%);
+      pointer-events: none;
+      opacity: 0.9;
+    }
+    .loader-symbol {
+      width: 56px; height: 56px;
+      margin: 0 auto 0.85rem;
+      border-radius: 999px;
+      border: 1px solid rgba(245,201,122,0.75);
+      display: flex; align-items: center; justify-content: center;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: radial-gradient(circle, var(--accent) 0, var(--bg-mid) 65%);
+      color: #fff3df;
+      box-shadow: 0 0 22px rgba(0,0,0,0.65);
+      animation: loaderPulse 1.6s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+    .loader-text-main {
+      position: relative; z-index: 1;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #f8e8c4;
+      margin-bottom: 0.4rem;
+    }
+    .loader-text-sub {
+      position: relative; z-index: 1;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    body.loaded .loader-overlay {
+      opacity: 0;
+      transform: translateY(-12px);
+      pointer-events: none;
+    }
+    @keyframes loaderPulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 26px rgba(0,0,0,0.75); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    }
 
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:22px;
+    /* =========================================
+       Coming Soon Banner (holiday themed)
+       ========================================= */
+    .coming-soon-banner {
+      background: linear-gradient(to right, var(--banner-a), var(--banner-b), var(--banner-a));
+      padding: 0.6rem 1rem;
+      text-align: center;
+      color: #f5e6dc;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 0.9rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      box-shadow: 0 0 18px rgba(0,0,0,0.65), var(--glow-accent);
+      position: relative;
+      overflow: hidden;
+      animation: flameFlicker 2.4s ease-in-out infinite alternate;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .coming-soon-banner::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 18% 40%, rgba(245,201,122,0.20), transparent 55%),
+        radial-gradient(circle at 82% 65%, rgba(255,255,255,0.06), transparent 60%);
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    @keyframes flameFlicker {
+      0% { opacity: 0.90; transform: translateY(0); }
+      50% { opacity: 1; transform: translateY(-0.5px); }
+      100% { opacity: 0.94; transform: translateY(0.5px); }
+    }
 
-  background:
-    linear-gradient(135deg, rgba(0,0,0,.35), rgba(0,0,0,.52)),
-    radial-gradient(circle at 20% 10%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 58%),
-    radial-gradient(circle at 80% 90%, color-mix(in srgb, var(--accent2) 12%, transparent), transparent 62%),
-    var(--card-tint);
+    /* =========================================
+       Sticky Header
+       ========================================= */
+    .hb-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: linear-gradient(
+        to right,
+        rgba(5, 3, 8, 0.96),
+        rgba(7, 1, 1, 0.96)
+      );
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 18px rgba(0,0,0,0.9);
+      transform: translateY(-18px);
+      opacity: 0;
+      transition: transform 0.55s cubic-bezier(0.22,0.9,0.35,1.1), opacity 0.55s ease, box-shadow 0.35s ease;
+    }
+    .hb-header.revealed { transform: translateY(0); opacity: 1; }
+    .hb-header.scrolled { box-shadow: 0 0 26px rgba(0,0,0,1), 0 0 28px rgba(0,0,0,0.35); }
 
-  backdrop-filter: blur(10px);
-}
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      padding: 0.45rem 0;
+      font-size: 0.95rem;
+    }
+    .nav-links-left { display: flex; gap: 1.4rem; font-size: 0.85rem; }
+    .nav-links-left a {
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      padding-bottom: 0.15rem;
+      transition: color 0.2s ease;
+    }
+    .nav-links-left a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -0.2rem;
+      height: 2px; width: 0;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--gold), var(--accent), var(--accent-soft));
+      box-shadow: 0 0 10px rgba(0,0,0,0.65);
+      opacity: 0;
+      transition: width 0.22s ease, opacity 0.22s ease;
+    }
+    .nav-links-left a:hover { color: var(--gold); }
+    .nav-links-left a:hover::after { width: 100%; opacity: 1; }
 
-/* ✅ Slightly narrower on very large screens (looks cleaner) */
-@media (min-width: 1100px){
-  .card{ max-width: 520px; }
-}
+    .nav-center { display: flex; align-items: center; gap: 0.6rem; text-align: center; }
+    .nav-logo-link { display: flex; align-items: center; justify-content: center; }
+    .logo-img {
+      height: 90px; width: auto; display: block;
+      filter: drop-shadow(0 0 12px rgba(0,0,0,0.65));
+      transition: height 0.25s ease, transform 0.25s ease, filter 0.25s ease;
+    }
+    .hb-header.scrolled .logo-img { height: 68px; filter: drop-shadow(0 0 10px rgba(0,0,0,0.55)); }
+    .logo-img:hover { animation: logoFlame 1s ease-in-out infinite alternate; }
+    @keyframes logoFlame {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 10px rgba(0,0,0,0.65)); }
+      100% { transform: translateY(-1px) scale(1.03); filter: drop-shadow(0 0 18px rgba(0,0,0,0.8)); }
+    }
 
-.avatar{
-  width:120px;height:120px;
-  border-radius:50%;
-  border:3px solid #fff;
-  display:block;
-  margin:0 auto 12px;
-  object-fit:cover;
-  box-shadow:0 10px 24px rgba(0,0,0,.35);
-}
+    .nav-brand-text .brand-name {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .nav-brand-text .brand-subtitle {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-h1{
-  font-family:Satisfy,cursive;
-  text-align:center;
-  margin:0 0 6px;
-  font-size:2.4rem;
-}
+    .nav-right { display: flex; align-items: center; }
+    .nav-cta {
+      border-radius: 999px;
+      border: 1px solid rgba(245,201,122,0.85);
+      padding: 0.45rem 1.2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.06), transparent),
+        radial-gradient(circle at bottom right, rgba(0,0,0,0.35), var(--panel-strong));
+      color: #fff;
+      box-shadow: 0 0 16px rgba(0,0,0,0.65), var(--glow-gold);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .nav-cta::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 0% 50%, rgba(245,201,122,0.28), transparent 55%);
+      transform: translateX(-120%);
+      transition: transform 0.35s ease-out;
+      pointer-events: none;
+    }
+    .nav-cta:hover::after { transform: translateX(120%); }
+    .nav-cta:hover { box-shadow: 0 0 22px rgba(0,0,0,0.8), 0 0 14px rgba(245,201,122,0.35); }
 
-.tagline{
-  text-align:center;
-  font-size:.92rem;
-  color:var(--muted);
-  margin:0 0 14px;
-}
+    main { padding-bottom: 4rem; }
 
-.socials{
-  display:flex;
-  justify-content:center;
-  gap:14px;
-  margin-bottom:16px;
-}
+    /* =========================================
+       Hero
+       ========================================= */
+    .hero { padding: 3.6rem 0 3rem; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+    .hero-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      font-size: 0.7rem;
+      color: var(--gold);
+      opacity: 0.92;
+      margin-bottom: 0.75rem;
+    }
+    .hero-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      line-height: 1.1;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 18px rgba(0,0,0,0.8);
+    }
+    .hero-title span { color: var(--accent); }
+    .hero-subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 36rem;
+      margin-bottom: 1.4rem;
+    }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.6rem; }
+    .tag {
+      border-radius: 999px;
+      border: 1px solid rgba(245,201,122,0.3);
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      background: rgba(0,0,0,0.18);
+      backdrop-filter: blur(3px);
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      padding: 0.55rem 1.3rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-soft));
+      color: #fff;
+      box-shadow: 0 0 18px rgba(0,0,0,0.6), var(--glow-accent);
+    }
+    .btn-primary:hover { filter: brightness(1.06); transform: translateY(-1px); }
+    .hero-note { font-size: 0.8rem; color: var(--muted); }
 
-.icon-btn{
-  width:44px;height:44px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,.22);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-decoration:none;
-  color:inherit;
-  position:relative;
-  overflow:hidden;
-  transition:.2s;
-}
+    .hero-art {
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(245,201,122,0.25);
+      padding: 1px;
+      background: radial-gradient(circle at top, var(--hero-top), var(--bg-mid));
+      box-shadow: 0 0 32px rgba(0,0,0,0.55), 0 0 80px rgba(0,0,0,0.9);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-art::before {
+      content: "";
+      position: absolute; inset: -2px;
+      background:
+        radial-gradient(circle at 15% 25%, rgba(245,201,122,0.12), transparent 55%),
+        radial-gradient(circle at 85% 75%, rgba(255,255,255,0.05), transparent 65%);
+      pointer-events: none;
+      opacity: 0.85;
+    }
+    .hero-art-inner {
+      position: relative;
+      border-radius: calc(var(--radius-lg) - 2px);
+      background: radial-gradient(circle at bottom, var(--bg-mid) 0, rgba(20,3,8,0.9) 40%, var(--bg-mid) 100%);
+      padding: 1.3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .hero-art-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .hero-art-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.75rem;
+      font-size: 0.8rem;
+    }
+    .hero-card {
+      border-radius: 16px;
+      border: 1px solid rgba(245,201,122,0.22);
+      padding: 0.65rem 0.75rem;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.04), rgba(0,0,0,0.22));
+      backdrop-filter: blur(4px);
+    }
+    .hero-card h4 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .hero-card p { font-size: 0.78rem; color: var(--muted); }
 
-.icon-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 24px rgba(0,0,0,.38);
-}
+    /* =========================================
+       Sections
+       ========================================= */
+    section { padding: 2.6rem 0; border-top: 1px solid rgba(245,201,122,0.12); }
+    .section-header { margin-bottom: 1.5rem; text-align: left; }
+    .section-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      font-size: 0.7rem;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .section-title-row { display: flex; align-items: center; gap: 0.6rem; }
+    .section-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+    .section-subtitle {
+      font-size: 0.88rem;
+      color: var(--muted);
+      max-width: 42rem;
+    }
 
-.icon-btn::before{
-  content:"";
-  position:absolute;
-  inset:-2px;
-  background:
-    radial-gradient(circle at 30% 30%,var(--glow-strong),transparent 45%),
-    radial-gradient(circle at 70% 70%,var(--glow),transparent 55%);
-  opacity:0;
-  transition:.25s;
-}
-.icon-btn:hover::before{opacity:.7}
-.icon-btn i{font-size:22px;z-index:1}
+    /* Menu */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+    }
+    .menu-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+    .menu-group-title {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .menu-item {
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed rgba(245,201,122,0.25);
+    }
+    .menu-item:last-child { border-bottom: none; }
 
-/* FetLife SVG */
-.icon-btn.fetlife svg{
-  width:26px;height:26px;
-  filter:drop-shadow(0 2px 6px rgba(0,0,0,.35));
-}
+    .menu-item-name {
+      font-size: 0.95rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .menu-item-name strong { font-weight: 650; }
+    .menu-item-price {
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .menu-item-desc {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      max-width: 40rem;
+    }
+    .menu-badges {
+      margin-top: 0.28rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+      font-size: 0.7rem;
+    }
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.05rem 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      background: rgba(0,0,0,0.16);
+    }
+    .badge-hot {
+      border-color: rgba(255,255,255,0.18);
+      color: #ffe7d2;
+      background: linear-gradient(135deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35));
+    }
 
-.tabs{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin:0 0 14px;
-}
+    /* Add-on row */
+    .addon-row {
+      margin-top: 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(245,201,122,0.22);
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.04), rgba(0,0,0,0.26));
+      padding: 0.9rem 1rem;
+      color: var(--muted);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 0 18px rgba(0,0,0,0.55);
+    }
+    .addon-row strong { color: var(--gold); text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.78rem; }
 
-.tab{
-  padding:10px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(0,0,0,.26);
-  font-weight:700;
-  cursor:pointer;
-  color:var(--text);
-}
-.tab.active{background:rgba(255,255,255,.12)}
+    /* Seasonal callout */
+    .season-callout {
+      border: 1px solid var(--border-strong);
+      border-radius: 14px;
+      padding: 0.95rem 1.2rem;
+      margin: 1rem 0 1.5rem;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.04), rgba(0,0,0,0.22));
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 18px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .season-callout::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(245,201,122,0.16), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(255,255,255,0.05), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .season-title {
+      position: relative;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-size: 0.88rem;
+      letter-spacing: 0.16em;
+    }
+    .season-message {
+      position: relative;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
 
-.panel{display:none}
-.panel.active{display:block}
+    /* Secret star */
+    .secret-star {
+      width: 18px; height: 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,201,122,0.55);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      color: #f5e6dc;
+      cursor: pointer;
+      opacity: 0.45;
+      box-shadow: 0 0 6px rgba(245,201,122,0.35);
+      transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+      background: radial-gradient(circle at top, rgba(245,201,122,0.14), transparent 60%);
+    }
+    .secret-star span { transform: translateY(-0.5px); }
+    .secret-star:hover { opacity: 0.92; transform: scale(1.05); box-shadow: 0 0 12px rgba(245,201,122,0.75); }
+    .secret-star.active { opacity: 1; box-shadow: 0 0 12px rgba(245,201,122,1), 0 0 20px rgba(0,0,0,0.55); }
 
-.section-card{
-  border:1px solid color-mix(in srgb, var(--accent) 22%, var(--border));
-  border-radius:16px;
-  padding:14px;
-  margin-bottom:14px;
-  background:
-    linear-gradient(135deg,
-      color-mix(in srgb, var(--accent) 8%, transparent),
-      color-mix(in srgb, var(--accent2) 6%, transparent)
-    ),
-    var(--section-tint);
-}
+    .secret-menu {
+      margin-top: 1.4rem;
+      border-radius: 18px;
+      border: 1px dashed rgba(245,201,122,0.4);
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.03), rgba(0,0,0,0.28));
+      padding: 1.15rem 1.25rem;
+      font-size: 0.85rem;
+      display: none;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      backdrop-filter: blur(6px);
+    }
+    .secret-menu::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(245,201,122,0.16), transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(255,255,255,0.05), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .secret-menu-inner { position: relative; z-index: 1; }
+    .secret-menu.visible { display: block; animation: fadeInUp 0.38s ease forwards; }
+    .secret-menu-label {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.72rem;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+    }
+    .secret-menu-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.25rem;
+    }
+    .secret-menu-desc { color: var(--muted); margin-bottom: 0.6rem; }
+    .secret-menu-meta { font-size: 0.78rem; color: var(--muted); }
+    .secret-price { color: var(--gold); font-weight: 700; letter-spacing: 0.08em; }
+    .secret-badge {
+      display: inline-block;
+      margin-left: 0.4rem;
+      padding: 0.05rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #f5e6dc;
+      background: rgba(0,0,0,0.18);
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(8px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
 
-.about-text p{
-  margin:0 0 14px;
-  line-height:1.8;
-  font-size:.97rem;
-  color:var(--muted);
-}
-.about-text p:last-child{ margin-bottom:0; }
+    /* Menu top title */
+    .menu-heading {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 0.15rem;
+    }
+    .menu-heading span { color: var(--accent); }
+    .menu-subheading {
+      margin-top: 0.35rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+      max-width: 44rem;
+    }
 
-.links{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-}
+    /* Spellbook panel */
+    .menu-art {
+      border-radius: 20px;
+      border: 1px solid rgba(245,201,122,0.22);
+      padding: 1rem;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.04), rgba(0,0,0,0.28));
+      box-shadow: 0 0 24px rgba(0,0,0,0.65);
+      font-size: 0.82rem;
+      backdrop-filter: blur(6px);
+    }
+    .menu-art h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .menu-art p { color: var(--muted); }
+    .menu-spell {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-style: italic;
+      margin-top: 0.5rem;
+      color: #f8e8c4;
+    }
 
-.link-btn{
-  padding:14px 16px;
-  border-radius:999px;
-  border:1px solid var(--border);
-  background:
-    linear-gradient(135deg,
-      color-mix(in srgb, var(--accent) 18%, var(--btn)),
-      color-mix(in srgb, var(--accent2) 14%, var(--btn))
-    );
-  color:#fff;
-  text-decoration:none;
-  font-weight:800;
-  display:flex;
-  justify-content:space-between;
-  transition:.2s;
-}
-.link-btn:hover{
-  transform:translateY(-2px);
-  box-shadow:0 14px 30px rgba(0,0,0,.28);
-}
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .about-crest {
+      border-radius: 18px;
+      border: 1px solid rgba(245,201,122,0.22);
+      padding: 1.25rem 1.35rem;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.04), rgba(0,0,0,0.28));
+      text-align: center;
+      box-shadow: 0 0 22px rgba(0,0,0,0.85);
+      backdrop-filter: blur(7px);
+      position: relative;
+      overflow: hidden;
+    }
+    .about-crest::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(245,201,122,0.18), transparent 65%),
+        radial-gradient(circle at 10% 70%, rgba(255,255,255,0.05), transparent 60%);
+      opacity: 0.75;
+      pointer-events: none;
+    }
+    .about-crest-logo {
+      position: relative;
+      max-width: 260px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto 0.85rem;
+      filter: drop-shadow(0 0 18px rgba(0,0,0,0.7));
+    }
+    .about-crest-title {
+      position: relative;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+    }
+    .about-crest-text {
+      position: relative;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.75;
+      font-family: "Georgia", "Times New Roman", serif;
+    }
+    .about-crest-text .crest-lead { color: var(--gold); font-weight: 700; }
+    .about-content { display: flex; flex-direction: column; gap: 1.2rem; }
+    .about-box {
+      border-radius: 18px;
+      border: 1px solid rgba(245,201,122,0.22);
+      padding: 1.1rem 1.2rem;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.04), rgba(0,0,0,0.26));
+      font-size: 0.9rem;
+      color: var(--muted);
+      box-shadow: 0 0 18px rgba(0,0,0,0.65);
+      backdrop-filter: blur(6px);
+    }
+    .about-box strong { color: var(--gold); }
+    .about-label {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+    .about-quote {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-style: italic;
+      margin-top: 0.7rem;
+      color: #f8e8c4;
+    }
+    .about-highlight {
+      border-radius: 16px;
+      border: 1px dashed rgba(245,201,122,0.4);
+      padding: 0.95rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: radial-gradient(circle at bottom right, rgba(255,255,255,0.04), rgba(0,0,0,0.28));
+      box-shadow: 0 0 18px rgba(0,0,0,0.55);
+      backdrop-filter: blur(6px);
+    }
 
-/* ✅ Apple Music: tight on phone, a bit bigger on desktop */
-.music-wrap{
-  padding:8px;
-  border-radius:16px;
-  background:rgba(0,0,0,.20);
-  border:1px solid var(--border);
-}
-.music-wrap iframe{
-  width:100%;
-  border:0;
-  border-radius:14px;
-  height:128px; /* phone */
-}
-@media(min-width:900px){
-  .music-wrap iframe{ height:150px; } /* desktop */
-}
+    /* Contact / Booking */
+    .contact { background: radial-gradient(circle at top, rgba(0,0,0,0.12), var(--bg-mid)); }
+    .summon-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 2rem;
+    }
+    .summon-calendar {
+      border-radius: 20px;
+      border: 1px solid rgba(245,201,122,0.22);
+      padding: 1.3rem 1.4rem;
+      background: radial-gradient(circle at top, rgba(255,255,255,0.04), rgba(0,0,0,0.28));
+      box-shadow: 0 0 24px rgba(0,0,0,0.85);
+      font-size: 0.85rem;
+      color: var(--muted);
+      backdrop-filter: blur(7px);
+    }
+    .summon-calendar h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .calendar-wrap {
+      margin-top: 0.6rem;
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(0,0,0,0.45);
+      border: 1px solid rgba(245,201,122,0.3);
+      height: 460px;
+    }
+    .calendar-wrap iframe { width: 100%; height: 100%; border: 0; }
 
-footer{
-  text-align:center;
-  font-size:.75rem;
-  color:rgba(255,255,255,.6);
-  margin-top:4px;
-}
-</style>
+    .contact-card {
+      border-radius: 20px;
+      border: 1px solid rgba(245,201,122,0.22);
+      padding: 1.3rem 1.4rem;
+      background: radial-gradient(circle at top left, rgba(255,255,255,0.04), rgba(0,0,0,0.28));
+      box-shadow: 0 0 24px rgba(0,0,0,0.85);
+      font-size: 0.85rem;
+      color: var(--muted);
+      backdrop-filter: blur(7px);
+    }
+    .contact-card-title {
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .contact-card p { margin-bottom: 0.6rem; }
+    .contact-card-list { list-style: none; padding-left: 0; margin: 0.3rem 0 0.6rem; }
+    .contact-card-list li { margin-bottom: 0.25rem; }
+    .contact-card-list li::before { content: "✶"; color: var(--accent); margin-right: 0.35rem; }
+    .contact-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(245,201,122,0.18);
+      padding: 1rem 0 1.6rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      opacity: 0.95;
+    }
+    .debug-line {
+      margin-top: 0.7rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      opacity: 0.75;
+    }
+
+    /* Responsive */
+    @media (max-width: 840px) {
+      .hero-grid, .menu-grid, .about-grid, .summon-grid { grid-template-columns: minmax(0, 1fr); }
+      .nav-links-left { display: none; }
+      .nav { justify-content: space-between; }
+      .logo-img { height: 80px; }
+      .hb-header.scrolled .logo-img { height: 62px; }
+      .calendar-wrap { height: 380px; }
+    }
+  </style>
 </head>
 
 <body>
-<main class="card">
-
-  <img class="avatar" src="houndsprofile.png" alt="Hound Of Hades">
-
-  <h1>Hound Of Hades</h1>
-  <p class="tagline">Fantasy • Crafting • Culinary Adventures • Cosplay</p>
-
-  <div class="socials">
-    <a class="icon-btn" href="https://www.instagram.com/hound.0f.hades" target="_blank" rel="noopener">
-      <i class="bx bxl-instagram"></i>
-    </a>
-    <a class="icon-btn" href="https://www.tiktok.com/@hound..of..hades" target="_blank" rel="noopener">
-      <i class="bx bxl-tiktok"></i>
-    </a>
-    <a class="icon-btn" href="https://x.com/Hound_0f_Hades" target="_blank" rel="noopener">
-      <i class="fa-brands fa-x-twitter"></i>
-    </a>
-
-    <!-- FetLife (Age verification only) -->
-    <a class="icon-btn fetlife" href="https://fetlife.com/Hound0fHades" data-gate="dob" aria-label="FetLife">
-      <!-- heart + horns + tail -->
-      <svg viewBox="0 0 64 64" aria-hidden="true">
-        <path d="M22 18c-8-10 1-14 6-7" fill="#8f0b10"/>
-        <path d="M42 18c8-10-1-14-6-7" fill="#8f0b10"/>
-        <path d="M32 50c-8-5-18-12-18-22 0-7 5-12 12-12 3 0 5 1 6 4 1-3 3-4 6-4 7 0 12 5 12 12 0 10-10 17-18 22z" fill="#c0171d"/>
-        <path d="M44 41c10 1 10 12-2 10" fill="none" stroke="#c0171d" stroke-width="3" stroke-linecap="round"/>
-        <circle cx="42.5" cy="50" r="1.6" fill="#c0171d"/>
-      </svg>
-    </a>
-
-    <!-- Snapchat (Password gate) -->
-    <a class="icon-btn" href="https://www.snapchat.com/add/hound0fhades" data-gate="password" aria-label="Snapchat">
-      <i class="bx bxl-snapchat"></i>
-    </a>
+  <!-- Loading overlay -->
+  <div class="loader-overlay" id="loader">
+    <div class="loader-inner">
+      <div class="loader-symbol">CB</div>
+      <div class="loader-text-main">Summoning the Underworld Kitchen…</div>
+      <div class="loader-text-sub">Please wait, mortal.</div>
+    </div>
   </div>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="about" type="button">About</button>
-    <button class="tab" data-tab="tributes" type="button">Tributes</button>
+  <!-- Banner -->
+  <div class="coming-soon-banner" id="banner">
+    🐺🔥 Cerberus Bites • Sourdough from the Underworld • Coming Soon 🔥🐺
   </div>
 
-  <section class="panel active" id="about">
-    <div class="section-card about-text">
-      <p>As a true bibliophile, I find immense joy in the written fantasy world, whether in the form of reading or audiobooks. But my passions extend far beyond the literary realm - I'm an avid crafter, a curious explorer of the world, and a passionate seeker of new culinary adventures.</p>
-      <p>The thrill of travel, both domestically and internationally, fuels my spirit, with Ireland, Scotland, and Greece topping my dream destination list, the latter driven by a deep fascination with Greek mythology.</p>
-      <p>This past year, I've delved into the captivating world of cosplay, creating outfits that have been an absolute delight. The sheer joy of cooking, or simply embarking on culinary explorations, is an exhilarating experience unto itself.</p>
-      <p>Beyond these creative outlets, spending quality time with my partner, loved ones, and friends is what truly brings me the greatest joy and fulfillment. The opportunity to be immersed in these enriching experiences would be a dream come true!</p>
-    </div>
+  <!-- Header -->
+  <header class="hb-header">
+    <div class="container">
+      <div class="nav">
+        <nav class="nav-links-left">
+          <a href="#menu">Menu</a>
+          <a href="#about">Lore</a>
+        </nav>
 
-    <div class="section-card music-wrap">
-      <iframe
-        src="https://embed.music.apple.com/us/playlist/links-list/pl.u-BNA6rk3FAXAo29?ls"
-        loading="lazy"
-        allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-        title="Apple Music Playlist">
-      </iframe>
-    </div>
-  </section>
+        <div class="nav-center">
+          <a href="#top" class="nav-logo-link" aria-label="Back to top">
+            <img src="CerberusLogo2.png" alt="Cerberus Bites Logo" class="logo-img" />
+          </a>
+          <div class="nav-brand-text">
+            <div class="brand-name">Cerberus Bites</div>
+            <div class="brand-subtitle">Sourdough from the Underworld</div>
+          </div>
+        </div>
 
-  <section class="panel" id="tributes">
-    <div class="section-card">
-      <div class="links">
-        <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/2FX1Z68HYLD7Q" target="_blank" rel="noopener">Offerings</a>
-        <a class="link-btn" href="https://www.amazon.com/hz/wishlist/ls/G7B3W3YZACIY" target="_blank" rel="noopener">Offerings</a>
-        <a class="link-btn" href="https://cash.app/$Hound0fHades" target="_blank" rel="noopener">CashApp</a>
-        <a class="link-btn" href="https://venmo.com/code?user_id=4332566748333514766" target="_blank" rel="noopener">Venmo</a>
+        <div class="nav-right">
+          <a href="#contact" class="nav-cta">Summon the Hound</a>
+        </div>
       </div>
     </div>
-  </section>
+  </header>
 
-  <footer>© Hound Of Hades</footer>
-</main>
+  <main>
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <div class="hero-eyebrow">House-fermented sourdough • butter-crisped melts • underworld heat</div>
+            <h1 class="hero-title">
+              <span>🐺🔥 CERBERUS BITES</span><br />
+              Sourdough from the Underworld.
+            </h1>
+            <p class="hero-subtitle">
+              All melts served on <strong>house-fermented sourdough</strong> — crisped in butter, forged in flame,
+              and guarded by the three-headed hound. Simple, fast, and wickedly satisfying.
+            </p>
+            <div class="hero-tags">
+              <div class="tag">All melts on sourdough</div>
+              <div class="tag">Fast festival service</div>
+              <div class="tag">Vegan option</div>
+              <div class="tag">Secret menu</div>
+            </div>
+            <div class="hero-actions">
+              <a href="#menu" class="btn btn-primary">View the Menu</a>
+              <div class="hero-note">Limited runs. Sold out = hype. 🔥</div>
+            </div>
+          </div>
 
-<script>
-/* Tabs */
-document.querySelectorAll('.tab').forEach(t=>{
-  t.addEventListener('click', ()=>{
-    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-    t.classList.add('active');
-    document.getElementById(t.dataset.tab).classList.add('active');
-  });
-});
+          <div class="hero-art">
+            <div class="hero-art-inner">
+              <div class="hero-art-title">Tonight at the Gate</div>
+              <div class="hero-art-grid">
+                <div class="hero-card">
+                  <h4>Melt Forge</h4>
+                  <p>Butter-crisped sourdough, molten cheese, and underworld aiolis.</p>
+                </div>
+                <div class="hero-card">
+                  <h4>Fast & Focused</h4>
+                  <p>Five-core items built for speed, consistency, and max profit per loaf.</p>
+                </div>
+                <div class="hero-card">
+                  <h4>Dip Worthy</h4>
+                  <p>Charred tomato soup made for dunking every bite.</p>
+                </div>
+                <div class="hero-card">
+                  <h4>Ask the Hound</h4>
+                  <p>Some things are whispered—never written on the board.</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-/* Gates */
-const SNAP_PASSWORD = "I Bite";
+        </div>
+      </div>
+    </section>
 
-function verify18(){
-  const year = prompt("Age verification required.\nEnter your birth year (YYYY):");
-  if(!year) return false;
-  const y = parseInt(year, 10);
-  if(Number.isNaN(y)) return false;
-  return (new Date().getFullYear() - y) >= 18;
-}
+    <!-- Menu -->
+    <section id="menu">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">Sourdough from the Underworld</div>
+          <div class="section-title-row">
+            <h2 class="section-title">Menu</h2>
+            <!-- Secret hotspot: Black Gate -->
+            <button class="secret-star" id="secretStar" aria-label="Hidden sigil"><span>✶</span></button>
+          </div>
 
-document.querySelectorAll('[data-gate]').forEach(link=>{
-  link.addEventListener('click', (e)=>{
-    const type = link.dataset.gate;
-    if(type === "password"){
-      e.preventDefault();
-      const pw = prompt("Password required:");
-      if(pw === SNAP_PASSWORD) window.open(link.href, "_blank", "noopener");
-      return;
+          <h3 class="menu-heading"><span>🐺🔥 CERBERUS BITES</span></h3>
+          <p class="menu-subheading">
+            All melts served on <strong>house-fermented sourdough</strong>. Limited. When it’s gone, it’s gone.
+          </p>
+
+          <div id="seasonCallout" class="season-callout" aria-live="polite">
+            <strong class="season-title" id="seasonTitle">Seasonal & Holiday Theme</strong>
+            <p class="season-message" id="seasonMessage">
+              Your site colors shift near each sabbat (and stay base between sabbats). Menu stays focused for speed.
+            </p>
+          </div>
+        </div>
+
+        <div class="menu-grid">
+          <div>
+            <div class="menu-columns">
+              <!-- LEFT: MELTS -->
+              <div>
+                <div class="menu-group-title">🥪 Melts</div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">
+                    <strong>Cerberus Melt</strong>
+                    <span class="menu-item-price">$9</span>
+                  </div>
+                  <div class="menu-item-desc">
+                    Triple cheese on butter-crisped sourdough.
+                  </div>
+                  <div class="menu-badges">
+                    <div class="badge">Best seller</div>
+                    <div class="badge">Fast build</div>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">
+                    <strong>Gatekeeper Turkey Melt</strong>
+                    <span class="menu-item-price">$11</span>
+                  </div>
+                  <div class="menu-item-desc">
+                    Smoked turkey, sharp cheddar, black garlic aioli.
+                  </div>
+                  <div class="menu-badges">
+                    <div class="badge">Savory</div>
+                    <div class="badge">Premium</div>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">
+                    <strong>Hellfire Chicken Melt</strong>
+                    <span class="menu-item-price">$11</span>
+                  </div>
+                  <div class="menu-item-desc">
+                    Blackened chicken, pepper jack, ember mayo.
+                  </div>
+                  <div class="menu-badges">
+                    <div class="badge badge-hot">Spicy</div>
+                    <div class="badge">Crowd pull</div>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">
+                    <strong>Persephone’s Garden (Vegan) 🌿</strong>
+                    <span class="menu-item-price">$10</span>
+                  </div>
+                  <div class="menu-item-desc">
+                    Roasted mushrooms, caramelized onion, herb oil.
+                  </div>
+                  <div class="menu-badges">
+                    <div class="badge">Vegan</div>
+                    <div class="badge">Umami</div>
+                  </div>
+                </div>
+
+                <div class="addon-row">
+                  <strong>🥣 Add-on</strong><br />
+                  <span style="display:flex; justify-content:space-between; gap:0.75rem; margin-top:0.35rem;">
+                    <span>Add Charred Tomato Soup (Cup) to any melt</span>
+                    <span style="color:var(--gold); font-weight:700;">+ $3</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- RIGHT: SIDES -->
+              <div>
+                <div class="menu-group-title">🥣 Sides</div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">
+                    <strong>Charred Tomato Soup (Cup)</strong>
+                    <span class="menu-item-price">$4</span>
+                  </div>
+                  <div class="menu-item-desc">
+                    Rich, smoky, perfect for dipping.
+                  </div>
+                  <div class="menu-badges">
+                    <div class="badge">Dip-worthy</div>
+                    <div class="badge">High margin</div>
+                  </div>
+                </div>
+
+                <!-- Small note card -->
+                <div class="addon-row" style="margin-top:1.2rem;">
+                  <strong>🔥 Limited Runs</strong><br />
+                  <span style="display:block; margin-top:0.35rem;">
+                    We bake to a par. When we sell out, the gate closes. <span style="color:var(--gold); font-weight:650;">Sold Out = Hype.</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Spellbook panel -->
+          <aside class="menu-art">
+            <h4>The Sourdough Oath</h4>
+            <p>
+              Every loaf is house-fermented and every melt is forged for speed:
+              crisp buttered sourdough, fast builds, and repeatable assembly.
+            </p>
+            <p class="menu-spell">
+              “If you hear the griddle hiss, the gate is open.”
+            </p>
+            <p style="margin-top:0.75rem;">
+              <strong style="color:var(--gold);">Pro tip:</strong> Pair any melt with soup for the perfect dip ritual.
+            </p>
+          </aside>
+        </div>
+
+        <!-- SECRET MENU: THE BLACK GATE -->
+        <div id="secretMenu" class="secret-menu" aria-hidden="true">
+          <div class="secret-menu-inner">
+            <div class="secret-menu-label">🔥 Off-Menu (Ask if Available)</div>
+            <div class="secret-menu-title">The Black Gate</div>
+            <p class="secret-menu-desc">
+              Extra-butter sourdough, triple cheese, black garlic aioli, <strong>charred dark</strong>.
+              Limited. When it’s gone, it’s gone.
+            </p>
+            <p class="secret-menu-meta">
+              <span class="secret-price">$12</span>
+              <span class="secret-badge">Secret • Limited • Extra char</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- About / Lore -->
+    <section id="about">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">Lore of the Underworld Kitchen</div>
+          <h2 class="section-title">About the Hound of Hades</h2>
+          <p class="section-subtitle">
+            Guardian of flame, keeper of the sourdough starter, and judge of every melt that dares leave the gate.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-crest">
+            <img src="CerberusLogo2.png" alt="Cerberus Bites Crest Logo" class="about-crest-logo" />
+            <div class="about-crest-title">Official Crest of Cerberus Bites</div>
+            <p class="about-crest-text">
+              <span class="crest-lead">We are the guardians of souls who enter this realm.</span><br />
+              I watch the flames.<br />
+              I guard the melts.<br />
+              I guide the hungry.<br />
+              We are the eternal watchdog of hunger and flame — and if we don’t approve it, it doesn’t leave the kitchen.
+            </p>
+          </div>
+
+          <div class="about-content">
+            <div class="about-box">
+              <span class="about-label">The Underworld Starter</span>
+              <p>
+                The heart of Cerberus Bites is a living culture: a house starter fed, fermented, and guarded like a relic.
+                That’s why the sourdough hits different — crispy edges, chewy center, and flavor that doesn’t need fuss.
+              </p>
+              <div class="about-quote">“Bread is a pact. Fire is the signature.”</div>
+            </div>
+
+            <div class="about-highlight">
+              <span class="about-label">How It Works</span>
+              <p>✶ Focused menu = fast service.</p>
+              <p style="margin-top:0.35rem;">✶ Limited bakes = sold-out hype.</p>
+              <p style="margin-top:0.35rem;">✶ Ask for <strong>The Black Gate</strong> if the hound approves.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Booking -->
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-eyebrow">Summon the Underworld Kitchen</div>
+          <h2 class="section-title">Bookings & General Inquiries</h2>
+          <p class="section-subtitle">
+            Use the calendar to claim your date in the Underworld. For everything else, reach out directly.
+          </p>
+        </div>
+
+        <div class="summon-grid">
+          <div class="summon-calendar">
+            <h4>Claim Your Date in the Underworld</h4>
+            <p class="form-helper">
+              Choose your time directly on the calendar. Once confirmed, you’ll receive an email from our booking system.
+            </p>
+            <div class="calendar-wrap">
+              <iframe
+                src="https://CerberusBites.setmore.com"
+                loading="lazy"
+                scrolling="yes"
+                frameborder="0"
+                title="Cerberus Bites booking calendar"
+              ></iframe>
+            </div>
+          </div>
+
+          <aside class="contact-card">
+            <div class="contact-card-title">General Inquiries</div>
+            <p>
+              For questions, collaborations, press, or other mischief that isn’t a booking:
+            </p>
+            <ul class="contact-card-list">
+              <li><strong>Email:</strong> <a href="mailto:cerberusbites@hotmail.com">cerberusbites@hotmail.com</a></li>
+              <li><strong>Phone:</strong> <a href="tel:15409448898">540-944-8898</a></li>
+              <li><strong>Instagram:</strong> <a href="https://www.instagram.com/cerberus_bites" target="_blank" rel="noreferrer">@cerberus_bites</a></li>
+              <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@cerberusbites" target="_blank" rel="noreferrer">@cerberusbites</a></li>
+            </ul>
+            <p class="contact-note">
+              Bookings live on the calendar. Messages here are for conversation, not reservations.
+            </p>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-row">
+        <div>© <span id="year"></span> Cerberus Bites. All rights reserved.</div>
+        <div class="footer-links">
+          <span>Sourdough from the Underworld.</span>
+          <span>Sold Out = Hype.</span>
+        </div>
+      </div>
+
+      <!-- tiny debug line -->
+      <div class="debug-line" id="debugLine" style="display:none;"></div>
+    </div>
+  </footer>
+
+  <script>
+    // ==========================
+    // Helper: date utils
+    // ==========================
+    function ymd(d) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
     }
-    if(type === "dob"){
-      e.preventDefault();
-      if(verify18()) window.open(link.href, "_blank", "noopener");
-      return;
+
+    function daysBetween(a, b) {
+      const A = new Date(a.getFullYear(), a.getMonth(), a.getDate());
+      const B = new Date(b.getFullYear(), b.getMonth(), b.getDate());
+      const ms = 24 * 60 * 60 * 1000;
+      return Math.round((A - B) / ms);
     }
-  });
-});
 
-/* Subtle Wheel of the Year (seasonal tint shift) */
-const themes=[
-  {start:[12,1], end:[1,31],  a:"#d6b15f", b:"#6fd3ff"}, // Yule
-  {start:[2,1],  end:[3,19],  a:"#ffd9f0", b:"#ffe58a"}, // Imbolc
-  {start:[3,20], end:[4,30],  a:"#78e08f", b:"#ffeaa7"}, // Ostara
-  {start:[5,1],  end:[6,19],  a:"#ff4d6d", b:"#ffb703"}, // Beltane
-  {start:[6,20], end:[7,31],  a:"#ffdd57", b:"#ff7a00"}, // Litha
-  {start:[8,1],  end:[9,21],  a:"#ff9f1c", b:"#d00000"}, // Lughnasadh
-  {start:[9,22], end:[10,31], a:"#a3cb38", b:"#b33939"}, // Mabon
-  {start:[11,1], end:[11,30], a:"#9b5de5", b:"#f15bb5"}  // Samhain
-];
+    function setVars(vars) {
+      const r = document.documentElement;
+      Object.entries(vars).forEach(([k, v]) => r.style.setProperty(k, v));
+    }
 
-function md(m,d){ return m*100 + d; }
-const now = new Date();
-const today = md(now.getMonth()+1, now.getDate());
-let theme = themes[0];
+    // ==========================
+    // Pagan holiday theme engine
+    // - Applies ONLY within +/- windowDays of a sabbat
+    // - Otherwise keeps base theme exactly
+    // ==========================
+    function applyPaganHolidayTheme(now = new Date()) {
+      const windowDays = 7;
 
-themes.forEach(t=>{
-  const s = md(t.start[0], t.start[1]);
-  const e = md(t.end[0], t.end[1]);
-  const inRange = (s > e) ? (today >= s || today <= e) : (today >= s && today <= e);
-  if(inRange) theme = t;
-});
+      const base = {
+        "--bg": "#050308",
+        "--bg-alt": "#0c050b",
+        "--panel": "rgba(10, 6, 18, 0.82)",
+        "--panel-strong": "rgba(5, 3, 8, 0.96)",
+        "--text": "#f4f2f6",
+        "--muted": "#b3a9c0",
+        "--accent": "#ca3400",
+        "--accent-soft": "#7e0f1d",
+        "--gold": "#f5c97a",
+        "--border": "rgba(245, 201, 122, 0.22)",
+        "--border-strong": "rgba(245, 201, 122, 0.35)",
+        "--bg-top": "#1b0710",
+        "--bg-mid": "#050308",
+        "--bg-deep": "#020107",
+        "--loader-top": "#2b0915",
+        "--hero-top": "rgba(202, 52, 0, 0.82)",
+        "--banner-a": "#7e0f1d",
+        "--banner-b": "#ca3400",
+      };
 
-document.documentElement.style.setProperty("--accent", theme.a);
-document.documentElement.style.setProperty("--accent2", theme.b);
-document.documentElement.style.setProperty("--glow-strong", `color-mix(in srgb, ${theme.a} 30%, transparent)`);
-</script>
+      const y = now.getFullYear();
+
+      const sabbats = [
+        { key: "yule",      label: "Yule",      date: new Date(y, 11, 21), theme: {
+          "--accent": "#2b6f66",
+          "--accent-soft": "#a21caf",
+          "--gold": "#f5c97a",
+          "--bg-top": "#06161a",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#0a1c22",
+          "--hero-top": "rgba(43,111,102,0.75)",
+          "--banner-a": "#2b6f66",
+          "--banner-b": "#a21caf",
+        }},
+        { key: "imbolc",    label: "Imbolc",    date: new Date(y, 1, 1),  theme: {
+          "--accent": "#f59e0b",
+          "--accent-soft": "#fde68a",
+          "--gold": "#f7d88b",
+          "--bg-top": "#1a1210",
+          "--bg-mid": "#060308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#25140a",
+          "--hero-top": "rgba(245,158,11,0.55)",
+          "--banner-a": "#fde68a",
+          "--banner-b": "#f59e0b",
+        }},
+        { key: "ostara",    label: "Ostara",    date: new Date(y, 2, 20), theme: {
+          "--accent": "#22c55e",
+          "--accent-soft": "#f472b6",
+          "--gold": "#f5c97a",
+          "--bg-top": "#07160f",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#0a1f14",
+          "--hero-top": "rgba(34,197,94,0.55)",
+          "--banner-a": "#f472b6",
+          "--banner-b": "#22c55e",
+        }},
+        { key: "beltane",   label: "Beltane",   date: new Date(y, 4, 1),  theme: {
+          "--accent": "#ef4444",
+          "--accent-soft": "#f97316",
+          "--gold": "#f5c97a",
+          "--bg-top": "#1a0706",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#2b0908",
+          "--hero-top": "rgba(239,68,68,0.6)",
+          "--banner-a": "#ef4444",
+          "--banner-b": "#f97316",
+        }},
+        { key: "litha",     label: "Litha",     date: new Date(y, 5, 21), theme: {
+          "--accent": "#0ea5e9",
+          "--accent-soft": "#f59e0b",
+          "--gold": "#f7d68a",
+          "--bg-top": "#06121a",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#071a28",
+          "--hero-top": "rgba(14,165,233,0.55)",
+          "--banner-a": "#f59e0b",
+          "--banner-b": "#0ea5e9",
+        }},
+        { key: "lughnasadh",label: "Lughnasadh",date: new Date(y, 7, 1),  theme: {
+          "--accent": "#f97316",
+          "--accent-soft": "#a16207",
+          "--gold": "#f5c97a",
+          "--bg-top": "#1a0b06",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#2a120a",
+          "--hero-top": "rgba(249,115,22,0.55)",
+          "--banner-a": "#a16207",
+          "--banner-b": "#f97316",
+        }},
+        { key: "mabon",     label: "Mabon",     date: new Date(y, 8, 21), theme: {
+          "--accent": "#b45309",
+          "--accent-soft": "#7c2d12",
+          "--gold": "#f5c97a",
+          "--bg-top": "#160a08",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#23100c",
+          "--hero-top": "rgba(180,83,9,0.55)",
+          "--banner-a": "#7c2d12",
+          "--banner-b": "#b45309",
+        }},
+        { key: "samhain",   label: "Samhain",   date: new Date(y, 9, 31), theme: {
+          "--accent": "#a855f7",
+          "--accent-soft": "#ef4444",
+          "--gold": "#f5c97a",
+          "--bg-top": "#12061a",
+          "--bg-mid": "#050308",
+          "--bg-deep": "#020107",
+          "--loader-top": "#1c0a28",
+          "--hero-top": "rgba(168,85,247,0.55)",
+          "--banner-a": "#ef4444",
+          "--banner-b": "#a855f7",
+        }},
+      ];
+
+      const yulePrev = { key: "yule_prev", label: "Yule", date: new Date(y - 1, 11, 21), theme: sabbats[0].theme };
+      const all = [yulePrev, ...sabbats];
+
+      let closest = null;
+      for (const s of all) {
+        const dist = Math.abs(daysBetween(now, s.date));
+        if (!closest || dist < closest.dist) closest = { ...s, dist };
+      }
+
+      setVars(base);
+
+      let active = { key: "base", label: "In-between Sabbats", dist: null };
+      if (closest && closest.dist <= windowDays) {
+        setVars(closest.theme);
+        active = closest;
+      }
+
+      // Update banner wording with active holiday
+      const banner = document.getElementById("banner");
+      if (banner) {
+        const holidayNote = (active.key !== "base") ? ` • ${active.label} Theme` : "";
+        banner.textContent = `🐺🔥 Cerberus Bites • Sourdough from the Underworld${holidayNote} 🔥🐺`;
+      }
+
+      return active;
+    }
+
+    // ==========================
+    // Boot
+    // ==========================
+    (function boot() {
+      // Year
+      const yearSpan = document.getElementById('year');
+      if (yearSpan) yearSpan.textContent = new Date().getFullYear();
+
+      // Apply holiday theme FIRST so loader/banner are themed immediately
+      const activeHoliday = applyPaganHolidayTheme(new Date());
+
+      // Debug line (tiny)
+      const debug = document.getElementById("debugLine");
+      if (debug) {
+        const show = getComputedStyle(document.documentElement).getPropertyValue("--debug").trim() === "1";
+        debug.style.display = show ? "block" : "none";
+        debug.textContent =
+          `DEBUG • date=${ymd(new Date())} • theme=${activeHoliday.label}${activeHoliday.dist !== null ? ` (±${activeHoliday.dist}d)` : ""}`;
+      }
+
+      // Reveal header & hide loader on load (plus failsafe)
+      window.addEventListener('load', function () {
+        document.body.classList.add('loaded');
+        const header = document.querySelector('.hb-header');
+        if (header) header.classList.add('revealed');
+      });
+
+      // Failsafe: never get stuck on loader
+      setTimeout(function () {
+        document.body.classList.add('loaded');
+        const header = document.querySelector('.hb-header');
+        if (header) header.classList.add('revealed');
+      }, 4000);
+
+      // Shrink header on scroll
+      window.addEventListener('scroll', function () {
+        const header = document.querySelector('.hb-header');
+        if (!header) return;
+        header.classList.toggle('scrolled', window.scrollY > 20);
+      });
+
+      // Secret menu hover / tap logic
+      (function () {
+        const star = document.getElementById('secretStar');
+        const secret = document.getElementById('secretMenu');
+        if (!star || !secret) return;
+
+        let hideTimeout;
+
+        function showSecret() {
+          clearTimeout(hideTimeout);
+          secret.classList.add('visible');
+          star.classList.add('active');
+          secret.setAttribute('aria-hidden', 'false');
+        }
+
+        function scheduleHide() {
+          hideTimeout = setTimeout(function () {
+            secret.classList.remove('visible');
+            star.classList.remove('active');
+            secret.setAttribute('aria-hidden', 'true');
+          }, 200);
+        }
+
+        // Hover support (desktop)
+        star.addEventListener('mouseenter', showSecret);
+        star.addEventListener('mouseleave', scheduleHide);
+        secret.addEventListener('mouseenter', showSecret);
+        secret.addEventListener('mouseleave', scheduleHide);
+
+        // Tap/click support (mobile)
+        star.addEventListener('click', function (e) {
+          e.preventDefault();
+          const visible = secret.classList.toggle('visible');
+          star.classList.toggle('active', visible);
+          secret.setAttribute('aria-hidden', String(!visible));
+        });
+      })();
+    })();
+  </script>
 </body>
 </html>
