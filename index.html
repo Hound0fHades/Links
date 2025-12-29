@@ -4,176 +4,144 @@
   <meta charset="UTF-8" />
   <title>Cerberus Bites | Sourdough from the Underworld</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Cerberus Bites — Sourdough from the Underworld. All melts served on house-fermented sourdough." />
-  <link rel="canonical" href="https://hound0fhades.github.io/Hades-Wicked-Bites" />
+  <meta name="description" content="Cerberus Bites — Sourdough melts forged in flame. If the hound doesn’t approve it, it doesn’t leave the kitchen." />
 
   <style>
-    /* =========================================================
-      THEME SYSTEM (Base = “Between Sabbats”)
-      JS will update these CSS variables automatically by holiday.
-    ========================================================== */
-    :root{
-      /* Base / between-sabbats theme (your current vibe) */
+    :root {
+      /* BASE (between sabbats) — your original vibe */
       --bg: #050308;
       --bg-alt: #0c050b;
-
       --accent: #ca3400;
       --accent-soft: #7e0f1d;
-
       --gold: #f5c97a;
-
       --text: #f4f2f6;
       --muted: #b3a9c0;
       --border: #312033;
 
-      /* background gradients (also swap by holiday) */
-      --bg-grad-1: #1b0710;
-      --bg-grad-2: #050308;
-      --bg-grad-3: #020107;
-
-      /* banner gradient */
-      --banner-a: #7e0f1d;
-      --banner-b: #ca3400;
-
-      /* glow */
-      --glow-accent: rgba(202,52,0,0.80);
-      --glow-gold: rgba(245,201,122,0.60);
-
-      /* tiny debug line control */
-      --debug-opacity: 0.55;
+      /* optional helper vars derived by JS */
+      --theme-name: "Base";
+      --theme-window: "Between sabbats";
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body{
+    body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, var(--bg-grad-1) 0, var(--bg-grad-2) 55%, var(--bg-grad-3) 100%);
+      background: radial-gradient(circle at top, color-mix(in srgb, var(--accent-soft) 22%, #000 78%) 0, var(--bg) 60%, #020107 100%);
       color: var(--text);
       line-height: 1.6;
       transition: background 0.45s ease, color 0.45s ease;
     }
 
-    a{ color: var(--gold); text-decoration: none; }
-    a:hover{ text-decoration: underline; }
+    a { color: var(--gold); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-    .container{ max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
 
-    /* =========================
-      LOADER
-    ========================== */
-    .loader-overlay{
+    /* Loading Overlay */
+    .loader-overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, var(--bg-grad-1) 0, var(--bg-grad-2) 55%, var(--bg-grad-3) 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
+      background: radial-gradient(circle at top, color-mix(in srgb, var(--accent-soft) 28%, #000 72%) 0, var(--bg) 60%, #020107 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       z-index: 9999;
-      transition: opacity 0.65s ease, transform 0.65s ease;
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    .loader-inner{
-      text-align:center;
+    .loader-inner {
+      text-align: center;
       padding: 1.5rem 2rem;
       border-radius: 20px;
-      border: 1px solid rgba(245,201,122,0.4);
-      background: radial-gradient(circle at top, rgba(126,15,29,0.90), rgba(5,3,8,0.98));
-      box-shadow: 0 0 30px rgba(0,0,0,0.90);
+      border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+      background: radial-gradient(circle at top, color-mix(in srgb, var(--accent-soft) 68%, transparent), rgba(5,3,8,0.98));
+      box-shadow: 0 0 30px rgba(0,0,0,0.9);
     }
-    .loader-symbol{
-      width: 52px;
-      height: 52px;
-      margin: 0 auto 0.8rem;
+    .loader-symbol {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 0.9rem;
       border-radius: 999px;
-      border: 1px solid rgba(245,201,122,0.7);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family: "Georgia","Times New Roman",serif;
-      font-size: 1.1rem;
-      letter-spacing: 0.12em;
+      border: 1px solid color-mix(in srgb, var(--gold) 70%, transparent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-      background: radial-gradient(circle, var(--accent) 0, var(--bg) 65%);
+      background: radial-gradient(circle, var(--accent) 0, var(--bg) 68%);
       color: #fdf3e0;
-      box-shadow: 0 0 22px var(--glow-accent);
+      box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 80%, transparent);
       animation: loaderPulse 1.6s ease-in-out infinite;
     }
-    .loader-text-main{
-      font-family: "Georgia","Times New Roman",serif;
+    .loader-text-main {
+      font-family: "Georgia", "Times New Roman", serif;
       font-size: 1rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: #f8e8c4;
-      margin-bottom: 0.4rem;
+      color: color-mix(in srgb, var(--gold) 70%, #fff 30%);
+      margin-bottom: 0.35rem;
     }
-    .loader-text-sub{
+    .loader-text-sub {
       font-size: 0.8rem;
       color: var(--muted);
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    body.loaded .loader-overlay{
+    body.loaded .loader-overlay {
       opacity: 0;
       transform: translateY(-12px);
-      pointer-events:none;
+      pointer-events: none;
     }
-    @keyframes loaderPulse{
-      0%{ transform: scale(1); box-shadow: 0 0 10px rgba(202,52,0,0.4); }
-      50%{ transform: scale(1.05); box-shadow: 0 0 26px rgba(202,52,0,0.9); }
-      100%{ transform: scale(1); box-shadow: 0 0 10px rgba(202,52,0,0.4); }
+    @keyframes loaderPulse {
+      0% { transform: scale(1); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 40%, transparent); }
+      50% { transform: scale(1.05); box-shadow: 0 0 26px color-mix(in srgb, var(--accent) 85%, transparent); }
+      100% { transform: scale(1); box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 40%, transparent); }
     }
 
-    /* =========================
-      TOP BANNER (uses theme vars)
-    ========================== */
-    .coming-soon-banner{
-      background: linear-gradient(to right, var(--banner-a), var(--banner-b), var(--banner-a));
+    /* Coming Soon Banner */
+    .coming-soon-banner {
+      background: linear-gradient(to right, var(--accent-soft), var(--accent), var(--accent-soft));
       padding: 0.6rem 1rem;
-      text-align:center;
+      text-align: center;
       color: #f5e6dc;
-      font-family: "Georgia","Times New Roman",serif;
+      font-family: "Georgia", "Times New Roman", serif;
       font-size: 0.9rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      box-shadow: 0 0 18px var(--glow-accent);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 70%, transparent);
       position: relative;
-      overflow:hidden;
+      overflow: hidden;
       animation: flameFlicker 2.4s ease-in-out infinite alternate;
     }
-    @keyframes flameFlicker{
-      0%{ opacity: 0.88; text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 14px var(--glow-gold); transform: translateY(0); }
-      40%{ opacity: 1; text-shadow: 0 0 8px rgba(0,0,0,0.9), 0 0 18px rgba(245,201,122,0.9); transform: translateY(-0.5px); }
-      70%{ opacity: 0.93; text-shadow: 0 0 5px rgba(0,0,0,0.7), 0 0 12px rgba(245,201,122,0.5); transform: translateY(0.5px); }
-      100%{ opacity: 1; text-shadow: 0 0 10px rgba(0,0,0,0.95), 0 0 22px rgba(245,201,122,1); transform: translateY(-0.4px); }
+    @keyframes flameFlicker {
+      0% { opacity: 0.9; text-shadow: 0 0 6px rgba(0,0,0,0.8), 0 0 14px color-mix(in srgb, var(--gold) 60%, transparent); transform: translateY(0); }
+      55% { opacity: 1; text-shadow: 0 0 9px rgba(0,0,0,0.9), 0 0 18px color-mix(in srgb, var(--gold) 85%, transparent); transform: translateY(-0.6px); }
+      100% { opacity: 1; text-shadow: 0 0 11px rgba(0,0,0,0.95), 0 0 22px color-mix(in srgb, var(--gold) 95%, transparent); transform: translateY(-0.4px); }
     }
 
-    /* =========================
-      HEADER / NAV
-    ========================== */
-    .hb-header{
+    /* Sticky header */
+    .hb-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: linear-gradient(to right, rgba(5,3,8,0.96), rgba(7,1,1,0.96));
+      background: linear-gradient(to right, rgba(5, 3, 8, 0.96), rgba(7, 1, 1, 0.96));
       border-bottom: 1px solid rgba(245,201,122,0.22);
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 18px rgba(0,0,0,0.9), inset 0 -1px 0 rgba(202,52,0,0.30);
+      box-shadow: 0 0 18px rgba(0,0,0,0.9), inset 0 -1px 0 color-mix(in srgb, var(--accent) 30%, transparent);
       transform: translateY(-18px);
       opacity: 0;
       transition: transform 0.55s cubic-bezier(0.22,0.9,0.35,1.1), opacity 0.55s ease;
     }
-    .hb-header.revealed{ transform: translateY(0); opacity: 1; }
-    .hb-header.scrolled{ box-shadow: 0 0 26px rgba(0,0,0,1), 0 0 30px rgba(202,52,0,0.55); }
-
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content: space-between;
-      gap: 1.25rem;
-      padding: 0.4rem 0;
-      font-size: 0.95rem;
+    .hb-header.revealed { transform: translateY(0); opacity: 1; }
+    .hb-header.scrolled {
+      box-shadow: 0 0 26px rgba(0,0,0,1), 0 0 30px color-mix(in srgb, var(--accent) 55%, transparent);
     }
-    .nav-links-left{ display:flex; gap: 1.4rem; font-size: 0.85rem; }
-    .nav-links-left a{
+
+    .nav { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; padding: 0.4rem 0; font-size: 0.95rem; }
+    .nav-links-left { display: flex; gap: 1.4rem; font-size: 0.85rem; }
+    .nav-links-left a {
       position: relative;
       text-transform: uppercase;
       letter-spacing: 0.14em;
@@ -181,117 +149,109 @@
       padding-bottom: 0.15rem;
       transition: color 0.2s ease;
     }
-    .nav-links-left a::after{
-      content:"";
-      position:absolute;
-      left:0;
-      bottom:-0.2rem;
-      height:2px;
-      width:0;
-      border-radius:999px;
+    .nav-links-left a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -0.2rem;
+      height: 2px; width: 0;
+      border-radius: 999px;
       background: linear-gradient(to right, var(--gold), var(--accent), var(--accent-soft));
-      box-shadow: 0 0 10px var(--glow-accent);
+      box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 80%, transparent);
       opacity: 0;
       transition: width 0.22s ease, opacity 0.22s ease;
     }
-    .nav-links-left a:hover{ color: var(--gold); }
-    .nav-links-left a:hover::after{ width: 100%; opacity: 1; }
+    .nav-links-left a:hover { color: var(--gold); }
+    .nav-links-left a:hover::after { width: 100%; opacity: 1; }
 
-    .nav-center{ display:flex; align-items:center; gap: 0.6rem; text-align:center; }
-    .nav-logo-link{ display:flex; align-items:center; justify-content:center; }
-    .logo-img{
-      height: 90px;
-      width:auto;
-      display:block;
-      filter: drop-shadow(0 0 12px var(--glow-accent));
+    .nav-center { display: flex; align-items: center; gap: 0.6rem; text-align: center; }
+    .nav-logo-link { display: flex; align-items: center; justify-content: center; }
+    .logo-img {
+      height: 90px; width: auto; display: block;
+      filter: drop-shadow(0 0 12px color-mix(in srgb, var(--accent) 80%, transparent));
       transition: height 0.25s ease, transform 0.25s ease, filter 0.25s ease;
     }
-    .hb-header.scrolled .logo-img{ height: 68px; filter: drop-shadow(0 0 8px rgba(202,52,0,0.7)); }
-    .logo-img:hover{ animation: logoFlame 1s ease-in-out infinite alternate; }
-    @keyframes logoFlame{
-      0%{ transform: translateY(0) scale(1); filter: drop-shadow(0 0 10px var(--glow-accent)); }
-      100%{ transform: translateY(-1px) scale(1.03); filter: drop-shadow(0 0 18px rgba(202,52,0,1)); }
+    .hb-header.scrolled .logo-img { height: 68px; filter: drop-shadow(0 0 8px color-mix(in srgb, var(--accent) 70%, transparent)); }
+    .logo-img:hover { animation: logoFlame 1s ease-in-out infinite alternate; }
+    @keyframes logoFlame {
+      0% { transform: translateY(0) scale(1); filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 80%, transparent)); }
+      100% { transform: translateY(-1px) scale(1.03); filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 100%, transparent)); }
     }
-    .nav-brand-text .brand-name{
-      font-family:"Georgia","Times New Roman",serif;
+
+    .nav-brand-text .brand-name {
+      font-family: "Georgia", "Times New Roman", serif;
       font-size: 1.05rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
-    .nav-brand-text .brand-subtitle{
+    .nav-brand-text .brand-subtitle {
       font-size: 0.7rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: var(--muted);
     }
-    .nav-right{ display:flex; align-items:center; }
-    .nav-cta{
+
+    .nav-right { display: flex; align-items: center; }
+    .nav-cta {
       border-radius: 999px;
-      border: 1px solid rgba(245,201,122,0.85);
+      border: 1px solid color-mix(in srgb, var(--gold) 85%, transparent);
       padding: 0.45rem 1.2rem;
       font-size: 0.8rem;
       letter-spacing: 0.16em;
       text-transform: uppercase;
       background:
-        radial-gradient(circle at top left, rgba(202,52,0,0.9), transparent),
-        radial-gradient(circle at bottom right, rgba(126,15,29,0.9), rgba(5,3,8,0.95));
-      color:#fff;
-      box-shadow: 0 0 16px var(--glow-accent), 0 0 4px rgba(245,201,122,0.8);
-      cursor:pointer;
+        radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 90%, transparent), transparent),
+        radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent-soft) 90%, transparent), rgba(5,3,8,0.95));
+      color: #fff;
+      box-shadow: 0 0 16px color-mix(in srgb, var(--accent) 90%, transparent), 0 0 4px color-mix(in srgb, var(--gold) 80%, transparent);
+      cursor: pointer;
       position: relative;
-      overflow:hidden;
+      overflow: hidden;
       white-space: nowrap;
     }
-    .nav-cta::after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background: radial-gradient(circle at 0% 50%, rgba(245,201,122,0.35), transparent 55%);
+    .nav-cta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 50%, color-mix(in srgb, var(--gold) 35%, transparent), transparent 55%);
       transform: translateX(-120%);
       transition: transform 0.35s ease-out;
-      pointer-events:none;
+      pointer-events: none;
     }
-    .nav-cta:hover::after{ transform: translateX(120%); }
-    .nav-cta:hover{
-      box-shadow: 0 0 22px rgba(202,52,0,1), 0 0 10px rgba(245,201,122,0.9);
+    .nav-cta:hover::after { transform: translateX(120%); }
+    .nav-cta:hover {
+      box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 100%, transparent), 0 0 10px color-mix(in srgb, var(--gold) 90%, transparent);
     }
 
-    main{ padding-bottom: 4rem; }
+    main { padding-bottom: 4rem; }
 
-    /* =========================
-      HERO
-    ========================== */
-    .hero{ padding: 3.5rem 0 3rem; }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
+    /* Hero */
+    .hero { padding: 3.2rem 0 2.8rem; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
       gap: 2.5rem;
-      align-items:center;
+      align-items: center;
     }
-    .hero-eyebrow{
+    .hero-eyebrow {
       text-transform: uppercase;
       letter-spacing: 0.3em;
       font-size: 0.7rem;
       color: var(--gold);
-      opacity: 0.9;
+      opacity: 0.92;
       margin-bottom: 0.75rem;
     }
-    .hero-title{
-      font-family:"Georgia","Times New Roman",serif;
-      font-size: clamp(2.2rem, 4vw, 3rem);
+    .hero-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: clamp(2.1rem, 4vw, 3rem);
       line-height: 1.1;
       margin-bottom: 1rem;
       text-shadow: 0 0 18px rgba(0,0,0,0.8);
     }
-    .hero-title span{ color: var(--accent); }
-    .hero-subtitle{
-      color: var(--muted);
-      font-size: 0.95rem;
-      max-width: 34rem;
-      margin-bottom: 1.1rem;
-    }
-    .hero-tags{ display:flex; flex-wrap:wrap; gap: 0.4rem; margin-bottom: 1.6rem; }
-    .tag{
+    .hero-title span { color: var(--accent); }
+    .hero-subtitle { color: var(--muted); font-size: 0.95rem; max-width: 34rem; margin-bottom: 1.4rem; }
+
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.6rem; }
+    .tag {
       border-radius: 999px;
       border: 1px solid rgba(245,201,122,0.3);
       padding: 0.2rem 0.6rem;
@@ -299,256 +259,158 @@
       text-transform: uppercase;
       letter-spacing: 0.12em;
       color: var(--gold);
-      background: rgba(5,3,8,0.30);
+      background: rgba(5,3,8,0.35);
     }
-    .hero-actions{ display:flex; flex-wrap:wrap; gap: 0.75rem; align-items:center; }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
       border-radius: 999px;
       border: 1px solid transparent;
       padding: 0.55rem 1.3rem;
       font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      cursor:pointer;
-      text-decoration:none;
+      cursor: pointer;
+      text-decoration: none;
     }
-    .btn-primary{
+    .btn-primary {
       background: linear-gradient(135deg, var(--accent), var(--accent-soft));
-      color:#fff;
-      box-shadow: 0 0 18px rgba(202,52,0,0.7);
+      color: #fff;
+      box-shadow: 0 0 18px color-mix(in srgb, var(--accent) 70%, transparent);
     }
-    .btn-primary:hover{ filter: brightness(1.05); }
-    .hero-note{ font-size: 0.8rem; color: var(--muted); }
+    .btn-primary:hover { filter: brightness(1.05); }
+    .btn-ghost {
+      border-color: rgba(245,201,122,0.5);
+      color: var(--gold);
+      background: rgba(5,3,8,0.6);
+    }
+    .btn-ghost:hover { background: rgba(245,201,122,0.08); }
+    .hero-note { font-size: 0.8rem; color: var(--muted); }
 
-    .hero-art{
+    .hero-art {
       border-radius: 24px;
       border: 1px solid rgba(245,201,122,0.3);
       padding: 1px;
-      background: radial-gradient(circle at top, rgba(202,52,0,0.8), var(--bg));
-      box-shadow: 0 0 32px rgba(202,52,0,0.45), 0 0 80px rgba(0,0,0,0.9);
+      background: radial-gradient(circle at top, color-mix(in srgb, var(--accent) 75%, transparent), var(--bg));
+      box-shadow: 0 0 32px color-mix(in srgb, var(--accent) 45%, transparent), 0 0 80px rgba(0,0,0,0.9);
     }
-    .hero-art-inner{
+    .hero-art-inner {
       border-radius: 22px;
-      background: radial-gradient(circle at bottom, var(--bg) 0, rgba(20,3,8,1) 40%, var(--bg) 100%);
+      background: radial-gradient(circle at bottom, var(--bg) 0, color-mix(in srgb, var(--accent-soft) 18%, var(--bg) 82%) 45%, var(--bg) 100%);
       padding: 1.3rem;
-      display:flex;
-      flex-direction:column;
+      display: flex;
+      flex-direction: column;
       gap: 1rem;
     }
-    .hero-art-title{
-      font-family:"Georgia","Times New Roman",serif;
-      font-size: 1.1rem;
+    .hero-art-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 1.05rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
     }
-    .hero-art-grid{
-      display:grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 0.75rem;
-      font-size: 0.8rem;
-    }
-    .hero-card{
+    .hero-art-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.75rem; font-size: 0.8rem; }
+    .hero-card {
       border-radius: 16px;
       border: 1px solid rgba(245,201,122,0.25);
       padding: 0.6rem 0.7rem;
-      background: radial-gradient(circle at top left, rgba(126,15,29,0.55), rgba(5,3,8,0.9));
+      background: radial-gradient(circle at top left, color-mix(in srgb, var(--accent-soft) 55%, transparent), rgba(5,3,8,0.9));
     }
-    .hero-card h4{
-      font-size: 0.8rem;
+    .hero-card h4 {
+      font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
       color: var(--gold);
       margin-bottom: 0.2rem;
     }
-    .hero-card p{ font-size: 0.78rem; color: var(--muted); }
+    .hero-card p { font-size: 0.78rem; color: var(--muted); }
 
-    section{ padding: 2.5rem 0; border-top: 1px solid rgba(245,201,122,0.12); }
-    .section-header{ margin-bottom: 1.5rem; text-align:left; }
-    .section-eyebrow{
-      text-transform: uppercase;
-      letter-spacing: 0.28em;
-      font-size: 0.7rem;
-      color: var(--gold);
-      margin-bottom: 0.2rem;
-    }
-    .section-title{
-      font-family:"Georgia","Times New Roman",serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.3rem;
-    }
-    .section-subtitle{ font-size: 0.88rem; color: var(--muted); max-width: 44rem; }
+    section { padding: 2.5rem 0; border-top: 1px solid rgba(245,201,122,0.12); }
+    .section-header { margin-bottom: 1.5rem; text-align: left; }
+    .section-eyebrow { text-transform: uppercase; letter-spacing: 0.28em; font-size: 0.7rem; color: var(--gold); margin-bottom: 0.2rem; }
 
-    /* Seasonal callout shout-out (kept) */
-    .season-callout{
+    .section-title-row { display: flex; align-items: center; gap: 0.6rem; }
+    .section-title { font-family: "Georgia", "Times New Roman", serif; font-size: 1.4rem; margin-bottom: 0.3rem; }
+    .section-subtitle { font-size: 0.88rem; color: var(--muted); max-width: 40rem; }
+
+    /* Seasonal callout */
+    .season-callout {
       border: 1px solid rgba(245,201,122,0.35);
       border-radius: 14px;
       padding: 0.9rem 1.2rem;
       margin: 1rem 0 1.5rem;
-      background: radial-gradient(circle at top left, rgba(202,52,0,0.18), rgba(5,3,8,0.9));
+      background: radial-gradient(circle at top left, color-mix(in srgb, var(--accent) 16%, transparent), rgba(5,3,8,0.9));
       backdrop-filter: blur(4px);
       box-shadow: 0 0 18px rgba(0,0,0,0.6);
       animation: calloutFade 0.7s ease-out both;
     }
-    .season-title{
+    .season-title {
       color: var(--gold);
       text-transform: uppercase;
       font-size: 0.88rem;
       letter-spacing: 0.16em;
     }
-    .season-message{ font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
-    @keyframes calloutFade{ from{opacity:0; transform: translateY(8px);} to{opacity:1; transform: translateY(0);} }
+    .season-message { font-size: 0.82rem; color: var(--muted); margin-top: 0.25rem; }
+    @keyframes calloutFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* =========================
-      MENU (SOURDOUGH ONLY)
-    ========================== */
-    .menu-wrap{
-      display:grid;
-      grid-template-columns: minmax(0,1.2fr) minmax(0,1fr);
-      gap: 2rem;
-      align-items:start;
-    }
-    .menu-board{
-      border-radius: 20px;
-      border: 1px solid rgba(245,201,122,0.25);
-      padding: 1.2rem 1.25rem;
-      background: radial-gradient(circle at top left, rgba(126,15,29,0.45), rgba(5,3,8,0.96));
-      box-shadow: 0 0 22px rgba(0,0,0,0.85);
-    }
-    .menu-headline{
-      font-family:"Georgia","Times New Roman",serif;
-      font-size: 1.2rem;
-      letter-spacing: 0.08em;
-      margin-bottom: 0.3rem;
-    }
-    .menu-subline{
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .menu-section-title{
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 0.75rem;
-      color: var(--gold);
-      margin: 1.05rem 0 0.4rem;
-      display:flex;
-      align-items:center;
-      gap: 0.45rem;
-    }
-    .menu-item{
-      padding: 0.65rem 0;
-      border-bottom: 1px dashed rgba(245,201,122,0.25);
-    }
-    .menu-item:last-child{ border-bottom: none; }
-    .menu-item-top{
-      display:flex;
-      justify-content: space-between;
-      gap: 0.75rem;
-      align-items: baseline;
-    }
-    .menu-item-name{
-      font-size: 0.95rem;
-      color: var(--text);
-      font-weight: 700;
-    }
-    .menu-item-price{
-      color: var(--gold);
-      font-size: 0.9rem;
-      white-space: nowrap;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-    }
-    .menu-item-desc{
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-top: 0.18rem;
-    }
-    .menu-badges{
-      margin-top: 0.35rem;
-      display:flex;
-      flex-wrap:wrap;
-      gap: 0.35rem;
-      font-size: 0.7rem;
-    }
-    .badge{
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.12);
-      padding: 0.06rem 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--muted);
-      background: rgba(5,3,8,0.25);
-    }
-    .badge-hot{ border-color: rgba(202,52,0,0.55); color: #f5e6dc; }
-    .badge-vegan{ border-color: rgba(245,201,122,0.45); color: var(--gold); }
-
-    /* Secret menu: The Black Gate */
-    .secret-star{
+    /* Secret star */
+    .secret-star {
       width: 18px; height: 18px;
       border-radius: 999px;
       border: 1px solid rgba(245,201,122,0.55);
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
+      display: inline-flex; align-items: center; justify-content: center;
       font-size: 0.7rem;
       color: #f5e6dc;
-      cursor:pointer;
+      cursor: pointer;
       opacity: 0.45;
       box-shadow: 0 0 6px rgba(245,201,122,0.4);
       transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
       background: radial-gradient(circle at top, rgba(245,201,122,0.2), transparent 60%);
     }
-    .secret-star:hover{ opacity: 0.9; transform: scale(1.05); box-shadow: 0 0 10px rgba(245,201,122,0.8); }
-    .secret-star.active{ opacity: 1; box-shadow: 0 0 12px rgba(245,201,122,1), 0 0 20px rgba(202,52,0,0.9); }
+    .secret-star span { transform: translateY(-0.5px); }
+    .secret-star:hover { opacity: 0.9; transform: scale(1.05); box-shadow: 0 0 10px rgba(245,201,122,0.8); }
+    .secret-star.active { opacity: 1; box-shadow: 0 0 12px rgba(245,201,122,1), 0 0 20px rgba(202,52,0,0.9); }
 
-    .secret-menu{
-      margin-top: 1rem;
+    /* Secret menu panel */
+    .secret-menu {
+      margin-top: 1.4rem;
       border-radius: 18px;
       border: 1px dashed rgba(245,201,122,0.4);
       background: radial-gradient(circle at top left, rgba(15,3,10,0.97), rgba(5,3,8,0.98));
       padding: 1.1rem 1.2rem;
       font-size: 0.85rem;
-      display:none;
+      display: none;
       position: relative;
-      overflow:hidden;
+      overflow: hidden;
       opacity: 0;
       transform: translateY(8px);
     }
-    .secret-menu::before{
-      content:"";
-      position:absolute;
-      inset:0;
+    .secret-menu::before {
+      content: "";
+      position: absolute;
+      inset: 0;
       background:
         radial-gradient(circle at 10% 0%, rgba(245,201,122,0.18), transparent 55%),
         radial-gradient(circle at 90% 100%, rgba(202,52,0,0.25), transparent 60%);
       opacity: 0.7;
-      pointer-events:none;
+      pointer-events: none;
     }
-    .secret-menu-inner{ position: relative; z-index: 1; }
-    .secret-menu.visible{ display:block; animation: fadeInUp 0.38s ease forwards; }
-    @keyframes fadeInUp{ 0%{opacity:0; transform: translateY(8px);} 100%{opacity:1; transform: translateY(0);} }
-    .secret-menu-label{
+    .secret-menu-inner { position: relative; z-index: 1; }
+    .secret-menu.visible { display: block; animation: fadeInUp 0.38s ease forwards; }
+    .secret-menu-label {
       text-transform: uppercase;
       letter-spacing: 0.22em;
       font-size: 0.72rem;
       color: var(--gold);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.3rem;
     }
-    .secret-menu-title{
-      font-family:"Georgia","Times New Roman",serif;
-      font-size: 1.05rem;
-      margin-bottom: 0.35rem;
-    }
-    .secret-menu-desc{ color: var(--muted); margin-bottom: 0.55rem; }
-    .secret-menu-meta{ font-size: 0.8rem; color: var(--muted); }
-    .secret-price{ color: var(--gold); font-weight: 800; }
-    .secret-badge{
-      display:inline-block;
-      margin-left:0.45rem;
-      padding: 0.08rem 0.55rem;
+    .secret-menu-title { font-family: "Georgia", "Times New Roman", serif; font-size: 1rem; margin-bottom: 0.25rem; }
+    .secret-menu-desc { color: var(--muted); margin-bottom: 0.5rem; }
+    .secret-menu-meta { font-size: 0.78rem; color: var(--muted); }
+    .secret-price { color: var(--gold); font-weight: 600; }
+    .secret-badge {
+      display: inline-block;
+      margin-left: 0.4rem;
+      padding: 0.05rem 0.45rem;
       border-radius: 999px;
       border: 1px solid rgba(202,52,0,0.7);
       font-size: 0.68rem;
@@ -556,172 +418,208 @@
       letter-spacing: 0.12em;
       color: #f5e6dc;
     }
+    @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(8px); } 100% { opacity: 1; transform: translateY(0); } }
 
-    /* =========================
-      ABOUT / LORE
-    ========================== */
-    .about-grid{
-      display:grid;
-      grid-template-columns: minmax(0,1fr) minmax(0,1.1fr);
-      gap: 2rem;
-      align-items:flex-start;
+    /* Menu */
+    .menu-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 2rem; }
+    .menu-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+    .menu-group-title {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.75rem;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
     }
-    .about-crest{
+    .menu-item { padding: 0.55rem 0; border-bottom: 1px dashed rgba(245,201,122,0.25); }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item-name { font-size: 0.92rem; display: flex; justify-content: space-between; gap: 0.4rem; }
+    .menu-item-name span { color: var(--gold); font-size: 0.85rem; opacity: 0.95; }
+    .menu-item-desc { font-size: 0.82rem; color: var(--muted); margin-top: 0.1rem; }
+    .menu-badges { margin-top: 0.25rem; display: flex; flex-wrap: wrap; gap: 0.25rem; font-size: 0.7rem; }
+    .badge {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.05rem 0.45rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .menu-art {
+      border-radius: 20px;
+      border: 1px solid rgba(245,201,122,0.25);
+      padding: 1rem;
+      background: radial-gradient(circle at top, color-mix(in srgb, var(--accent) 60%, transparent), var(--bg));
+      font-size: 0.82rem;
+    }
+    .menu-art h4 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .menu-art p { color: var(--muted); }
+    .menu-spell { font-family: "Georgia", "Times New Roman", serif; font-style: italic; margin-top: 0.5rem; color: #f8e8c4; }
+
+    /* About/Lore */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    .about-crest {
       border-radius: 18px;
       border: 1px solid rgba(245,201,122,0.25);
       padding: 1.2rem 1.3rem;
       background: radial-gradient(circle at top, rgba(10,6,18,0.95), rgba(5,3,8,0.98));
-      text-align:center;
+      text-align: center;
       box-shadow: 0 0 22px rgba(0,0,0,0.9);
     }
-    .about-crest-logo{
-      max-width: 240px;
-      width:100%;
-      height:auto;
-      display:block;
+    .about-crest-logo {
+      max-width: 260px;
+      width: 100%;
+      height: auto;
+      display: block;
       margin: 0 auto 0.8rem;
-      filter: drop-shadow(0 0 16px var(--glow-accent));
+      filter: drop-shadow(0 0 18px color-mix(in srgb, var(--accent) 85%, transparent));
     }
-    .about-crest-title{
+    .about-crest-title {
       text-transform: uppercase;
       letter-spacing: 0.2em;
       font-size: 0.75rem;
       color: var(--gold);
       margin-bottom: 0.6rem;
     }
-    .about-crest-text{
-      font-size: 0.8rem;
+    .about-crest-text {
+      font-size: 0.82rem;
       color: var(--muted);
       line-height: 1.7;
-      font-family:"Georgia","Times New Roman",serif;
+      font-family: "Georgia", "Times New Roman", serif;
     }
-
-    .about-content{ display:flex; flex-direction:column; gap: 1.2rem; }
-    .about-box{
+    .about-content { display: flex; flex-direction: column; gap: 1.2rem; }
+    .about-box {
       border-radius: 18px;
       border: 1px solid rgba(245,201,122,0.25);
       padding: 1.1rem 1.2rem;
-      background: radial-gradient(circle at top left, rgba(126,15,29,0.55), rgba(5,3,8,0.95));
+      background: radial-gradient(circle at top left, color-mix(in srgb, var(--accent-soft) 60%, transparent), rgba(5,3,8,0.95));
       font-size: 0.9rem;
       color: var(--muted);
     }
-    .about-box strong{ color: var(--gold); }
-    .about-label{
+    .about-box strong { color: var(--gold); }
+    .about-label {
       text-transform: uppercase;
       letter-spacing: 0.22em;
       font-size: 0.75rem;
       color: var(--gold);
       margin-bottom: 0.4rem;
-      display:block;
+      display: block;
     }
-    .about-quote{
-      font-family:"Georgia","Times New Roman",serif;
-      font-style: italic;
-      margin-top: 0.7rem;
-      color: #f8e8c4;
+    .about-quote { font-family: "Georgia", "Times New Roman", serif; font-style: italic; margin-top: 0.7rem; color: #f8e8c4; }
+    .about-highlight {
+      border-radius: 16px;
+      border: 1px dashed rgba(245,201,122,0.4);
+      padding: 0.9rem 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: radial-gradient(circle at bottom right, color-mix(in srgb, var(--accent-soft) 40%, transparent), rgba(5,3,8,0.96));
     }
 
-    /* =========================
-      CONTACT / BOOKING
-    ========================== */
-    .contact{ background: radial-gradient(circle at top, #15020b, var(--bg)); }
-    .summon-grid{
-      display:grid;
-      grid-template-columns: minmax(0,1.15fr) minmax(0,1fr);
-      gap: 2rem;
-    }
-    .summon-calendar{
+    /* Contact */
+    .contact { background: radial-gradient(circle at top, rgba(21,2,11,1), var(--bg)); }
+    .summon-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 2rem; }
+
+    .summon-calendar {
       border-radius: 20px;
       border: 1px solid rgba(245,201,122,0.25);
       padding: 1.3rem 1.4rem;
-      background: radial-gradient(circle at top, rgba(202,52,0,0.65), var(--bg));
+      background: radial-gradient(circle at top, color-mix(in srgb, var(--accent) 65%, transparent), var(--bg));
       box-shadow: 0 0 24px rgba(0,0,0,0.9);
       font-size: 0.85rem;
       color: var(--muted);
     }
-    .summon-calendar h4{
+    .summon-calendar h4 {
       font-size: 0.9rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
       color: var(--gold);
       margin-bottom: 0.4rem;
     }
-    .calendar-wrap{
+    .calendar-wrap {
       margin-top: 0.6rem;
       border-radius: 14px;
-      overflow:hidden;
-      background: var(--bg);
+      overflow: hidden;
+      background: #050308;
       border: 1px solid rgba(245,201,122,0.3);
       height: 460px;
     }
-    .calendar-wrap iframe{ width:100%; height:100%; border:0; }
+    .calendar-wrap iframe { width: 100%; height: 100%; border: 0; }
 
-    .contact-card{
+    .contact-card {
       border-radius: 20px;
       border: 1px solid rgba(245,201,122,0.25);
       padding: 1.3rem 1.4rem;
-      background: radial-gradient(circle at top left, rgba(126,15,29,0.65), rgba(5,3,8,0.96));
+      background: radial-gradient(circle at top left, color-mix(in srgb, var(--accent-soft) 70%, transparent), rgba(5,3,8,0.96));
       box-shadow: 0 0 24px rgba(0,0,0,0.9);
       font-size: 0.85rem;
       color: var(--muted);
     }
-    .contact-card-title{
+    .contact-card-title {
       font-size: 0.95rem;
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--gold);
       margin-bottom: 0.4rem;
     }
-    .contact-card p{ margin-bottom: 0.6rem; }
-    .contact-card-list{ list-style:none; padding-left:0; margin: 0.3rem 0 0.6rem; }
-    .contact-card-list li{ margin-bottom: 0.25rem; }
-    .contact-card-list li::before{ content:"✶"; color: var(--accent); margin-right: 0.35rem; }
-    .contact-note{ font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+    .contact-card-list { list-style: none; padding-left: 0; margin: 0.3rem 0 0.6rem; }
+    .contact-card-list li { margin-bottom: 0.25rem; }
+    .contact-card-list li::before { content: "✶"; color: var(--accent); margin-right: 0.35rem; }
 
-    /* =========================
-      FOOTER + DEBUG
-    ========================== */
-    footer{
+    footer {
       border-top: 1px solid rgba(245,201,122,0.18);
       padding: 1rem 0 1.6rem;
       font-size: 0.75rem;
       color: var(--muted);
     }
-    .footer-row{
-      display:flex;
-      flex-wrap:wrap;
-      gap: 0.75rem;
-      align-items:center;
-      justify-content: space-between;
-    }
-    .footer-links{ display:flex; flex-wrap:wrap; gap: 0.8rem; }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; justify-content: space-between; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
-    .debug-line{
-      margin-top: 0.85rem;
-      font-size: 0.68rem;
-      letter-spacing: 0.16em;
+    /* Tiny debug line */
+    .debug-line {
+      margin-top: 0.65rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      opacity: var(--debug-opacity);
-      color: var(--muted);
-      border-top: 1px dashed rgba(245,201,122,0.18);
-      padding-top: 0.7rem;
+      color: color-mix(in srgb, var(--muted) 85%, #fff 15%);
+      opacity: 0.85;
     }
-    .debug-line strong{ color: var(--gold); font-weight: 700; }
+    .debug-pill {
+      display: inline-block;
+      margin-left: 0.4rem;
+      padding: 0.1rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(245,201,122,0.35);
+      background: rgba(5,3,8,0.45);
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      font-size: 0.68rem;
+    }
 
-    @media (max-width: 840px){
-      .hero-grid, .menu-wrap, .about-grid, .summon-grid{ grid-template-columns: minmax(0,1fr); }
-      .nav-links-left{ display:none; }
-      .nav{ justify-content: space-between; }
-      .logo-img{ height: 80px; }
-      .hb-header.scrolled .logo-img{ height: 62px; }
-      .calendar-wrap{ height: 380px; }
+    @media (max-width: 840px) {
+      .hero-grid, .menu-grid, .about-grid, .summon-grid { grid-template-columns: minmax(0, 1fr); }
+      .nav-links-left { display: none; }
+      .nav { justify-content: space-between; }
+      .logo-img { height: 80px; }
+      .hb-header.scrolled .logo-img { height: 62px; }
+      .calendar-wrap { height: 380px; }
     }
   </style>
 </head>
 
 <body>
-  <!-- Loader -->
-  <div class="loader-overlay" id="loaderOverlay">
+  <!-- Loading overlay -->
+  <div class="loader-overlay" id="loader">
     <div class="loader-inner">
       <div class="loader-symbol">CB</div>
       <div class="loader-text-main">Summoning the Underworld Kitchen…</div>
@@ -730,8 +628,8 @@
   </div>
 
   <!-- Banner -->
-  <div class="coming-soon-banner" id="topBanner">
-    🔥 Cerberus Bites • COMING SOON • Sourdough from the Underworld 🔥
+  <div class="coming-soon-banner">
+    🐺🔥 Cerberus Bites • Sourdough from the Underworld • Feast in the Underworld 🐺🔥
   </div>
 
   <!-- Header -->
@@ -745,7 +643,7 @@
 
         <div class="nav-center">
           <a href="#top" class="nav-logo-link">
-            <img src="CerberusLogo2.png" alt="Cerberus Bites Logo" class="logo-img" />
+            <img src="CerberusLogo2.png" alt="Cerberus Bites Logo" class="logo-img">
           </a>
           <div class="nav-brand-text">
             <div class="brand-name">Cerberus Bites</div>
@@ -754,7 +652,7 @@
         </div>
 
         <div class="nav-right">
-          <a href="#contact" class="nav-cta">Book the Hound</a>
+          <a href="#contact" class="nav-cta">Summon the Hound</a>
         </div>
       </div>
     </div>
@@ -766,47 +664,58 @@
       <div class="container">
         <div class="hero-grid">
           <div>
-            <div class="hero-eyebrow">Underworld melts • house-fermented sourdough • guarded by Cerberus</div>
+            <div class="hero-eyebrow">house-fermented sourdough • butter-crisped • guarded by the hound</div>
+
             <h1 class="hero-title">
-              <span>🐺🔥 CERBERUS BITES</span><br />
+              <span>🐺🔥 Cerberus Bites</span><br>
               Sourdough from the Underworld.
             </h1>
+
             <p class="hero-subtitle">
-              All melts are served on house-fermented sourdough — butter-crisped, cheese-pulled, and approved by the three-headed guardian at the gate.
+              All melts served on house-fermented sourdough — crisped in butter, pulled hot, and watched closely.
+              If the hound doesn’t approve it, it doesn’t leave the kitchen.
             </p>
 
             <div class="hero-tags">
-              <div class="tag">House Sourdough</div>
-              <div class="tag">Melts</div>
-              <div class="tag">Charred Tomato Soup</div>
-              <div class="tag">Limited Off-Menu</div>
+              <div class="tag">All melts on sourdough</div>
+              <div class="tag">Fast + profitable</div>
+              <div class="tag">Vegan option</div>
+              <div class="tag">Secret menu sigil</div>
+              <div class="tag">Seasonal shout-outs</div>
             </div>
 
             <div class="hero-actions">
               <a href="#menu" class="btn btn-primary">View the Menu</a>
-              <div class="hero-note">Limited runs. Sold out = hype.</div>
+              <a href="#contact" class="btn btn-ghost">Book the Hound</a>
+              <div class="hero-note">Ask about allergies at the window — we’ll guide your path.</div>
+            </div>
+
+            <!-- tiny debug line -->
+            <div class="debug-line" id="debugLine">
+              Theme: <span class="debug-pill" id="debugTheme">Loading…</span>
+              Window: <span class="debug-pill" id="debugWindow">Loading…</span>
             </div>
           </div>
 
           <div class="hero-art">
             <div class="hero-art-inner">
-              <div class="hero-art-title">Tonight at the Gate</div>
+              <div class="hero-art-title">Tonight in the Underworld</div>
               <div class="hero-art-grid">
                 <div class="hero-card">
                   <h4>Signature Melt</h4>
-                  <p>Cerberus Melt — triple cheese on butter-crisped sourdough.</p>
+                  <p>Cerberus Melt — triple cheese, butter-crisped sourdough.</p>
                 </div>
                 <div class="hero-card">
                   <h4>Gatekeeper</h4>
-                  <p>Turkey + sharp cheddar + black garlic aioli.</p>
+                  <p>Smoked turkey, sharp cheddar, black garlic aioli.</p>
                 </div>
                 <div class="hero-card">
                   <h4>Hellfire</h4>
-                  <p>Blackened chicken + pepper jack + ember mayo.</p>
+                  <p>Blackened chicken, pepper jack, ember mayo.</p>
                 </div>
                 <div class="hero-card">
-                  <h4>Dip Ritual</h4>
-                  <p>Charred Tomato Soup — rich, smoky, perfect for dipping.</p>
+                  <h4>Hidden Sigil</h4>
+                  <p>Find the ✶ — ask for what the gate keeps.</p>
                 </div>
               </div>
             </div>
@@ -820,215 +729,205 @@
     <section id="menu">
       <div class="container">
         <div class="section-header">
-          <div class="section-eyebrow">The Underworld Board</div>
-          <h2 class="section-title">Menu</h2>
-          <p class="section-subtitle">All melts served on house-fermented sourdough. 🐺🔥</p>
+          <div class="section-eyebrow">The Wicked Feast</div>
+          <div class="section-title-row">
+            <h2 class="section-title">🐺🔥 CERBERUS BITES Menu</h2>
+            <button class="secret-star" id="secretStar" aria-label="Hidden sigil"><span>✶</span></button>
+          </div>
+          <p class="section-subtitle">
+            Sourdough from the Underworld. All melts served on house-fermented sourdough.
+          </p>
 
-          <!-- Seasonal shout-out -->
           <div id="seasonCallout" class="season-callout">
-            <strong class="season-title">Seasonal Specials</strong>
-            <p class="season-message">Loading seasonal offerings…</p>
+            <strong class="season-title">Seasonal Shout-Out</strong>
+            <p class="season-message">Loading the season’s omen…</p>
           </div>
         </div>
 
-        <div class="menu-wrap">
-          <!-- Menu Board -->
-          <div class="menu-board">
-            <div class="menu-headline">🐺🔥 CERBERUS BITES</div>
-            <div class="menu-subline">Sourdough from the Underworld • All melts on house-fermented sourdough</div>
+        <div class="menu-grid">
+          <div>
+            <div class="menu-columns">
 
-            <div class="menu-section-title">🥪 Melts</div>
+              <!-- LEFT COLUMN -->
+              <div>
+                <div class="menu-group-title">🥪 Melts</div>
 
-            <div class="menu-item">
-              <div class="menu-item-top">
-                <div class="menu-item-name">Cerberus Melt</div>
-                <div class="menu-item-price">$9</div>
+                <div class="menu-item">
+                  <div class="menu-item-name">Cerberus Melt <span>$9</span></div>
+                  <div class="menu-item-desc">Triple cheese on butter-crisped sourdough.</div>
+                  <div class="menu-badges">
+                    <div class="badge">Signature</div>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">Gatekeeper Turkey Melt <span>$11</span></div>
+                  <div class="menu-item-desc">Smoked turkey, sharp cheddar, black garlic aioli.</div>
+                  <div class="menu-badges">
+                    <div class="badge">Crowd favorite</div>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">Hellfire Chicken Melt <span>$11</span></div>
+                  <div class="menu-item-desc">Blackened chicken, pepper jack, ember mayo.</div>
+                  <div class="menu-badges">
+                    <div class="badge">Spicy</div>
+                  </div>
+                </div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">Persephone’s Garden (Vegan) 🌿 <span>$10</span></div>
+                  <div class="menu-item-desc">Roasted mushrooms, caramelized onion, herb oil.</div>
+                  <div class="menu-badges">
+                    <div class="badge">Vegan</div>
+                  </div>
+                </div>
               </div>
-              <div class="menu-item-desc">Triple cheese on butter-crisped sourdough.</div>
+
+              <!-- RIGHT COLUMN -->
+              <div>
+                <div class="menu-group-title">🥣 Sides</div>
+
+                <div class="menu-item">
+                  <div class="menu-item-name">Charred Tomato Soup (Cup) <span>$4</span></div>
+                  <div class="menu-item-desc">Rich, smoky, perfect for dipping.</div>
+                  <div class="menu-badges">
+                    <div class="badge">Add to any melt +$3</div>
+                  </div>
+                </div>
+
+                <div class="menu-group-title" style="margin-top:1rem;">Notes</div>
+                <div class="menu-item">
+                  <div class="menu-item-name">All melts served on sourdough <span>—</span></div>
+                  <div class="menu-item-desc">
+                    House-fermented. Butter-crisped. Built for fast service + high return.
+                  </div>
+                </div>
+              </div>
+
             </div>
-
-            <div class="menu-item">
-              <div class="menu-item-top">
-                <div class="menu-item-name">Gatekeeper Turkey Melt</div>
-                <div class="menu-item-price">$11</div>
-              </div>
-              <div class="menu-item-desc">Smoked turkey, sharp cheddar, black garlic aioli.</div>
-            </div>
-
-            <div class="menu-item">
-              <div class="menu-item-top">
-                <div class="menu-item-name">Hellfire Chicken Melt</div>
-                <div class="menu-item-price">$11</div>
-              </div>
-              <div class="menu-item-desc">Blackened chicken, pepper jack, ember mayo.</div>
-              <div class="menu-badges">
-                <div class="badge badge-hot">🔥 Spicy</div>
-              </div>
-            </div>
-
-            <div class="menu-item">
-              <div class="menu-item-top">
-                <div class="menu-item-name">Persephone’s Garden (Vegan) 🌿</div>
-                <div class="menu-item-price">$10</div>
-              </div>
-              <div class="menu-item-desc">Roasted mushrooms, caramelized onion, herb oil.</div>
-              <div class="menu-badges">
-                <div class="badge badge-vegan">🌿 Vegan</div>
-              </div>
-            </div>
-
-            <div class="menu-section-title">🥣 Sides</div>
-
-            <div class="menu-item">
-              <div class="menu-item-top">
-                <div class="menu-item-name">Charred Tomato Soup (Cup)</div>
-                <div class="menu-item-price">$4</div>
-              </div>
-              <div class="menu-item-desc">Rich, smoky, perfect for dipping.</div>
-              <div class="menu-badges">
-                <div class="badge">Add to any melt: +$3</div>
-              </div>
-            </div>
-
-            <div class="menu-section-title" style="margin-top:1.15rem;">
-              🔥 Off-Menu
-              <button class="secret-star" id="secretStar" aria-label="Hidden sigil" title="Ask if available">
-                <span>✶</span>
-              </button>
-            </div>
-
-            <!-- Secret item -->
-            <div id="secretMenu" class="secret-menu" aria-hidden="true">
-              <div class="secret-menu-inner">
-                <div class="secret-menu-label">Ask if Available</div>
-                <div class="secret-menu-title">The Black Gate</div>
-                <p class="secret-menu-desc">
-                  Extra-butter sourdough, triple cheese, black garlic aioli — <em>charred dark</em>.
-                </p>
-                <p class="secret-menu-meta">
-                  <span class="secret-price">$12</span>
-                  <span class="secret-badge">Limited</span>
-                </p>
-                <p class="secret-menu-desc" style="margin-top:0.5rem;">
-                  <strong>Limited.</strong> When it’s gone, it’s gone.
-                </p>
-              </div>
-            </div>
-
           </div>
 
-          <!-- Side panel -->
-          <aside class="menu-board" style="background: radial-gradient(circle at top, rgba(202,52,0,0.45), rgba(5,3,8,0.96));">
-            <div class="menu-section-title" style="margin-top:0;">🜂 Gate Rules</div>
-            <p class="menu-item-desc" style="font-size:0.85rem;">
-              House-fermented sourdough. Butter-crisped edges. Cheese pull required.
-              If Cerberus doesn’t approve it, it doesn’t leave the kitchen.
+          <!-- Spellbook-style panel -->
+          <aside class="menu-art">
+            <h4>The Spellbook of Sourdough</h4>
+            <p>
+              House-fermented loaves. Butter-crisped edges. Cheese pulls that don’t lie.
+              The hound keeps the gate — and the standard.
             </p>
-            <div class="menu-section-title">🕯️ Limited Runs</div>
-            <p class="menu-item-desc" style="font-size:0.85rem;">
-              We bake in batches. Sold out = hype. Ask what’s next at the window.
+            <p class="menu-spell">
+              “Three heads. One rule: the bread must crackle.”
             </p>
-            <div class="menu-section-title">🥣 Best Pairing</div>
-            <p class="menu-item-desc" style="font-size:0.85rem;">
-              Charred Tomato Soup turns every melt into a dipping ritual.
+            <p style="margin-top:0.7rem;">
+              Look for the sigils:<br>
+              ✶ Vegan paths available<br>
+              ✶ Add soup to any melt +$3<br>
+              ✶ The hidden sigil reveals what the gate keeps
             </p>
           </aside>
+        </div>
+
+        <!-- SECRET MENU (The Black Gate) -->
+        <div id="secretMenu" class="secret-menu" aria-hidden="true">
+          <div class="secret-menu-inner">
+            <div class="secret-menu-label">🔥 Off-Menu — Ask if Available</div>
+            <div class="secret-menu-title">The Black Gate</div>
+            <p class="secret-menu-desc">
+              Extra-butter sourdough, triple cheese, black garlic aioli, charred dark.
+              <br><em>Limited. When it’s gone, it’s gone.</em>
+            </p>
+            <p class="secret-menu-meta">
+              <span class="secret-price">$12</span>
+              <span class="secret-badge">Limited • Off-menu</span>
+            </p>
+          </div>
         </div>
 
       </div>
     </section>
 
-    <!-- Lore -->
+    <!-- About / Lore -->
     <section id="about">
       <div class="container">
         <div class="section-header">
           <div class="section-eyebrow">Lore of the Underworld Kitchen</div>
-          <h2 class="section-title">About the Hound of Hades</h2>
+          <h2 class="section-title">The Crest & The Creed</h2>
           <p class="section-subtitle">
-            A sourdough-forward underworld kitchen — guarded by the three-headed gatekeeper and built for mortals who crave comfort with a bite.
+            The gate is watched. The flames are measured. The sourdough is sacred.
           </p>
         </div>
 
         <div class="about-grid">
           <div class="about-crest">
-            <img src="CerberusLogo2.png" alt="Cerberus Bites Crest Logo" class="about-crest-logo" />
+            <img src="CerberusLogo2.png" alt="Cerberus Bites Crest Logo" class="about-crest-logo">
             <div class="about-crest-title">Official Crest of Cerberus Bites</div>
             <p class="about-crest-text">
-              <strong>We are the guardians of souls who enter this realm.</strong><br />
-              I watch the flames.<br />
-              I guard the bites.<br />
-              I guide the hungry.<br />
+              <strong>We are the guardians of souls who enter this realm.</strong><br>
+              I watch the flames.<br>
+              I guard the bites.<br>
+              I guide the hungry.<br>
               We are the eternal watchdog of hunger and flame — and if we don’t approve it, it doesn’t leave the kitchen.
             </p>
           </div>
 
           <div class="about-content">
             <div class="about-box">
-              <span class="about-label">The Infernal Founder</span>
+              <span class="about-label">The Underworld Standard</span>
               <p>
-                Cerberus Bites is helmed by <strong>The Hound of Hades</strong> —
-                keeper of the starter, guardian of the griddle, and alchemist of wicked comfort food.
+                Cerberus Bites is built for speed, profit, and obsession-level consistency:
+                sourdough done right, butter-crisped, and served hot.
               </p>
-              <div class="about-quote">
-                “Bring me bread and I will bring you peace.”
-              </div>
+              <div class="about-quote">“If it’s not crackling, it’s not leaving.”</div>
             </div>
 
-            <div class="about-box" style="border-style:dashed;">
-              <span class="about-label">The Promise</span>
-              <p>
-                ✶ Sourdough made with patience.<br />
-                ✶ Batches baked with intent.<br />
-                ✶ Flavor guarded by Cerberus.<br />
-                ✶ Limited runs — because the Underworld doesn’t mass-produce magic.
-              </p>
+            <div class="about-highlight">
+              <span class="about-label">What We Stand For</span>
+              <p>✶ <strong>Quality first.</strong> Sourdough is the star — everything else serves it.</p>
+              <p style="margin-top:0.4rem;">✶ <strong>Fast service.</strong> A tight menu that moves.</p>
+              <p style="margin-top:0.4rem;">✶ <strong>Mythic experience.</strong> The gatekeeper vibe is part of the meal.</p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
 
-    <!-- Contact -->
+    <!-- Contact / Summon -->
     <section id="contact" class="contact">
       <div class="container">
         <div class="section-header">
           <div class="section-eyebrow">Summon the Underworld Kitchen</div>
           <h2 class="section-title">Bookings & General Inquiries</h2>
-          <p class="section-subtitle">Use the calendar to claim your date. For everything else, reach out directly.</p>
+          <p class="section-subtitle">
+            Use the calendar to claim your date. For everything else, message the gates below.
+          </p>
         </div>
 
         <div class="summon-grid">
           <div class="summon-calendar">
             <h4>Claim Your Date</h4>
-            <p class="form-helper">
-              Choose your time directly on the calendar. Once confirmed, you’ll receive an email from our booking system.
-            </p>
+            <p>Choose your time directly on the calendar.</p>
             <div class="calendar-wrap">
               <iframe
                 src="https://CerberusBites.setmore.com"
                 loading="lazy"
                 scrolling="yes"
-                frameborder="0"
-                title="Cerberus Bites booking calendar"></iframe>
+                title="Cerberus Bites booking calendar">
+              </iframe>
             </div>
           </div>
 
           <aside class="contact-card">
             <div class="contact-card-title">General Inquiries</div>
-            <p>For questions, collaborations, press, or other mischief that isn’t a booking:</p>
+            <p>For questions, collaborations, press, or other mischief:</p>
             <ul class="contact-card-list">
               <li><strong>Email:</strong> <a href="mailto:cerberusbites@hotmail.com">cerberusbites@hotmail.com</a></li>
               <li><strong>Phone:</strong> <a href="tel:15409448898">540-944-8898</a></li>
-              <li><strong>Instagram:</strong> <a href="https://www.instagram.com/cerberus_bites" target="_blank" rel="noopener">@cerberus_bites</a></li>
-              <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@cerberusbites" target="_blank" rel="noopener">@cerberusbites</a></li>
+              <li><strong>Instagram:</strong> <a href="https://www.instagram.com/cerberus_bites" target="_blank">@cerberus_bites</a></li>
+              <li><strong>TikTok:</strong> <a href="https://www.tiktok.com/@cerberusbites" target="_blank">@cerberusbites</a></li>
             </ul>
-            <p class="contact-note">
-              Bookings live on the calendar so your date is properly claimed. Messages here are for conversation, not reservations.
-            </p>
           </aside>
         </div>
-
       </div>
     </section>
   </main>
@@ -1039,437 +938,234 @@
         <div>© <span id="year"></span> Cerberus Bites. All rights reserved.</div>
         <div class="footer-links">
           <span>Sourdough from the Underworld.</span>
-          <span>Limited runs. Sold out = hype.</span>
+          <span>Feast in the Underworld.</span>
         </div>
       </div>
-
-      <!-- Tiny debug line (requested) -->
-      <div class="debug-line" id="debugLine">
-        Theme: <strong id="debugTheme">Loading…</strong> • Date: <span id="debugDate">—</span>
-      </div>
     </div>
-
-    <script>
-      /* =========================================================
-        1) LOADER RELIABILITY (fix “stuck on summoning”)
-      ========================================================== */
-      (function () {
-        function finishLoad() {
-          document.body.classList.add('loaded');
-          var header = document.querySelector('.hb-header');
-          if (header) header.classList.add('revealed');
-        }
-
-        window.addEventListener('load', finishLoad);
-
-        // Fallback: if something blocks load, force-hide loader after 2.5s
-        setTimeout(function () {
-          finishLoad();
-        }, 2500);
-      })();
-
-      // shrink header on scroll
-      window.addEventListener('scroll', function () {
-        const header = document.querySelector('.hb-header');
-        if (!header) return;
-        header.classList.toggle('scrolled', window.scrollY > 20);
-      });
-
-      // year
-      (function () {
-        var yearSpan = document.getElementById('year');
-        if (yearSpan) yearSpan.textContent = new Date().getFullYear();
-      })();
-
-      /* =========================================================
-        2) SECRET MENU (The Black Gate)
-      ========================================================== */
-      (function () {
-        const star = document.getElementById('secretStar');
-        const secret = document.getElementById('secretMenu');
-        if (!star || !secret) return;
-
-        let hideTimeout;
-
-        function showSecret() {
-          clearTimeout(hideTimeout);
-          secret.classList.add('visible');
-          star.classList.add('active');
-          secret.setAttribute('aria-hidden', 'false');
-        }
-
-        function scheduleHide() {
-          hideTimeout = setTimeout(function () {
-            secret.classList.remove('visible');
-            star.classList.remove('active');
-            secret.setAttribute('aria-hidden', 'true');
-          }, 200);
-        }
-
-        // Hover support (desktop)
-        star.addEventListener('mouseenter', showSecret);
-        star.addEventListener('mouseleave', scheduleHide);
-        secret.addEventListener('mouseenter', showSecret);
-        secret.addEventListener('mouseleave', scheduleHide);
-
-        // Tap/click support (mobile)
-        star.addEventListener('click', function (e) {
-          e.preventDefault();
-          const visible = secret.classList.toggle('visible');
-          star.classList.toggle('active', visible);
-          secret.setAttribute('aria-hidden', String(!visible));
-        });
-      })();
-
-      /* =========================================================
-        3) HOLIDAY (PAGAN SABBATS) THEME ENGINE
-           - Uses a small “activation window” around each sabbat.
-           - If not inside a sabbat window, it keeps your base colors.
-      ========================================================== */
-
-      (function () {
-        // Activation window (days before/after sabbat)
-        var WINDOW_DAYS = 6; // feel free to change to 3 / 7 / 10
-
-        function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
-
-        function dateAtLocalNoon(y, m, d){
-          // Noon prevents edge-case timezone flips at midnight.
-          return new Date(y, m, d, 12, 0, 0, 0);
-        }
-
-        function daysBetween(a, b){
-          var msPerDay = 24 * 60 * 60 * 1000;
-          return Math.round((a.getTime() - b.getTime()) / msPerDay);
-        }
-
-        function setVars(p){
-          var r = document.documentElement.style;
-
-          // Core vars
-          r.setProperty('--bg', p.bg);
-          r.setProperty('--bg-alt', p.bgAlt);
-          r.setProperty('--accent', p.accent);
-          r.setProperty('--accent-soft', p.accentSoft);
-          r.setProperty('--gold', p.gold);
-          r.setProperty('--text', p.text);
-          r.setProperty('--muted', p.muted);
-          r.setProperty('--border', p.border);
-
-          // Gradient vars
-          r.setProperty('--bg-grad-1', p.grad1);
-          r.setProperty('--bg-grad-2', p.grad2);
-          r.setProperty('--bg-grad-3', p.grad3);
-
-          // Banner vars
-          r.setProperty('--banner-a', p.bannerA);
-          r.setProperty('--banner-b', p.bannerB);
-
-          // Glow
-          r.setProperty('--glow-accent', p.glowAccent);
-          r.setProperty('--glow-gold', p.glowGold);
-        }
-
-        // Base palette (Between Sabbats) — unchanged
-        var BASE = {
-          name: "Between Sabbats",
-          bg: "#050308",
-          bgAlt: "#0c050b",
-          accent: "#ca3400",
-          accentSoft: "#7e0f1d",
-          gold: "#f5c97a",
-          text: "#f4f2f6",
-          muted: "#b3a9c0",
-          border: "#312033",
-          grad1: "#1b0710",
-          grad2: "#050308",
-          grad3: "#020107",
-          bannerA: "#7e0f1d",
-          bannerB: "#ca3400",
-          glowAccent: "rgba(202,52,0,0.80)",
-          glowGold: "rgba(245,201,122,0.60)"
-        };
-
-        // Sabbat palettes (Wheel of the Year)
-        // Dates are the common modern Wiccan/pagan calendar anchors.
-        var PALETTES = [
-          {
-            key: "yule",
-            name: "Yule (Winter Solstice)",
-            month: 11, day: 21, // Dec 21
-            emoji: "❄️🕯️",
-            palette: {
-              bg: "#04060b",
-              bgAlt: "#070b14",
-              accent: "#2b7bbb",
-              accentSoft: "#123a61",
-              gold: "#f5c97a",
-              text: "#f4f6ff",
-              muted: "#a8b6d6",
-              border: "#23314a",
-              grad1: "#0c1428",
-              grad2: "#04060b",
-              grad3: "#010207",
-              bannerA: "#123a61",
-              bannerB: "#2b7bbb",
-              glowAccent: "rgba(43,123,187,0.65)",
-              glowGold: "rgba(245,201,122,0.55)"
-            }
-          },
-          {
-            key: "imbolc",
-            name: "Imbolc",
-            month: 1, day: 1, // Feb 1
-            emoji: "🕯️🤍",
-            palette: {
-              bg: "#07060a",
-              bgAlt: "#0b0910",
-              accent: "#d9d7ff",
-              accentSoft: "#a7a3ff",
-              gold: "#f5c97a",
-              text: "#faf9ff",
-              muted: "#c9c6dd",
-              border: "#2a2333",
-              grad1: "#1b1424",
-              grad2: "#07060a",
-              grad3: "#020107",
-              bannerA: "#a7a3ff",
-              bannerB: "#d9d7ff",
-              glowAccent: "rgba(217,215,255,0.45)",
-              glowGold: "rgba(245,201,122,0.45)"
-            }
-          },
-          {
-            key: "ostara",
-            name: "Ostara (Spring Equinox)",
-            month: 2, day: 20, // Mar 20
-            emoji: "🌸🌿",
-            palette: {
-              bg: "#04070a",
-              bgAlt: "#061015",
-              accent: "#2ea86f",
-              accentSoft: "#1b5e44",
-              gold: "#f5c97a",
-              text: "#f2fff9",
-              muted: "#a8d6bf",
-              border: "#1e3a33",
-              grad1: "#0b2a24",
-              grad2: "#04070a",
-              grad3: "#010307",
-              bannerA: "#1b5e44",
-              bannerB: "#2ea86f",
-              glowAccent: "rgba(46,168,111,0.55)",
-              glowGold: "rgba(245,201,122,0.45)"
-            }
-          },
-          {
-            key: "beltane",
-            name: "Beltane",
-            month: 4, day: 1, // May 1
-            emoji: "🔥🌺",
-            palette: {
-              bg: "#070206",
-              bgAlt: "#12020a",
-              accent: "#ff3b6a",
-              accentSoft: "#a10f3d",
-              gold: "#f5c97a",
-              text: "#fff1f6",
-              muted: "#e0a2b6",
-              border: "#3c1a2a",
-              grad1: "#2a0614",
-              grad2: "#070206",
-              grad3: "#020105",
-              bannerA: "#a10f3d",
-              bannerB: "#ff3b6a",
-              glowAccent: "rgba(255,59,106,0.60)",
-              glowGold: "rgba(245,201,122,0.45)"
-            }
-          },
-          {
-            key: "litha",
-            name: "Litha (Summer Solstice)",
-            month: 5, day: 21, // Jun 21
-            emoji: "☀️🏺",
-            palette: {
-              bg: "#070500",
-              bgAlt: "#0f0b02",
-              accent: "#ff8a00",
-              accentSoft: "#b84a00",
-              gold: "#ffe3a3",
-              text: "#fff7ea",
-              muted: "#e1c7a6",
-              border: "#3a2a12",
-              grad1: "#2b1600",
-              grad2: "#070500",
-              grad3: "#020100",
-              bannerA: "#b84a00",
-              bannerB: "#ff8a00",
-              glowAccent: "rgba(255,138,0,0.60)",
-              glowGold: "rgba(255,227,163,0.55)"
-            }
-          },
-          {
-            key: "lughnasadh",
-            name: "Lughnasadh (Lammas)",
-            month: 7, day: 1, // Aug 1
-            emoji: "🌾🔥",
-            palette: {
-              bg: "#070401",
-              bgAlt: "#120a03",
-              accent: "#d17b00",
-              accentSoft: "#7a2f00",
-              gold: "#f5c97a",
-              text: "#fff7ec",
-              muted: "#d8b49a",
-              border: "#3a2416",
-              grad1: "#2a1200",
-              grad2: "#070401",
-              grad3: "#020100",
-              bannerA: "#7a2f00",
-              bannerB: "#d17b00",
-              glowAccent: "rgba(209,123,0,0.55)",
-              glowGold: "rgba(245,201,122,0.50)"
-            }
-          },
-          {
-            key: "mabon",
-            name: "Mabon (Autumn Equinox)",
-            month: 8, day: 22, // Sep 22
-            emoji: "🍂🍎",
-            palette: {
-              bg: "#060306",
-              bgAlt: "#0f0710",
-              accent: "#9b2c2c",
-              accentSoft: "#5c1414",
-              gold: "#f5c97a",
-              text: "#fff3f3",
-              muted: "#d3a8a8",
-              border: "#3a1f1f",
-              grad1: "#1e0a0a",
-              grad2: "#060306",
-              grad3: "#020106",
-              bannerA: "#5c1414",
-              bannerB: "#9b2c2c",
-              glowAccent: "rgba(155,44,44,0.55)",
-              glowGold: "rgba(245,201,122,0.45)"
-            }
-          },
-          {
-            key: "samhain",
-            name: "Samhain",
-            month: 9, day: 31, // Oct 31
-            emoji: "🕯️💀",
-            palette: {
-              bg: "#040208",
-              bgAlt: "#090312",
-              accent: "#7a2cff",
-              accentSoft: "#3a1380",
-              gold: "#f5c97a",
-              text: "#f6f0ff",
-              muted: "#b8a6d6",
-              border: "#2b2140",
-              grad1: "#140924",
-              grad2: "#040208",
-              grad3: "#010106",
-              bannerA: "#3a1380",
-              bannerB: "#7a2cff",
-              glowAccent: "rgba(122,44,255,0.55)",
-              glowGold: "rgba(245,201,122,0.50)"
-            }
-          }
-        ];
-
-        function getActiveHoliday(now){
-          var y = now.getFullYear();
-          var today = dateAtLocalNoon(y, now.getMonth(), now.getDate());
-
-          // Find the closest sabbat within WINDOW_DAYS
-          var best = null;
-          for (var i=0; i<PALETTES.length; i++){
-            var h = PALETTES[i];
-            var sabbat = dateAtLocalNoon(y, h.month, h.day);
-
-            // Handle Yule being Dec 21; if we're in January and closer to last year's Yule window, check last year
-            if (h.key === "yule" && now.getMonth() === 0) {
-              sabbat = dateAtLocalNoon(y - 1, h.month, h.day);
-            }
-
-            var diff = Math.abs(daysBetween(today, sabbat));
-            if (diff <= WINDOW_DAYS){
-              if (!best || diff < best.diff){
-                best = { key: h.key, name: h.name, emoji: h.emoji, palette: h.palette, diff: diff, date: sabbat };
-              }
-            }
-          }
-          return best; // null = between sabbats
-        }
-
-        function applyHolidayTheme(){
-          var now = new Date();
-          var active = getActiveHoliday(now);
-
-          var themeName = BASE.name;
-          var banner = document.getElementById('topBanner');
-
-          if (active){
-            setVars(Object.assign({}, BASE, active.palette));
-            themeName = active.emoji + " " + active.name;
-            if (banner){
-              banner.textContent = "🔥 Cerberus Bites • " + active.emoji + " " + active.name + " • Sourdough from the Underworld 🔥";
-            }
-          } else {
-            setVars(BASE); // keep your base colors between sabbats
-            if (banner){
-              banner.textContent = "🔥 Cerberus Bites • COMING SOON • Sourdough from the Underworld 🔥";
-            }
-          }
-
-          // Update seasonal shout-out copy
-          var callout = document.getElementById("seasonCallout");
-          if (callout){
-            var titleEl = callout.querySelector(".season-title");
-            var msgEl = callout.querySelector(".season-message");
-            if (titleEl && msgEl){
-              titleEl.textContent = active ? ("Seasonal: " + active.name) : "Seasonal Specials";
-              if (active){
-                msgEl.innerHTML = active.emoji + " <strong>" + active.name + "</strong><br>Theme colors are active across the site for this holiday window.";
-              } else {
-                // Still give a season-flavor message (not rotating menu items)
-                var m = now.getMonth(); // 0=Jan
-                if (m >= 2 && m <= 4){
-                  msgEl.innerHTML = "🌿 <strong>Spring Runs</strong><br>Brighter bakes, herb oil, lighter dips when available.";
-                } else if (m >= 5 && m <= 7){
-                  msgEl.innerHTML = "☀️ <strong>Summer Runs</strong><br>Hot griddle nights, crisp edges, extra batches when crowds arrive.";
-                } else if (m >= 8 && m <= 10){
-                  msgEl.innerHTML = "🍂 <strong>Autumn Runs</strong><br>Deeper roasts, smokier soup, heavier melts when the air turns sharp.";
-                } else {
-                  msgEl.innerHTML = "❄️ <strong>Winter Runs</strong><br>Coziest bakes, richest soup, darkest char (when Cerberus allows).";
-                }
-              }
-            }
-          }
-
-          // Debug line
-          var dbgTheme = document.getElementById("debugTheme");
-          var dbgDate = document.getElementById("debugDate");
-          if (dbgTheme) dbgTheme.textContent = themeName;
-          if (dbgDate){
-            dbgDate.textContent = now.toLocaleDateString(undefined, { weekday:'short', year:'numeric', month:'short', day:'numeric' });
-          }
-        }
-
-        applyHolidayTheme();
-
-        // Optional: re-check at 12:10pm local time daily (in case page stays open)
-        setInterval(function(){
-          var now = new Date();
-          if (now.getHours() === 12 && now.getMinutes() === 10){
-            applyHolidayTheme();
-          }
-        }, 60 * 1000);
-
-      })();
-    </script>
   </footer>
+
+  <script>
+    /* ==========================================================
+       1) Pagan Sabbat Color Shifting (with "between sabbats = base")
+       ========================================================== */
+
+    function fmt(d) {
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${m}/${day}`;
+    }
+
+    // Approx sabbat dates (common modern practice).
+    // We apply theme only inside an "active window" around each sabbat.
+    // Outside those windows: keep your BASE palette.
+    const sabbats = [
+      { key:"yule",       name:"Yule",       month:11, day:21, windowDays:12,
+        palette:{ bg:"#050308", bgAlt:"#0c050b", accent:"#2aa1ff", accentSoft:"#1b3a6a", gold:"#f5c97a", text:"#f4f2f6", muted:"#b3a9c0", border:"#2a2a44" } },
+      { key:"imbolc",     name:"Imbolc",     month:1,  day:1,  windowDays:10,
+        palette:{ bg:"#07060a", bgAlt:"#0d0b12", accent:"#f0b429", accentSoft:"#b07a12", gold:"#fff1c9", text:"#f4f2f6", muted:"#c7bdd6", border:"#2d2338" } },
+      { key:"ostara",     name:"Ostara",     month:2,  day:20, windowDays:10,
+        palette:{ bg:"#05060a", bgAlt:"#0a0f14", accent:"#3bd16f", accentSoft:"#1c7c44", gold:"#d7ffb9", text:"#f4f2f6", muted:"#b9c8bf", border:"#26332c" } },
+      { key:"beltane",    name:"Beltane",    month:4,  day:1,  windowDays:10,
+        palette:{ bg:"#07020a", bgAlt:"#120311", accent:"#ff2f7a", accentSoft:"#a10f44", gold:"#ffd1e1", text:"#f4f2f6", muted:"#d2b6c8", border:"#3a2030" } },
+      { key:"litha",      name:"Litha",      month:5,  day:21, windowDays:10,
+        palette:{ bg:"#050308", bgAlt:"#0b070a", accent:"#ff7a18", accentSoft:"#b84500", gold:"#ffe2a8", text:"#f4f2f6", muted:"#cdbfa8", border:"#3a2b1b" } },
+      { key:"lughnasadh", name:"Lughnasadh", month:7,  day:1,  windowDays:10,
+        palette:{ bg:"#050308", bgAlt:"#0c050b", accent:"#f1c232", accentSoft:"#9b6c0d", gold:"#fff0b3", text:"#f4f2f6", muted:"#d0c3a6", border:"#3a2d1a" } },
+      { key:"mabon",      name:"Mabon",      month:8,  day:22, windowDays:10,
+        palette:{ bg:"#050308", bgAlt:"#0b0506", accent:"#c66a2a", accentSoft:"#7a2e10", gold:"#f5c97a", text:"#f4f2f6", muted:"#c4b2a3", border:"#3b251b" } },
+      { key:"samhain",    name:"Samhain",    month:9,  day:31, windowDays:12,
+        palette:{ bg:"#040207", bgAlt:"#0b0410", accent:"#8f2cff", accentSoft:"#3b0f6d", gold:"#f5c97a", text:"#f4f2f6", muted:"#c0b4d1", border:"#2f1b3a" } },
+    ];
+
+    const BASE = {
+      bg: "#050308",
+      bgAlt: "#0c050b",
+      accent: "#ca3400",
+      accentSoft: "#7e0f1d",
+      gold: "#f5c97a",
+      text: "#f4f2f6",
+      muted: "#b3a9c0",
+      border: "#312033"
+    };
+
+    function clampDateToYear(now, month, day) {
+      return new Date(now.getFullYear(), month, day, 12, 0, 0); // noon local avoids DST weirdness
+    }
+
+    function dayDiff(a, b) {
+      const ms = 24 * 60 * 60 * 1000;
+      const ua = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+      const ub = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+      return Math.round((ua - ub) / ms);
+    }
+
+    function applyPalette(p, themeName, windowLabel) {
+      const r = document.documentElement.style;
+      r.setProperty("--bg", p.bg);
+      r.setProperty("--bg-alt", p.bgAlt);
+      r.setProperty("--accent", p.accent);
+      r.setProperty("--accent-soft", p.accentSoft);
+      r.setProperty("--gold", p.gold);
+      r.setProperty("--text", p.text);
+      r.setProperty("--muted", p.muted);
+      r.setProperty("--border", p.border);
+      r.setProperty("--theme-name", `"${themeName}"`);
+      r.setProperty("--theme-window", `"${windowLabel}"`);
+    }
+
+    function setHolidayTheme() {
+      const now = new Date();
+      let active = null;
+
+      // Find the closest sabbat window (including edge cases near year boundaries for Yule/Imbolc)
+      for (const s of sabbats) {
+        const targetThisYear = clampDateToYear(now, s.month, s.day);
+
+        // Also check adjacent year occurrence for edge windows (ex: early Jan near Yule, late Dec near Imbolc next year)
+        const targetPrevYear = new Date(now.getFullYear() - 1, s.month, s.day, 12, 0, 0);
+        const targetNextYear = new Date(now.getFullYear() + 1, s.month, s.day, 12, 0, 0);
+
+        const candidates = [targetPrevYear, targetThisYear, targetNextYear];
+
+        for (const t of candidates) {
+          const d = Math.abs(dayDiff(now, t));
+          if (d <= s.windowDays) {
+            // choose the closest in days
+            if (!active || d < active.distance) {
+              active = { sabbat: s, target: t, distance: d };
+            }
+          }
+        }
+      }
+
+      if (active) {
+        const s = active.sabbat;
+        const start = new Date(active.target); start.setDate(start.getDate() - s.windowDays);
+        const end   = new Date(active.target); end.setDate(end.getDate() + s.windowDays);
+        applyPalette(s.palette, s.name, `${fmt(start)}–${fmt(end)}`);
+        return { name: s.name, window: `${fmt(start)}–${fmt(end)}` };
+      }
+
+      // Between sabbats: keep base palette
+      applyPalette(BASE, "Between Sabbats", "Base palette");
+      return { name: "Between Sabbats", window: "Base palette" };
+    }
+
+    /* ==========================================================
+       2) Seasonal Shout-Out (keeps “seasonal callout” feel)
+       ========================================================== */
+    function setSeasonCallout() {
+      const seasonCallout = document.getElementById("seasonCallout");
+      const seasonMessage = seasonCallout ? seasonCallout.querySelector(".season-message") : null;
+      const seasonTitleEl = seasonCallout ? seasonCallout.querySelector(".season-title") : null;
+      if (!seasonCallout || !seasonMessage || !seasonTitleEl) return;
+
+      const now = new Date();
+      const m = now.getMonth();
+
+      const titles = [
+        "🔥 Seasonal Shout-Out 🔥",
+        "The Season Hungers…",
+        "A Sign from the Gate"
+      ];
+      seasonTitleEl.textContent = titles[Math.floor(Math.random() * titles.length)];
+
+      // simple seasonal copy that fits melts/soup (no old menu references)
+      let msg = "";
+      if (m === 11 || m === 0 || m === 1) {
+        msg = `❄️ <strong>Cold nights at the gate</strong><br>
+               Soup hits harder in winter — add Charred Tomato Soup to any melt for +$3.`;
+      } else if (m >= 2 && m <= 4) {
+        msg = `🌿 <strong>Spring returns</strong><br>
+               Persephone’s Garden is in bloom — roasted mushrooms, onion, herb oil.`;
+      } else if (m >= 5 && m <= 7) {
+        msg = `☀️ <strong>Summer heat</strong><br>
+               Hellfire Chicken brings the ember — ask for extra char if you’re brave.`;
+      } else {
+        msg = `🍂 <strong>Autumn at the Black Gate</strong><br>
+               Gatekeeper Turkey + soup is the cleanest combo when the air turns sharp.`;
+      }
+
+      seasonMessage.innerHTML = msg;
+    }
+
+    /* ==========================================================
+       3) Secret menu hover/tap logic (like your original)
+       ========================================================== */
+    function initSecretMenu() {
+      const star = document.getElementById('secretStar');
+      const secret = document.getElementById('secretMenu');
+      if (!star || !secret) return;
+
+      let hideTimeout;
+
+      function showSecret() {
+        clearTimeout(hideTimeout);
+        secret.classList.add('visible');
+        star.classList.add('active');
+        secret.setAttribute('aria-hidden', 'false');
+      }
+
+      function scheduleHide() {
+        hideTimeout = setTimeout(function () {
+          secret.classList.remove('visible');
+          star.classList.remove('active');
+          secret.setAttribute('aria-hidden', 'true');
+        }, 200);
+      }
+
+      // Hover support
+      star.addEventListener('mouseenter', showSecret);
+      star.addEventListener('mouseleave', scheduleHide);
+      secret.addEventListener('mouseenter', showSecret);
+      secret.addEventListener('mouseleave', scheduleHide);
+
+      // Tap/click support
+      star.addEventListener('click', function (e) {
+        e.preventDefault();
+        const visible = secret.classList.toggle('visible');
+        star.classList.toggle('active', visible);
+        secret.setAttribute('aria-hidden', String(!visible));
+      });
+    }
+
+    /* ==========================================================
+       4) Loader + header reveal + fail-safe (fix “stuck summoning”)
+       ========================================================== */
+    function hideLoader() {
+      document.body.classList.add('loaded');
+      const header = document.querySelector('.hb-header');
+      if (header) header.classList.add('revealed');
+    }
+
+    window.addEventListener('load', function () {
+      document.getElementById('year').textContent = new Date().getFullYear();
+      hideLoader();
+    });
+
+    // Fail-safe: if load event doesn’t fire (rare iframe/caching issues), force hide after 2.5s
+    setTimeout(hideLoader, 2500);
+
+    window.addEventListener('scroll', function () {
+      const header = document.querySelector('.hb-header');
+      if (!header) return;
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    /* ==========================================================
+       5) Boot
+       ========================================================== */
+    (function boot() {
+      const t = setHolidayTheme();
+      setSeasonCallout();
+      initSecretMenu();
+
+      // Debug line
+      const dbgTheme = document.getElementById("debugTheme");
+      const dbgWindow = document.getElementById("debugWindow");
+      if (dbgTheme) dbgTheme.textContent = t.name;
+      if (dbgWindow) dbgWindow.textContent = t.window;
+    })();
+  </script>
 </body>
 </html>
